@@ -1,0 +1,232 @@
+// Central content + structure. Mirrors content/sitemap.json and pages/*.md.
+// Build remaining routes by reading content/pages/*.md (see CLAUDE.md).
+
+export const brand = {
+  name: 'Fitness World',
+  sub: 'Studios',
+  claim: 'Stärker. Gesünder. Gemeinsam.',
+}
+
+// Full route table (from content/sitemap.json). Home is built; rest are stubs.
+export const routes = [
+  { path: '/', label: 'Startseite', template: 'home' },
+  { path: '/holdorf', label: 'Studio Holdorf', template: 'studio-detail' },
+  { path: '/goldenstedt', label: 'Studio Goldenstedt', template: 'studio-detail' },
+  { path: '/twistringen', label: 'Studio Twistringen', template: 'studio-detail' },
+  { path: '/vechta', label: 'Studio Vechta', template: 'studio-detail' },
+  { path: '/kurse', label: 'Kursplan & Angebote', template: 'course-overview' },
+  { path: '/kurse/reha-sport', label: 'Reha-Sport & AOK', template: 'health-landing' },
+  { path: '/kurse/personal-training', label: 'Personal Training', template: 'service-landing' },
+  { path: '/kurse/boxen', label: 'Boxen & Kickboxen', template: 'service-landing' },
+  { path: '/mitgliedschaft', label: 'Mitglied werden / Preise', template: 'pricing' },
+  { path: '/probetraining', label: 'Kostenloses Probetraining', template: 'lead-form' },
+  { path: '/team', label: 'Unser Team', template: 'team' },
+  { path: '/jobs', label: 'Stellenangebote', template: 'jobs' },
+  { path: '/blog', label: 'News & Tipps', template: 'blog' },
+  { path: '/kontakt', label: 'Kontakt', template: 'contact' },
+  { path: '/impressum', label: 'Impressum', template: 'legal' },
+  { path: '/datenschutz', label: 'Datenschutz', template: 'legal' },
+  { path: '/agb', label: 'AGB', template: 'legal' },
+  { path: '/hausordnung', label: 'Hausordnung', template: 'legal' },
+]
+
+export const nav = [
+  {
+    label: 'Standorte', to: '/holdorf',
+    children: [
+      { label: 'Holdorf', to: '/holdorf' },
+      { label: 'Goldenstedt', to: '/goldenstedt' },
+      { label: 'Twistringen', to: '/twistringen' },
+      { label: 'Vechta', to: '/vechta' },
+    ],
+  },
+  {
+    label: 'Kurse', to: '/kurse',
+    children: [
+      { label: 'Kursplan & Angebote', to: '/kurse' },
+      { label: 'Reha-Sport & AOK', to: '/kurse/reha-sport' },
+      { label: 'Personal Training', to: '/kurse/personal-training' },
+      { label: 'Boxen & Kickboxen', to: '/kurse/boxen' },
+    ],
+  },
+  { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
+  { label: 'Team', to: '/team' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Kontakt', to: '/kontakt' },
+]
+
+export const marqueeItems = [
+  '24/7 Training', 'Reha-Sport', 'AOK-Kurse', 'Boxen', 'Kickboxen',
+  'Personal Training', 'Kurse', 'Wellness', 'Community',
+]
+
+export const heroStats = ['4 Standorte', '24/7 Training', 'Reha-Sport & AOK', 'Persönliche Betreuung']
+
+export const locations = [
+  { name: 'Holdorf', to: '/holdorf', img: 'studios/holdorf-card.jpg', features: ['24/7 Training', 'Boxen', 'Wellness', 'Parkplätze'] },
+  { name: 'Goldenstedt', to: '/goldenstedt', img: 'studios/goldenstedt-card.jpg', features: ['24/7 Training', 'Reha-Sport', 'Kurse', 'Lounge'] },
+  { name: 'Twistringen', to: '/twistringen', img: 'studios/twistringen-card.jpg', features: ['24/7 Training', 'Functional', 'Community', 'Solarium'] },
+  { name: 'Vechta', to: '/vechta', img: 'studios/vechta-card.jpg', features: ['Premium Equipment', 'Performance', 'Personal Training', 'Wellness'] },
+]
+
+export const services = [
+  { icon: 'dumbbell', title: 'Krafttraining', to: '/kurse', text: 'Mehr Kraft, mehr Stabilität und sichtbarer Fortschritt mit modernen Geräten und klarer Struktur.' },
+  { icon: 'pulse', title: 'Ausdauer', to: '/kurse', text: 'Verbessere Kondition, Energie und Leistungsfähigkeit mit Cardio, das in deinen Alltag passt.' },
+  { icon: 'heart', title: 'Reha-Sport', to: '/kurse/reha-sport', text: 'Gesundheitlich orientiertes Training mit klarer Betreuung und strukturierten Kursen.' },
+  { icon: 'glove', title: 'Boxen & Kickboxen', to: '/kurse/boxen', text: 'Technik, Fokus und Kondition in intensiven Einheiten für Anfänger und Fortgeschrittene.' },
+  { icon: 'users', title: 'Kurse', to: '/kurse', text: 'Gemeinsam trainieren, motiviert bleiben und neue Routinen aufbauen.' },
+  { icon: 'target', title: 'Personal Training', to: '/kurse/personal-training', text: 'Individuelle Betreuung, klare Ziele und ein Plan, der wirklich zu dir passt.' },
+]
+
+export const numbers = [
+  { count: 4, label: 'Standorte' },
+  { static: '24/7', label: 'Zugang' },
+  { count: 1000, suffix: '+', label: 'Aktive Mitglieder' },
+  { count: 4.8, decimals: 1, label: 'Google Bewertung' },
+]
+
+export const testimonials = [
+  { initial: 'J', name: 'Julia M.', loc: 'Holdorf', quote: 'Zum ersten Mal fühle ich mich in einem Studio wirklich wohl. Das Team ist aufmerksam, die Stimmung ist gut und ich weiß endlich, was ich trainieren soll.' },
+  { initial: 'T', name: 'Tobias K.', loc: 'Vechta', quote: 'Die Trainer kennen meinen Namen und helfen mir bei jedem Schritt. Genau das hat mir in anderen Studios immer gefehlt.' },
+  { initial: 'M', name: 'Maria S.', loc: 'Goldenstedt', quote: 'Durch den Reha-Sport habe ich wieder mehr Vertrauen in meinen Körper bekommen. Danke für die kompetente Betreuung.' },
+]
+
+export const studioData = {
+  holdorf: {
+    slug: 'holdorf',
+    title: 'FITNESS WORLD HOLDORF',
+    eyebrow: 'Studio Holdorf',
+    sub: 'Dein Studio für Kraft, Boxen und Wellness. 24/7 Zugang, kostenlose Parkplätze und ein Team, das dich kennt.',
+    img: '/images/studios/holdorf-hero.jpg',
+    seoTitle: 'Fitness World Holdorf | 24/7 Fitness, Boxen & Wellness',
+    metaDesc: 'Trainiere im Fitness World Studio Holdorf. 24/7 Zugang, Boxen, Wellness, kostenlose Parkplätze und persönliche Betreuung.',
+    keyFacts: ['24/7 Training', 'Boxen & Kickboxen', 'Wellness', 'Kostenlose Parkplätze'],
+    intro: {
+      headline: 'DEIN HEIMSTUDIO IN HOLDORF.',
+      text: 'In Holdorf findest du ein Studio, das sich mit deinem Alltag verbindet. Egal wann du kommst: Die Geräte sind modern, das Team ist da und du hast Platz, um wirklich zu trainieren. Boxen, Kraft, Ausdauer oder einfach mal abschalten – bei uns geht das alles.',
+    },
+    ausstattung: ['Kraftbereich', 'Cardio-Bereich', 'Boxbereich', 'Wellness', 'Umkleiden & Duschen', 'Aufenthaltsbereich', 'Kostenlose Parkplätze'],
+    kurse: [
+      { title: 'Boxen & Kickboxen', text: 'Technik, Kondition und Fokus für Anfänger und Fortgeschrittene.' },
+      { title: 'Kraft & Ausdauer', text: 'Strukturiertes Training auf modernen Geräten mit klarer Anleitung.' },
+      { title: 'Community-Kurse', text: 'Gemeinsam trainieren, Routine aufbauen und durchhalten.' },
+    ],
+    ctaHeadline: 'KOMM ZUM PROBETRAINING NACH HOLDORF.',
+    ctaText: 'Lerne das Studio kennen und starte mit einem Training, das zu dir passt.',
+  },
+  goldenstedt: {
+    slug: 'goldenstedt',
+    title: 'FITNESS WORLD GOLDENSTEDT',
+    eyebrow: 'Studio Goldenstedt',
+    sub: 'Dein Studio für Kraft, Reha-Sport, Kurse und echte Community. 24/7 Training und persönliche Betreuung.',
+    img: '/images/studios/goldenstedt-hero.jpg',
+    seoTitle: 'Fitness World Goldenstedt | 24/7 Fitness, Reha-Sport & Kurse',
+    metaDesc: 'Trainiere im Fitness World Studio Goldenstedt. 24/7 Zugang, Reha-Sport, Kurse, Lounge und persönliche Betreuung.',
+    keyFacts: ['24/7 Training', 'Reha-Sport', 'Kurse', 'Getränke & Lounge'],
+    intro: {
+      headline: 'MEHR ALS EIN FITNESSSTUDIO.',
+      text: 'Goldenstedt ist einer unserer vielseitigsten Standorte. Ob du Kraft aufbauen, gesundheitsorientiert trainieren oder einfach in Bewegung bleiben willst – wir haben das passende Angebot. Reha-Sport, Kurse und offene Trainingsflächen unter einem Dach.',
+    },
+    ausstattung: ['Kraftbereich', 'Cardio-Bereich', 'Kursraum', 'Reha-Sport Bereich', 'Getränkelounge', 'Umkleiden & Duschen', 'Aufenthaltsbereich'],
+    kurse: [
+      { title: 'Reha-Sport & AOK', text: 'Gesundheitsorientiertes Training mit Betreuung und klarer Struktur.' },
+      { title: 'Kurse für alle Level', text: 'Gruppentraining mit Motivation, Abwechslung und klarer Anleitung.' },
+      { title: 'Kraft & Ausdauer', text: 'Modern ausgestattet und für jedes Trainingsziel geeignet.' },
+    ],
+    ctaHeadline: 'STARTE DEIN PROBETRAINING IN GOLDENSTEDT.',
+    ctaText: 'Lerne das Studio kennen und finde heraus, welches Angebot am besten zu dir passt.',
+  },
+  twistringen: {
+    slug: 'twistringen',
+    title: 'FITNESS WORLD TWISTRINGEN',
+    eyebrow: 'Studio Twistringen',
+    sub: 'Dein Studio für Kraft, Ausdauer, Functional Training und Community. Flexibel trainieren, besser werden und gemeinsam dranbleiben.',
+    img: '/images/studios/twistringen-hero.jpg',
+    seoTitle: 'Fitness World Twistringen | 24/7 Fitness, Kurse & Functional Training',
+    metaDesc: 'Trainiere im Fitness World Studio Twistringen. 24/7 Zugang, Functional Training, Kraft, Kurse, Community und Regeneration.',
+    keyFacts: ['24/7 Training', 'Functional Training', 'Kurse', 'Community'],
+    intro: {
+      headline: 'FÜR DEINEN ALLTAG. FÜR DEIN ZIEL.',
+      text: 'In Twistringen findest du ein Studio, das dich flexibel unterstützt: vor der Arbeit, nach der Arbeit oder wann immer dein Alltag es zulässt. Moderne Trainingsflächen, betreute Angebote und eine motivierende Atmosphäre machen es einfacher, regelmäßig zu trainieren.',
+    },
+    ausstattung: ['Kraftbereich', 'Cardio-Bereich', 'Functional Training', 'Kursbereich', 'Solarium', 'Umkleiden & Duschen', 'Aufenthaltsbereich'],
+    kurse: [
+      { title: 'Functional Training', text: 'Ganzkörpertraining für Kraft, Stabilität und Beweglichkeit.' },
+      { title: 'Kurse für jedes Level', text: 'Gemeinsam trainieren und mit Struktur motiviert bleiben.' },
+      { title: 'Gesundheitsorientiertes Training', text: 'Sicher bewegen, Belastbarkeit aufbauen und langfristig fitter werden.' },
+    ],
+    ctaHeadline: 'KOMM ZUM PROBETRAINING NACH TWISTRINGEN.',
+    ctaText: 'Lerne das Studio kennen und starte mit einem Training, das zu dir passt.',
+  },
+  vechta: {
+    slug: 'vechta',
+    title: 'FITNESS WORLD VECHTA',
+    eyebrow: 'Studio Vechta',
+    sub: 'Dein Studio für Performance, persönliche Betreuung und Training auf einem neuen Level. Modern, klar strukturiert und mit Raum für dein Ziel.',
+    img: '/images/studios/vechta-hero.jpg',
+    seoTitle: 'Fitness World Vechta | Premium Fitness, Coaching & Wellness',
+    metaDesc: 'Fitness World Vechta: modernes Training, Premium Equipment, Personal Training, Wellness und Community.',
+    keyFacts: ['Premium Equipment', 'Personal Training', 'Performance Training', 'Wellness'],
+    intro: {
+      headline: 'DEIN TRAINING AUF DEM NÄCHSTEN LEVEL.',
+      text: 'Fitness World Vechta richtet sich an alle, die ihr Training ernst nehmen, aber nicht anonym trainieren wollen. Wir verbinden hochwertige Ausstattung, Betreuung und eine starke Community zu einem Studioerlebnis, das dich langfristig weiterbringt.',
+    },
+    ausstattung: ['Premium Kraftgeräte', 'Freihantelbereich', 'Cardio', 'Functional Zone', 'Personal Training', 'Wellness & Regeneration', 'Umkleiden & Duschen'],
+    kurse: [
+      { title: 'Performance Training', text: 'Strukturiertes Training für mehr Kraft, Kondition und Fortschritt.' },
+      { title: 'Personal Training', text: 'Individuelle Betreuung für klare Ziele und messbare Ergebnisse.' },
+      { title: 'Wellness', text: 'Regeneration, Entspannung und Ausgleich nach dem Training.' },
+    ],
+    ctaHeadline: 'STARTE IN VECHTA.',
+    ctaText: 'Vereinbare dein Probetraining und finde heraus, wie Fitness World Vechta zu deinem Ziel passt.',
+  },
+}
+
+export const pricingPlans = [
+  {
+    name: 'Flex',
+    price: '24,90',
+    period: 'pro Monat',
+    desc: 'Für alle, die flexibel bleiben und ohne lange Bindung trainieren wollen.',
+    features: ['Zugang zu einem Standort', 'Trainingsfläche & Geräte', 'Monatlich kündbar', 'App-Zugang'],
+    cta: 'Jetzt Flex starten',
+    highlight: false,
+  },
+  {
+    name: 'Standard',
+    price: '34,90',
+    period: 'pro Monat',
+    desc: 'Unser beliebtester Tarif: alle Standorte, Kurse und voller Zugang.',
+    features: ['Zugang zu allen 4 Standorten', 'Trainingsfläche & Geräte', 'Kursflat inklusive', 'App-Zugang', '12 Monate Laufzeit'],
+    cta: 'Jetzt Mitglied werden',
+    highlight: true,
+    badge: 'Beliebt',
+  },
+  {
+    name: 'Premium',
+    price: '54,90',
+    period: 'pro Monat',
+    desc: 'Für alle, die das Komplettpaket wollen – inklusive Personal Training.',
+    features: ['Alles aus Standard', '2× Personal Training / Monat', 'Wellness & Regeneration', 'Persönlicher Trainingsplan', '12 Monate Laufzeit'],
+    cta: 'Premium starten',
+    highlight: false,
+  },
+]
+
+export const mitgliedschaftFAQ = [
+  { q: 'Wie lange ist die Mindestlaufzeit?', a: 'Beim Flex-Tarif gibt es keine Mindestlaufzeit – du kannst monatlich kündigen. Standard und Premium haben eine Laufzeit von 12 Monaten.' },
+  { q: 'Kann ich den Tarif wechseln?', a: 'Ja. Ein Upgrade ist jederzeit möglich. Ein Wechsel in einen günstigeren Tarif ist nach Ablauf der Mindestlaufzeit möglich.' },
+  { q: 'Kann ich alle Standorte nutzen?', a: 'Mit Standard und Premium hast du Zugang zu allen vier Standorten. Der Flex-Tarif gilt für einen Standort deiner Wahl.' },
+  { q: 'Was kostet ein Probetraining?', a: 'Das Probetraining ist kostenlos und unverbindlich. Du lernst das Studio kennen und wir besprechen gemeinsam, was zu dir passt.' },
+  { q: 'Gibt es eine Aufnahmegebühr?', a: 'Bitte frag direkt im Studio nach – das können wir dir beim Probetraining genau sagen.' },
+]
+
+export const footer = {
+  text: 'Dein Training. Deine Gesundheit. Deine Community. An vier Standorten für dich da – rund um die Uhr.',
+  columns: [
+    { title: 'Standorte', links: [['Holdorf', '/holdorf'], ['Goldenstedt', '/goldenstedt'], ['Twistringen', '/twistringen'], ['Vechta', '/vechta']] },
+    { title: 'Leistungen', links: [['Kurse', '/kurse'], ['Reha-Sport & AOK', '/kurse/reha-sport'], ['Personal Training', '/kurse/personal-training'], ['Boxen & Kickboxen', '/kurse/boxen']] },
+    { title: 'Service', links: [['Probetraining', '/probetraining'], ['Mitgliedschaft', '/mitgliedschaft'], ['Team', '/team'], ['Jobs', '/jobs'], ['Kontakt', '/kontakt']] },
+    { title: 'Rechtliches', links: [['Impressum', '/impressum'], ['Datenschutz', '/datenschutz'], ['AGB', '/agb'], ['Hausordnung', '/hausordnung']] },
+  ],
+}

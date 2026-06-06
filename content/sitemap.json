@@ -1,0 +1,23 @@
+{
+  "routes": [
+    { "path": "/", "label": "Startseite", "template": "home" },
+    { "path": "/holdorf", "label": "Studio Holdorf", "template": "studio-detail" },
+    { "path": "/goldenstedt", "label": "Studio Goldenstedt", "template": "studio-detail" },
+    { "path": "/twistringen", "label": "Studio Twistringen", "template": "studio-detail" },
+    { "path": "/vechta", "label": "Studio Vechta", "template": "studio-detail" },
+    { "path": "/kurse", "label": "Kursplan & Angebote", "template": "course-overview" },
+    { "path": "/kurse/reha-sport", "label": "Reha-Sport & AOK", "template": "health-landing" },
+    { "path": "/kurse/personal-training", "label": "Personal Training", "template": "service-landing" },
+    { "path": "/kurse/boxen", "label": "Boxen & Kickboxen", "template": "service-landing" },
+    { "path": "/mitgliedschaft", "label": "Mitglied werden / Preise", "template": "pricing" },
+    { "path": "/probetraining", "label": "Kostenloses Probetraining", "template": "lead-form" },
+    { "path": "/team", "label": "Unser Team", "template": "team" },
+    { "path": "/jobs", "label": "Stellenangebote", "template": "jobs" },
+    { "path": "/blog", "label": "News & Tipps", "template": "blog" },
+    { "path": "/kontakt", "label": "Kontakt", "template": "contact" },
+    { "path": "/impressum", "label": "Impressum", "template": "legal" },
+    { "path": "/datenschutz", "label": "Datenschutz", "template": "legal" },
+    { "path": "/agb", "label": "AGB", "template": "legal" },
+    { "path": "/hausordnung", "label": "Hausordnung", "template": "legal" }
+  ]
+}
