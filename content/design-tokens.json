@@ -1,0 +1,54 @@
+{
+  "brand": {
+    "name": "Fitness World Studios",
+    "claim_primary": "Stärker. Gesünder. Gemeinsam.",
+    "claim_secondary": "Trainiere für mehr.",
+    "logo_svg": "assets/fitness-world-logo.svg",
+    "logo_png": "assets/fitness-world-logo.png"
+  },
+  "colors": {
+    "brandBlue": "#1A91D5",
+    "brandDark": "#373737",
+    "brandGrey": "#DDDDDC",
+    "brandLight": "#ECECEC",
+    "navy900": "#07111C",
+    "navy800": "#0B1724",
+    "navy700": "#102437",
+    "white": "#FFFFFF",
+    "offWhite": "#F7F9FC",
+    "line": "rgba(255,255,255,0.14)",
+    "lineLight": "#E6EBF1",
+    "textDark": "#111827",
+    "textMuted": "#667085"
+  },
+  "typography": {
+    "headline": "Anton, Oswald, Impact, sans-serif",
+    "body": "Inter, Manrope, system-ui, sans-serif",
+    "nav": "Inter, Manrope, system-ui, sans-serif"
+  },
+  "layout": {
+    "maxWidth": "1240px",
+    "sectionPaddingDesktop": "96px 32px",
+    "sectionPaddingMobile": "64px 20px",
+    "borderRadiusSmall": "10px",
+    "borderRadiusMedium": "18px",
+    "borderRadiusLarge": "28px"
+  },
+  "buttons": {
+    "primary": {
+      "background": "#1A91D5",
+      "text": "#FFFFFF",
+      "hover": "#1479B3"
+    },
+    "secondaryDark": {
+      "background": "transparent",
+      "text": "#FFFFFF",
+      "border": "rgba(255,255,255,0.35)"
+    },
+    "secondaryLight": {
+      "background": "transparent",
+      "text": "#1A91D5",
+      "border": "#1A91D5"
+    }
+  }
+}
