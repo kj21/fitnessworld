@@ -17,11 +17,15 @@ function CheckIcon() {
 }
 
 export default function StudioDetail({ studio }) {
-  const { data: studioData } = useSanityData(
+  // Sanity studios override the site.js fallback per-slug. Merging (rather than
+  // replacing) means a studio missing from Sanity — e.g. Vechta — still renders
+  // from the hardcoded fallback instead of going blank.
+  const { data: sanityStudios } = useSanityData(
     STUDIO_LOCATIONS_QUERY,
-    studioDataFallback,
+    {},
     studioArrayToObject
   )
+  const studioData = { ...studioDataFallback, ...sanityStudios }
   const d = studioData[studio]
 
   useEffect(() => {
