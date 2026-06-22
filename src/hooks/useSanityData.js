@@ -57,10 +57,16 @@ export function useSanityData(query, fallback, transform) {
  * Transform helper for StudioDetail.
  * Converts Sanity's flat array into { holdorf: {...}, goldenstedt: {...}, ... }
  * so StudioDetail.jsx can continue using studioData[studio] unchanged.
+ *
+ * Keys are lower-cased so the route lookup ("holdorf") matches regardless of
+ * how the slug was typed in Sanity Studio ("Holdorf", "HOLDORF", …). Editors
+ * never have to worry about slug casing.
  */
 export function studioArrayToObject(arr) {
+  if (!Array.isArray(arr)) return {}
   return arr.reduce((acc, studio) => {
-    acc[studio.slug] = studio
+    const key = String(studio?.slug || '').trim().toLowerCase()
+    if (key) acc[key] = studio
     return acc
   }, {})
 }

@@ -1,8 +1,9 @@
-// Sanity CLI config — tells the CLI which project to use.
-// Plain export form avoids ESM/CJS resolver issues with some Node versions.
-export default {
+// CommonJS — CLI reads this before Vite takes over, so no "type":"module" needed
+const { defineCliConfig } = require('sanity/cli')
+
+module.exports = defineCliConfig({
   api: {
     projectId: 'u4s4v1t1',
     dataset: 'production',
   },
-}
+})
