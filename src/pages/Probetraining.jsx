@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import FAQAccordion from '../components/FAQAccordion'
 import PageHero from '../components/PageHero'
+import { useStudios } from '../lib/studios.js'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -23,6 +24,7 @@ const faq = [
 
 export default function Probetraining() {
   const query = useQuery()
+  const { studios } = useStudios()
   const defaultStudio = query.get('studio') || ''
   const defaultInteresse = query.get('interesse') || ''
 
@@ -118,10 +120,11 @@ export default function Probetraining() {
                     <label htmlFor="studio">Wunschstandort *</label>
                     <select id="studio" value={form.studio} onChange={set('studio')} aria-invalid={!!errors.studio} aria-describedby={errors.studio ? 'err-studio' : undefined}>
                       <option value="">Bitte wählen</option>
-                      <option value="holdorf">Holdorf</option>
-                      <option value="goldenstedt">Goldenstedt</option>
-                      <option value="twistringen">Twistringen</option>
-                      <option value="vechta">Vechta</option>
+                      {studios.map((s) => (
+                        <option key={s.slug} value={s.slug} disabled={s.comingSoon}>
+                          {s.name}{s.comingSoon ? ' (demnächst)' : ''}
+                        </option>
+                      ))}
                     </select>
                     {errors.studio && <span className="form-error" id="err-studio" role="alert">{errors.studio}</span>}
                   </div>

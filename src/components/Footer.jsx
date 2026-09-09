@@ -1,12 +1,21 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
-import { footer, brand } from '../data/site'
+import { footer, brand, numberWord } from '../data/site'
+import { useStudios } from '../lib/studios.js'
 
 function Social({ label, children }) {
   return <a href="#" aria-label={label}>{children}</a>
 }
 
 export default function Footer() {
+  const { studios } = useStudios()
+  const openCount = studios.filter((s) => !s.comingSoon).length
+  const text = footer.text.replace('{standorte}', numberWord(openCount).toLowerCase())
+  const columns = footer.columns.map((col) =>
+    col.studios
+      ? { ...col, links: studios.map((s) => [s.comingSoon ? `${s.name} (demnächst)` : s.name, s.to]) }
+      : col
+  )
   return (
     <>
       <footer className="footer">
@@ -20,10 +29,10 @@ export default function Footer() {
                   <span className="brand__sub">{brand.sub}</span>
                 </span>
               </Link>
-              <p>{footer.text}</p>
+              <p>{text}</p>
             </div>
 
-            {footer.columns.map((col) => (
+            {columns.map((col) => (
               <div key={col.title}>
                 <h4>{col.title}</h4>
                 <ul>
