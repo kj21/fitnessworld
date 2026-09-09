@@ -80,7 +80,7 @@ export const services = [
 
 export const numbers = [
   { count: 4, label: 'Standorte' },
-  { static: '24/7', label: 'Zugang' },
+  { text: '24*/*7', label: 'Zugang' },
   { count: 1000, suffix: '+', label: 'Aktive Mitglieder' },
   { count: 4.8, decimals: 1, label: 'Google Bewertung' },
 ]
@@ -90,6 +90,58 @@ export const testimonials = [
   { initial: 'T', name: 'Tobias K.', loc: 'Vechta', quote: 'Die Trainer kennen meinen Namen und helfen mir bei jedem Schritt. Genau das hat mir in anderen Studios immer gefehlt.' },
   { initial: 'M', name: 'Maria S.', loc: 'Goldenstedt', quote: 'Durch den Reha-Sport habe ich wieder mehr Vertrauen in meinen Körper bekommen. Danke für die kompetente Betreuung.' },
 ]
+
+// ─── Homepage copy (fallback for the Sanity "Startseite" document) ────────────
+// Headline convention (same as in Sanity): "\n" = new line, *word* = blue.
+const NUMBER_WORDS = ['Null', 'Ein', 'Zwei', 'Drei', 'Vier', 'Fünf', 'Sechs', 'Sieben', 'Acht', 'Neun', 'Zehn', 'Elf', 'Zwölf']
+export const numberWord = (n) => NUMBER_WORDS[n] ?? String(n)
+
+export function homeContent(studioCount = locations.length) {
+  const word = numberWord(studioCount)
+  return {
+    seoTitle: 'Fitness World Studios | 24/7 Fitness, Reha-Sport & Kurse',
+    metaDesc: `24/7 Training, Reha-Sport, Kurse und persönliche Betreuung an ${word.toLowerCase()} Standorten. Kostenloses Probetraining bei Fitness World Studios.`,
+
+    heroEyebrow: 'Fitness World Studios',
+    heroHeadline: 'Stärker.\n*Gesünder.*\nGemeinsam.',
+    heroLede: `24/7 Training, Reha-Sport, Kurse und persönliche Betreuung an ${word.toLowerCase()} Standorten. Für deinen Start, deinen Wiedereinstieg und dein nächstes Ziel.`,
+    heroPrimaryCta:   { label: 'Kostenloses Probetraining', to: '/probetraining' },
+    heroSecondaryCta: { label: 'Studio finden', to: '/holdorf' },
+    heroStats: [`${studioCount} Standorte`, ...heroStats.slice(1)],
+
+    marqueeItems,
+
+    whyEyebrow: 'Warum Fitness World?',
+    whyHeadline: 'Training allein\nreicht *nicht.*',
+    whyLede: 'Wir glauben, dass langfristige Erfolge dort entstehen, wo professionelle Betreuung, moderne Trainingsmöglichkeiten und echte Gemeinschaft zusammenkommen.',
+    whyText: 'Egal ob du gerade erst anfängst, nach einer Pause zurückkommst oder gezielt stärker werden willst: Bei Fitness World findest du einen Ort, der zu deinem Alltag passt und dich nicht alleine lässt.',
+    whyLink: { label: 'Mehr über uns', to: '/team' },
+
+    studiosEyebrow: 'Unsere Studios',
+    studiosHeadline: `${word} Standorte.\nEine *Community.*`,
+    studiosText: 'Wähle dein Studio in deiner Nähe und finde heraus, welche Angebote, Kurse und Trainingsmöglichkeiten vor Ort auf dich warten.',
+
+    servicesEyebrow: 'Unsere Leistungen',
+    servicesHeadline: 'Alles für *dein Ziel.*',
+    servicesText: 'Ob Kraft, Ausdauer, Gesundheit oder Technik: Wir bieten dir Training, das zu deinem Ziel und deinem Level passt.',
+    services,
+
+    communityEyebrow: 'Community',
+    communityHeadline: 'Fitness ist besser *gemeinsam.*',
+    communityText: 'Bei Fitness World trainierst du nicht anonym. Du wirst Teil einer Gemeinschaft, die sich gegenseitig motiviert, unterstützt und gemeinsam besser wird.',
+    communityCta: { label: 'Community entdecken', to: '/team' },
+
+    numbers: numbers.map((n) => (n.label === 'Standorte' ? { ...n, count: studioCount } : n)),
+
+    testimonialsEyebrow: 'Das sagen unsere Mitglieder',
+    testimonialsHeadline: 'Echte Stimmen.\nEchtes *Vertrauen.*',
+
+    ctaEyebrow: 'Probetraining',
+    ctaHeadline: 'Finde heraus,\nwas in dir *steckt.*',
+    ctaText: 'Vereinbare jetzt dein kostenloses Probetraining und lerne Fitness World persönlich kennen.',
+    ctaButton: { label: 'Probetraining vereinbaren', to: '/probetraining' },
+  }
+}
 
 export const studioData = {
   holdorf: {
