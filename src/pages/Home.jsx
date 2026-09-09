@@ -8,12 +8,11 @@ import LocationCard from '../components/LocationCard'
 import ServiceCard from '../components/ServiceCard'
 import TestimonialCard from '../components/TestimonialCard'
 import Stat from '../components/Stat'
-import { routes, locations as locationsFallback, testimonials as testimonialsFallback, homeContent } from '../data/site'
+import { testimonials as testimonialsFallback, homeContent } from '../data/site'
 import { useSanityData } from '../hooks/useSanityData.js'
-import { HOME_PAGE_QUERY, HOME_STUDIOS_QUERY, TESTIMONIALS_QUERY } from '../lib/queries.js'
-import { mergeHomePage, mergeHomeStudios } from '../lib/home.js'
-
-const routePaths = routes.map((r) => r.path)
+import { HOME_PAGE_QUERY, TESTIMONIALS_QUERY } from '../lib/queries.js'
+import { mergeHomePage } from '../lib/home.js'
+import { useStudios } from '../lib/studios.js'
 
 function setMetaDescription(content) {
   if (!content) return
@@ -27,15 +26,15 @@ function setMetaDescription(content) {
 }
 
 export default function Home() {
-  // Three Sanity sources, each with a site.js fallback:
-  //   studio cards  ← "Studio Standort" documents (shared with StudioDetail)
-  //   page copy     ← "Startseite" singleton (every field optional)
+  // Three Sanity sources:
+  //   studio cards  ← "Studio Standort" documents (Sanity is authoritative;
+  //                   site.js only when Sanity is unreachable — see useStudios)
+  //   page copy     ← "Startseite" singleton (every field optional, merged over site.js)
   //   testimonials  ← "Kundenstimme" documents
-  const { data: sanityStudios } = useSanityData(HOME_STUDIOS_QUERY, [])
-  const { data: sanityHome }    = useSanityData(HOME_PAGE_QUERY, null)
-  const { data: testimonials }  = useSanityData(TESTIMONIALS_QUERY, testimonialsFallback)
+  const { studios }            = useStudios()
+  const { data: sanityHome }   = useSanityData(HOME_PAGE_QUERY, null)
+  const { data: testimonials } = useSanityData(TESTIMONIALS_QUERY, testimonialsFallback)
 
-  const studios   = mergeHomeStudios(locationsFallback, sanityStudios, routePaths)
   const openCount = studios.filter((s) => !s.comingSoon).length
   const c         = mergeHomePage(homeContent(openCount), sanityHome)
 
@@ -100,7 +99,7 @@ export default function Home() {
           </Reveal>
           <div className="loc-grid">
             {studios.map((loc, i) => (
-              <Reveal key={loc.name} delay={i * 0.07}><LocationCard {...loc} /></Reveal>
+              <Reveal key={loc.slug} delay={i * 0.07}><LocationCard {...loc} /></Reveal>
             ))}
           </div>
         </div>

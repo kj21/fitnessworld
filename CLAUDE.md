@@ -15,13 +15,16 @@ The homepage is fully built as the reference implementation — match its patter
 - **Content:** `content/pages/*.md` — real German copy per route. Use it verbatim. Never Lorem Ipsum.
 - **Routes:** `content/sitemap.json` (also mirrored in `src/data/site.js`).
 - **Original brief:** `content/01_DESIGN_SYSTEM.md`, `03_COMPONENT_SPEC.md`, `04_IMPLEMENTATION_NOTES.md`.
-- **CMS:** Sanity (`studio/`). Editors change copy there; `src/data/site.js` is only the fallback.
-  Homepage: studio cards come from `studioLocation` docs, quotes from `testimonial`,
-  all other copy from the `homePage` singleton ("Startseite"). Every Sanity field is
-  optional — `mergeHomePage()` in `src/lib/home.js` layers it over `homeContent()`.
-  Headline convention (Sanity + site.js): `\n` = new line, `*word*` = blue.
-  Studio count ("4 Standorte") is derived from published studios that have a route
-  and are not `comingSoon`; new studios without a page show as "Demnächst".
+- **CMS:** Sanity (`studio/`). Editors change content there; `src/data/site.js` is only the fallback.
+  - **Studios are Sanity-only.** `useStudios()` in `src/lib/studios.js` feeds the homepage
+    cards, header nav, footer, Probetraining select and the studio pages. When Sanity
+    answers, its list is used as-is — the `locations`/`studioData` fallback is never merged
+    in. Studio pages are one dynamic route `/:slug` (`StudioRoute.jsx`); never add static
+    studio routes. `comingSoon` studios show "Demnächst" everywhere and don't count.
+  - Homepage copy comes from the `homePage` singleton ("Startseite"), quotes from
+    `testimonial`. Every Sanity field is optional — `mergeHomePage()` in `src/lib/home.js`
+    layers it over `homeContent()`. Headline convention: `\n` = new line, `*word*` = blue.
+  - Studio count ("3 Standorte") = published studios that are not `comingSoon`.
 
 ## Non-negotiables
 
@@ -29,7 +32,7 @@ The homepage is fully built as the reference implementation — match its patter
 2. Use the **real logo** `public/logo/fitness-world-logo.svg` (rendered inline via `src/components/Logo.jsx`). Never redraw or recolor it.
 3. Blue is used **sparingly**: CTAs, eyebrows, icons, lines, hover, active states. Surfaces stay navy/white.
 4. Mobile-first. The sticky `Probetraining` CTA bar (`.mcta`) shows on mobile.
-5. No dead links — every route in `src/data/site.js` resolves (unbuilt ones render `Placeholder`).
+5. No dead links — every route in `src/data/site.js` resolves (unbuilt ones render `Placeholder`); studio pages resolve via `/:slug`.
 6. Accessibility: real buttons/links, visible focus, labelled forms, ARIA on accordions, one `<h1>` per page.
 7. SEO per page: set `document.title` + a meta description, semantic `<section>`s.
 

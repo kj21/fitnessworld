@@ -3,9 +3,6 @@ import Reveal from '../components/Reveal'
 import Button, { TextLink } from '../components/Button'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import PageHero from '../components/PageHero'
-import { studioData as studioDataFallback } from '../data/site'
-import { useSanityData, studioArrayToObject } from '../hooks/useSanityData.js'
-import { STUDIO_LOCATIONS_QUERY } from '../lib/queries.js'
 
 function CheckIcon() {
   return (
@@ -16,115 +13,135 @@ function CheckIcon() {
   )
 }
 
-export default function StudioDetail({ studio }) {
-  // Sanity studios override the site.js fallback per-slug. Merging (rather than
-  // replacing) means a studio missing from Sanity — e.g. Vechta — still renders
-  // from the hardcoded fallback instead of going blank.
-  const { data: sanityStudios } = useSanityData(
-    STUDIO_LOCATIONS_QUERY,
-    {},
-    studioArrayToObject
-  )
-  const studioData = { ...studioDataFallback, ...sanityStudios }
-  const d = studioData[studio]
+function setMetaDescription(content) {
+  if (!content) return
+  let el = document.querySelector('meta[name="description"]')
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute('name', 'description')
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+
+/**
+ * Studio page. `data` is one normalized studio from useStudios() — Sanity when
+ * available, site.js otherwise. Sections whose data is empty are skipped, so a
+ * freshly created studio with only a title and a teaser still renders cleanly.
+ * Coming-soon studios get a "Demnächst" hero and a contact CTA instead of the
+ * trial-training CTA.
+ */
+export default function StudioDetail({ data: d }) {
+  const soon = d.comingSoon
+  const trialTo = `/probetraining?studio=${d.slug}`
+  const title = d.title || `FITNESS WORLD ${d.name.toUpperCase()}`
 
   useEffect(() => {
-    document.title = d ? `${d.seoTitle}` : 'Studio | Fitness World Studios'
+    document.title = d.seoTitle || `${d.eyebrow} | Fitness World Studios`
+    setMetaDescription(d.metaDesc || d.sub)
   }, [d])
-
-  if (!d) return null
 
   return (
     <main>
       <PageHero
-        eyebrow={d.eyebrow}
-        title={d.title}
+        eyebrow={soon ? `${d.eyebrow} · Demnächst` : d.eyebrow}
+        title={title}
         sub={d.sub}
-        primaryCta="Probetraining vereinbaren"
-        primaryTo={`/probetraining?studio=${d.slug}`}
-        secondaryCta="Kursplan ansehen"
-        secondaryTo="/kurse"
-        img={d.img}
+        primaryCta={soon ? 'Kontakt aufnehmen' : 'Probetraining vereinbaren'}
+        primaryTo={soon ? '/kontakt' : trialTo}
+        secondaryCta={soon ? 'Alle Studios' : 'Kursplan ansehen'}
+        secondaryTo={soon ? '/#standorte' : '/kurse'}
+        img={d.img || `/images/studios/${d.slug}-hero.jpg`}
         alt={`${d.eyebrow} Eingangsbereich`}
       />
 
       {/* KEY FACTS */}
-      <section className="section section--dark" style={{ padding: '36px 0' }}>
-        <div className="wrap">
-          <Reveal className="keyfacts">
-            {d.keyFacts.map((f) => (
-              <div key={f} className="keyfact">
-                <span className="dot" />
-                {f}
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
+      {d.keyFacts.length > 0 && (
+        <section className="section section--dark" style={{ padding: '36px 0' }}>
+          <div className="wrap">
+            <Reveal className="keyfacts">
+              {d.keyFacts.map((f) => (
+                <div key={f} className="keyfact">
+                  <span className="dot" />
+                  {f}
+                </div>
+              ))}
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* INTRO */}
-      <section className="section section--light">
-        <div className="wrap split">
-          <Reveal>
-            <h2 className="display">{d.intro.headline}</h2>
-            <p className="lede" style={{ marginTop: 22 }}>{d.intro.text}</p>
-            <div style={{ marginTop: 28 }}>
-              <Button to={`/probetraining?studio=${d.slug}`}>Probetraining vereinbaren</Button>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <ImagePlaceholder
-              className="split__media"
-              label={`/images/studios/${d.slug}-intro.jpg`}
-              alt={`Trainingsfläche ${d.eyebrow}`}
-            />
-          </Reveal>
-        </div>
-      </section>
+      {(d.intro?.headline || d.intro?.text) && (
+        <section className="section section--light">
+          <div className="wrap split">
+            <Reveal>
+              {d.intro.headline && <h2 className="display">{d.intro.headline}</h2>}
+              {d.intro.text && <p className="lede" style={{ marginTop: 22 }}>{d.intro.text}</p>}
+              {!soon && (
+                <div style={{ marginTop: 28 }}>
+                  <Button to={trialTo}>Probetraining vereinbaren</Button>
+                </div>
+              )}
+            </Reveal>
+            <Reveal delay={0.1}>
+              <ImagePlaceholder
+                className="split__media"
+                label={`/images/studios/${d.slug}-intro.jpg`}
+                alt={`Trainingsfläche ${d.eyebrow}`}
+              />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* AUSSTATTUNG */}
-      <section className="section section--white">
-        <div className="wrap">
-          <Reveal className="head-row">
-            <div>
-              <p className="eyebrow">Ausstattung</p>
-              <h2 className="display">Alles, was du<br /><span className="blue">brauchst.</span></h2>
-            </div>
-          </Reveal>
-          <Reveal>
-            <ul className="equip-list">
-              {d.ausstattung.map((item) => (
-                <li key={item}>
-                  <CheckIcon />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
+      {d.ausstattung.length > 0 && (
+        <section className="section section--white">
+          <div className="wrap">
+            <Reveal className="head-row">
+              <div>
+                <p className="eyebrow">Ausstattung</p>
+                <h2 className="display">Alles, was du<br /><span className="blue">brauchst.</span></h2>
+              </div>
+            </Reveal>
+            <Reveal>
+              <ul className="equip-list">
+                {d.ausstattung.map((item) => (
+                  <li key={item}>
+                    <CheckIcon />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* KURSE */}
-      <section className="section section--dark">
-        <div className="wrap">
-          <Reveal className="head-row">
-            <div>
-              <p className="eyebrow">Kurse & Angebote</p>
-              <h2 className="display">Training,<br />das <span className="blue">zu dir passt.</span></h2>
+      {d.kurse.length > 0 && (
+        <section className="section section--dark">
+          <div className="wrap">
+            <Reveal className="head-row">
+              <div>
+                <p className="eyebrow">Kurse & Angebote</p>
+                <h2 className="display">Training,<br />das <span className="blue">zu dir passt.</span></h2>
+              </div>
+              <TextLink to="/kurse">Alle Kurse ansehen</TextLink>
+            </Reveal>
+            <div className="svc-grid">
+              {d.kurse.map((k, i) => (
+                <Reveal key={k.title} delay={i * 0.06} className="svc-card svc-card--dark">
+                  <h3>{k.title}</h3>
+                  <p>{k.text}</p>
+                  <TextLink to="/kurse">Mehr erfahren</TextLink>
+                </Reveal>
+              ))}
             </div>
-            <TextLink to="/kurse">Alle Kurse ansehen</TextLink>
-          </Reveal>
-          <div className="svc-grid">
-            {d.kurse.map((k, i) => (
-              <Reveal key={k.title} delay={i * 0.06} className="svc-card svc-card--dark">
-                <h3>{k.title}</h3>
-                <p>{k.text}</p>
-                <TextLink to="/kurse">Mehr erfahren</TextLink>
-              </Reveal>
-            ))}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* GALLERY */}
       <section className="section section--darker">
@@ -146,10 +163,18 @@ export default function StudioDetail({ studio }) {
         <div className="wrap">
           <Reveal className="finalcta">
             <div className="finalcta__in">
-              <p className="eyebrow">Probetraining</p>
-              <h2 className="display">{d.ctaHeadline}</h2>
-              <p>{d.ctaText}</p>
-              <Button to={`/probetraining?studio=${d.slug}`}>Probetraining buchen</Button>
+              <p className="eyebrow">{soon ? 'Demnächst' : 'Probetraining'}</p>
+              <h2 className="display">
+                {d.ctaHeadline || (soon ? `BALD AUCH IN ${d.name.toUpperCase()}.` : 'KOMM ZUM PROBETRAINING.')}
+              </h2>
+              <p>
+                {d.ctaText || (soon
+                  ? 'Wir informieren dich, sobald es losgeht. Melde dich gern schon jetzt bei uns.'
+                  : 'Lerne das Studio kennen und starte mit einem Training, das zu dir passt.')}
+              </p>
+              {soon
+                ? <Button to="/kontakt">Kontakt aufnehmen</Button>
+                : <Button to={trialTo}>Probetraining buchen</Button>}
             </div>
           </Reveal>
         </div>

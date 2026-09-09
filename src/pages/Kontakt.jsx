@@ -8,7 +8,6 @@ const studiosFallback = [
   { name: 'Holdorf', addr: 'Musterstraße 1, 49451 Holdorf', tel: '+49 5494 000000', email: 'holdorf@fitness-world-studios.de', hours: 'Mo–Fr 06:00–22:00, Sa–So 08:00–20:00, 24/7 Kartenzugang' },
   { name: 'Goldenstedt', addr: 'Musterstraße 2, 49424 Goldenstedt', tel: '+49 4444 000000', email: 'goldenstedt@fitness-world-studios.de', hours: 'Mo–Fr 06:00–22:00, Sa–So 08:00–20:00, 24/7 Kartenzugang' },
   { name: 'Twistringen', addr: 'Musterstraße 3, 27239 Twistringen', tel: '+49 4243 000000', email: 'twistringen@fitness-world-studios.de', hours: 'Mo–Fr 06:00–22:00, Sa–So 08:00–20:00, 24/7 Kartenzugang' },
-  { name: 'Vechta', addr: 'Musterstraße 4, 49377 Vechta', tel: '+49 4441 000000', email: 'vechta@fitness-world-studios.de', hours: 'Mo–Fr 06:00–22:00, Sa–So 08:00–20:00, 24/7 Kartenzugang' },
 ]
 
 export default function Kontakt() {

@@ -10,10 +10,8 @@ export const brand = {
 // Full route table (from content/sitemap.json). Home is built; rest are stubs.
 export const routes = [
   { path: '/', label: 'Startseite', template: 'home' },
-  { path: '/holdorf', label: 'Studio Holdorf', template: 'studio-detail' },
-  { path: '/goldenstedt', label: 'Studio Goldenstedt', template: 'studio-detail' },
-  { path: '/twistringen', label: 'Studio Twistringen', template: 'studio-detail' },
-  { path: '/vechta', label: 'Studio Vechta', template: 'studio-detail' },
+  // Studio pages are dynamic: /<slug> for every studio published in Sanity
+  // (src/lib/studios.js + src/pages/StudioRoute.jsx). Nothing to list here.
   { path: '/kurse', label: 'Kursplan & Angebote', template: 'course-overview' },
   { path: '/kurse/reha-sport', label: 'Reha-Sport & AOK', template: 'health-landing' },
   { path: '/kurse/personal-training', label: 'Personal Training', template: 'service-landing' },
@@ -31,15 +29,8 @@ export const routes = [
 ]
 
 export const nav = [
-  {
-    label: 'Standorte', to: '/holdorf',
-    children: [
-      { label: 'Holdorf', to: '/holdorf' },
-      { label: 'Goldenstedt', to: '/goldenstedt' },
-      { label: 'Twistringen', to: '/twistringen' },
-      { label: 'Vechta', to: '/vechta' },
-    ],
-  },
+  // `studios: true` → Header fills the children from Sanity (useStudios).
+  { label: 'Standorte', to: '/holdorf', studios: true },
   {
     label: 'Kurse', to: '/kurse',
     children: [
@@ -62,11 +53,12 @@ export const marqueeItems = [
 
 export const heroStats = ['4 Standorte', '24/7 Training', 'Reha-Sport & AOK', 'Persönliche Betreuung']
 
+// Offline safety net only. Sanity is the source of truth for studios — when it
+// answers, this list is NOT merged in (see src/lib/studios.js).
 export const locations = [
-  { name: 'Holdorf', to: '/holdorf', img: 'studios/holdorf-card.jpg', features: ['24/7 Training', 'Boxen', 'Wellness', 'Parkplätze'] },
-  { name: 'Goldenstedt', to: '/goldenstedt', img: 'studios/goldenstedt-card.jpg', features: ['24/7 Training', 'Reha-Sport', 'Kurse', 'Lounge'] },
-  { name: 'Twistringen', to: '/twistringen', img: 'studios/twistringen-card.jpg', features: ['24/7 Training', 'Functional', 'Community', 'Solarium'] },
-  { name: 'Vechta', to: '/vechta', img: 'studios/vechta-card.jpg', features: ['Premium Equipment', 'Performance', 'Personal Training', 'Wellness'] },
+  { slug: 'holdorf',     name: 'Holdorf',     to: '/holdorf',     cardImg: 'studios/holdorf-card.jpg',     features: ['24/7 Training', 'Boxen', 'Wellness', 'Parkplätze'] },
+  { slug: 'goldenstedt', name: 'Goldenstedt', to: '/goldenstedt', cardImg: 'studios/goldenstedt-card.jpg', features: ['24/7 Training', 'Reha-Sport', 'Kurse', 'Lounge'] },
+  { slug: 'twistringen', name: 'Twistringen', to: '/twistringen', cardImg: 'studios/twistringen-card.jpg', features: ['24/7 Training', 'Functional', 'Community', 'Solarium'] },
 ]
 
 export const services = [
@@ -87,7 +79,7 @@ export const numbers = [
 
 export const testimonials = [
   { initial: 'J', name: 'Julia M.', loc: 'Holdorf', quote: 'Zum ersten Mal fühle ich mich in einem Studio wirklich wohl. Das Team ist aufmerksam, die Stimmung ist gut und ich weiß endlich, was ich trainieren soll.' },
-  { initial: 'T', name: 'Tobias K.', loc: 'Vechta', quote: 'Die Trainer kennen meinen Namen und helfen mir bei jedem Schritt. Genau das hat mir in anderen Studios immer gefehlt.' },
+  { initial: 'T', name: 'Tobias K.', loc: 'Twistringen', quote: 'Die Trainer kennen meinen Namen und helfen mir bei jedem Schritt. Genau das hat mir in anderen Studios immer gefehlt.' },
   { initial: 'M', name: 'Maria S.', loc: 'Goldenstedt', quote: 'Durch den Reha-Sport habe ich wieder mehr Vertrauen in meinen Körper bekommen. Danke für die kompetente Betreuung.' },
 ]
 
@@ -210,28 +202,6 @@ export const studioData = {
     ctaHeadline: 'KOMM ZUM PROBETRAINING NACH TWISTRINGEN.',
     ctaText: 'Lerne das Studio kennen und starte mit einem Training, das zu dir passt.',
   },
-  vechta: {
-    slug: 'vechta',
-    title: 'FITNESS WORLD VECHTA',
-    eyebrow: 'Studio Vechta',
-    sub: 'Dein Studio für Performance, persönliche Betreuung und Training auf einem neuen Level. Modern, klar strukturiert und mit Raum für dein Ziel.',
-    img: '/images/studios/vechta-hero.jpg',
-    seoTitle: 'Fitness World Vechta | Premium Fitness, Coaching & Wellness',
-    metaDesc: 'Fitness World Vechta: modernes Training, Premium Equipment, Personal Training, Wellness und Community.',
-    keyFacts: ['Premium Equipment', 'Personal Training', 'Performance Training', 'Wellness'],
-    intro: {
-      headline: 'DEIN TRAINING AUF DEM NÄCHSTEN LEVEL.',
-      text: 'Fitness World Vechta richtet sich an alle, die ihr Training ernst nehmen, aber nicht anonym trainieren wollen. Wir verbinden hochwertige Ausstattung, Betreuung und eine starke Community zu einem Studioerlebnis, das dich langfristig weiterbringt.',
-    },
-    ausstattung: ['Premium Kraftgeräte', 'Freihantelbereich', 'Cardio', 'Functional Zone', 'Personal Training', 'Wellness & Regeneration', 'Umkleiden & Duschen'],
-    kurse: [
-      { title: 'Performance Training', text: 'Strukturiertes Training für mehr Kraft, Kondition und Fortschritt.' },
-      { title: 'Personal Training', text: 'Individuelle Betreuung für klare Ziele und messbare Ergebnisse.' },
-      { title: 'Wellness', text: 'Regeneration, Entspannung und Ausgleich nach dem Training.' },
-    ],
-    ctaHeadline: 'STARTE IN VECHTA.',
-    ctaText: 'Vereinbare dein Probetraining und finde heraus, wie Fitness World Vechta zu deinem Ziel passt.',
-  },
 }
 
 export const pricingPlans = [
@@ -274,9 +244,11 @@ export const mitgliedschaftFAQ = [
 ]
 
 export const footer = {
-  text: 'Dein Training. Deine Gesundheit. Deine Community. An vier Standorten für dich da – rund um die Uhr.',
+  // {standorte} → number word of open studios, filled in by Footer.jsx
+  text: 'Dein Training. Deine Gesundheit. Deine Community. An {standorte} Standorten für dich da – rund um die Uhr.',
   columns: [
-    { title: 'Standorte', links: [['Holdorf', '/holdorf'], ['Goldenstedt', '/goldenstedt'], ['Twistringen', '/twistringen'], ['Vechta', '/vechta']] },
+    // `studios: true` → Footer fills the links from Sanity (useStudios).
+    { title: 'Standorte', studios: true, links: [] },
     { title: 'Leistungen', links: [['Kurse', '/kurse'], ['Reha-Sport & AOK', '/kurse/reha-sport'], ['Personal Training', '/kurse/personal-training'], ['Boxen & Kickboxen', '/kurse/boxen']] },
     { title: 'Service', links: [['Probetraining', '/probetraining'], ['Mitgliedschaft', '/mitgliedschaft'], ['Team', '/team'], ['Jobs', '/jobs'], ['Kontakt', '/kontakt']] },
     { title: 'Rechtliches', links: [['Impressum', '/impressum'], ['Datenschutz', '/datenschutz'], ['AGB', '/agb'], ['Hausordnung', '/hausordnung']] },

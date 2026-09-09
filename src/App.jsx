@@ -16,7 +16,7 @@ function StickyCTA() {
   )
 }
 import Home from './pages/Home'
-import StudioDetailPage from './pages/StudioDetail'
+import StudioRoute from './pages/StudioRoute'
 import Kurse from './pages/Kurse'
 import RehaSport from './pages/RehaSport'
 import PersonalTraining from './pages/PersonalTraining'
@@ -43,11 +43,6 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Studios */}
-        <Route path="/holdorf"     element={<StudioDetailPage studio="holdorf" />} />
-        <Route path="/goldenstedt" element={<StudioDetailPage studio="goldenstedt" />} />
-        <Route path="/twistringen" element={<StudioDetailPage studio="twistringen" />} />
-        <Route path="/vechta"      element={<StudioDetailPage studio="vechta" />} />
         {/* Kurse */}
         <Route path="/kurse"                  element={<Kurse />} />
         <Route path="/kurse/reha-sport"       element={<RehaSport />} />
@@ -66,6 +61,9 @@ export default function App() {
         <Route path="/datenschutz" element={<Legal />} />
         <Route path="/agb"         element={<Legal />} />
         <Route path="/hausordnung" element={<Legal />} />
+        {/* Studios: one dynamic route for every studio published in Sanity.
+            Static routes above always win; unknown slugs fall through to Placeholder. */}
+        <Route path="/:slug" element={<StudioRoute />} />
         {/* Fallback */}
         <Route path="*" element={<Placeholder />} />
       </Routes>

@@ -2,12 +2,16 @@
 // All field names match the existing JSX access patterns exactly.
 // Changing a query here never requires a JSX change.
 
-export const STUDIO_LOCATIONS_QUERY = `
-  *[_type == "studioLocation"] | order(slug.current asc) {
+// Every studio, with everything the site needs: cards (Home), nav/footer/form
+// lists, and the studio detail page. One query, deduped by useSanityData.
+export const STUDIOS_QUERY = `
+  *[_type == "studioLocation"] | order(sortOrder asc, _createdAt asc) {
+    _id,
     "slug": slug.current,
-    title, eyebrow, sub,
+    eyebrow, title, sub, comingSoon, sortOrder,
     "img": heroImage.asset->url,
-    seoTitle, metaDesc, keyFacts,
+    cardFeatures, keyFacts,
+    seoTitle, metaDesc,
     intro { headline, text },
     ausstattung,
     kurse[] { title, text },
@@ -43,17 +47,6 @@ export const TESTIMONIALS_QUERY = `
 export const STUDIO_CONTACTS_QUERY = `
   *[_type == "studioContact"] | order(sortOrder asc) {
     name, addr, tel, email, hours
-  }
-`
-
-// Homepage studio cards. Lightweight on purpose — StudioDetail uses the full
-// STUDIO_LOCATIONS_QUERY above.
-export const HOME_STUDIOS_QUERY = `
-  *[_type == "studioLocation"] | order(sortOrder asc, slug.current asc) {
-    "slug": slug.current,
-    eyebrow, title, comingSoon, sortOrder,
-    "img": heroImage.asset->url,
-    cardFeatures, keyFacts
   }
 `
 

@@ -23,7 +23,7 @@ const schedule = [
   { tag: 'Di', uhrzeit: '19:00', kurs: 'Zirkeltraining', standort: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
   { tag: 'Mi', uhrzeit: '09:30', kurs: 'Reha-Sport', standort: 'Goldenstedt', level: 'Einsteiger', trainer: 'Team FW' },
   { tag: 'Mi', uhrzeit: '18:00', kurs: 'Kickboxen', standort: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Do', uhrzeit: '10:00', kurs: 'Functional Training', standort: 'Vechta', level: 'Alle Level', trainer: 'Team FW' },
+  { tag: 'Do', uhrzeit: '10:00', kurs: 'Functional Training', standort: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
   { tag: 'Do', uhrzeit: '19:30', kurs: 'Boxen', standort: 'Twistringen', level: 'Fortgeschrittene', trainer: 'Team FW' },
   { tag: 'Fr', uhrzeit: '09:00', kurs: 'Zirkeltraining', standort: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
   { tag: 'Sa', uhrzeit: '10:00', kurs: 'Functional Training', standort: 'Goldenstedt', level: 'Alle Level', trainer: 'Team FW' },
