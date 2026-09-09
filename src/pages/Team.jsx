@@ -10,7 +10,7 @@ const teamFallback = [
   { initial: 'A', name: 'Andreas M.', role: 'Geschäftsführer & Trainer', loc: 'Holdorf', text: 'Andreas hat Fitness World von Anfang an aufgebaut und lebt für das, was er tut. Er steht regelmäßig selbst auf der Trainingsfläche.' },
   { initial: 'S', name: 'Sarah K.', role: 'Trainerin & Kursleitung', loc: 'Goldenstedt', text: 'Sarah leitet unsere Gesundheitskurse und Reha-Sport-Angebote. Ihre ruhige Art und ihr Fachwissen machen sie zum Anker für viele Mitglieder.' },
   { initial: 'F', name: 'Felix B.', role: 'Box- & Kickboxtrainer', loc: 'Holdorf', text: 'Felix bringt technisches Boxwissen und viel Energie mit. Er macht auch absolute Anfänger schnell fit und sicher.' },
-  { initial: 'L', name: 'Lisa T.', role: 'Personal Trainerin', loc: 'Vechta', text: 'Lisa entwickelt individuelle Trainingspläne und begleitet ihre Klienten mit klarem Fokus auf Ziele und nachhaltige Fortschritte.' },
+  { initial: 'L', name: 'Lisa T.', role: 'Personal Trainerin', loc: 'Holdorf', text: 'Lisa entwickelt individuelle Trainingspläne und begleitet ihre Klienten mit klarem Fokus auf Ziele und nachhaltige Fortschritte.' },
   { initial: 'M', name: 'Marco H.', role: 'Trainer & Rezeption', loc: 'Twistringen', text: 'Marco ist das freundliche Gesicht am Eingang und auf der Fläche. Er hilft bei Gerätenfragen und sorgt dafür, dass das Studio läuft.' },
   { initial: 'J', name: 'Jana W.', role: 'Trainerin & Kursleiterin', loc: 'Goldenstedt', text: 'Jana leitet Kurse, hilft Einsteigern beim Start und sorgt dafür, dass Training Spaß macht – auch wenn es anstrengend wird.' },
 ]

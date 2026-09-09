@@ -2,6 +2,24 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Logo from './Logo'
 import { nav, brand } from '../data/site'
+import { useStudios } from '../lib/studios.js'
+
+/** nav from site.js, with the "Standorte" children filled from Sanity. */
+function useNavItems() {
+  const { studios } = useStudios()
+  return nav.map((item) => {
+    if (!item.studios) return item
+    const first = studios.find((s) => !s.comingSoon) || studios[0]
+    return {
+      ...item,
+      to: first?.to || item.to,
+      children: studios.map((s) => ({
+        label: s.comingSoon ? `${s.name} (demnächst)` : s.name,
+        to: s.to,
+      })),
+    }
+  })
+}
 
 function Brand({ onClick }) {
   return (
@@ -19,6 +37,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  const items = useNavItems()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -40,12 +59,12 @@ export default function Header() {
         <div className="header__inner">
           <Brand />
           <nav className="nav" aria-label="Hauptnavigation">
-            {nav.map((item) => (
+            {items.map((item) => (
               <div className={`nav__item ${item.children ? 'has-menu' : ''}`} key={item.label}>
                 <Link to={item.to}>
                   {item.label}{item.children && <span className="chev">▾</span>}
                 </Link>
-                {item.children && (
+                {item.children?.length > 0 && (
                   <div className="submenu">
                     {item.children.map((c) => <Link key={c.to} to={c.to}>{c.label}</Link>)}
                   </div>
@@ -71,7 +90,7 @@ export default function Header() {
       </header>
 
       <div id="mobileMenu" className={`mobile ${open ? 'open' : ''}`} aria-hidden={!open}>
-        {nav.map((item) => (
+        {items.map((item) => (
           <div key={item.label}>
             <Link to={item.to} onClick={() => setOpen(false)}>{item.label}</Link>
             {item.children && (

@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react'
 import { sanityClient } from '../lib/sanity.js'
 
+// Components mounted at the same time (Header + Home + StudioRoute all need the
+// studio list) share one in-flight request per query instead of firing three.
+const inflight = new Map()
+function fetchQuery(query) {
+  if (!inflight.has(query)) {
+    const p = sanityClient.fetch(query).finally(() => inflight.delete(query))
+    inflight.set(query, p)
+  }
+  return inflight.get(query)
+}
+
 /**
  * Fetch Sanity data with a site.js fallback.
  *
  * @param {string}   query     — GROQ query string from src/lib/queries.js
  * @param {*}        fallback  — value from site.js used while loading or on error
  * @param {function} [transform] — optional fn to reshape the raw Sanity result
- *                                 (e.g. studioArrayToObject for StudioDetail)
+ *                                 (e.g. studiosFromSanity in src/lib/studios.js)
  * @returns {{ data, loading, error }}
  *
  * The fallback stays in `data` whenever Sanity is unreachable, ensuring
@@ -27,8 +38,7 @@ export function useSanityData(query, fallback, transform) {
 
     let cancelled = false
 
-    sanityClient
-      .fetch(query)
+    fetchQuery(query)
       .then((result) => {
         if (cancelled) return
         const resolved = transform ? transform(result) : result
@@ -51,22 +61,4 @@ export function useSanityData(query, fallback, transform) {
   }, [query]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return { data, loading, error }
-}
-
-/**
- * Transform helper for StudioDetail.
- * Converts Sanity's flat array into { holdorf: {...}, goldenstedt: {...}, ... }
- * so StudioDetail.jsx can continue using studioData[studio] unchanged.
- *
- * Keys are lower-cased so the route lookup ("holdorf") matches regardless of
- * how the slug was typed in Sanity Studio ("Holdorf", "HOLDORF", …). Editors
- * never have to worry about slug casing.
- */
-export function studioArrayToObject(arr) {
-  if (!Array.isArray(arr)) return {}
-  return arr.reduce((acc, studio) => {
-    const key = String(studio?.slug || '').trim().toLowerCase()
-    if (key) acc[key] = studio
-    return acc
-  }, {})
 }

@@ -7,9 +7,24 @@ export default defineType({
   fields: [
     defineField({
       name: 'slug', title: 'Slug (URL-Kürzel)', type: 'slug',
-      options: { source: 'eyebrow', maxLength: 96 },
-      description: 'z.B. holdorf, goldenstedt, twistringen, vechta',
-      validation: Rule => Rule.required(),
+      options: {
+        source: 'eyebrow', maxLength: 96,
+        // "Studio Neuenkirchen-Vörden" → "neuenkirchen-voerden"
+        slugify: (input) => String(input || '')
+          .toLowerCase()
+          .replace(/^studio\s+/, '')
+          .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .slice(0, 96),
+      },
+      description: 'Wird zur Adresse der Studio-Seite: /holdorf, /delmenhorst … Nur Kleinbuchstaben, Zahlen und Bindestriche. "Demnächst" bitte über das Häkchen unten setzen, nicht im Slug.',
+      validation: Rule => Rule.required().custom((slug) => {
+        const v = slug?.current || ''
+        return /^[a-z0-9-]+$/.test(v)
+          ? true
+          : 'Bitte nur Kleinbuchstaben, Zahlen und Bindestriche verwenden (z.B. delmenhorst). Die Website korrigiert das automatisch, aber die Adresse wird dann unschön.'
+      }).warning(),
     }),
     defineField({ name: 'eyebrow',  title: 'Eyebrow (z.B. "Studio Holdorf")', type: 'string', validation: Rule => Rule.required() }),
     defineField({ name: 'title',    title: 'Seitentitel (Großbuchstaben)', type: 'string', description: 'z.B. FITNESS WORLD HOLDORF' }),
@@ -30,7 +45,7 @@ export default defineType({
     }),
     defineField({
       name: 'comingSoon', title: 'Demnächst (noch nicht eröffnet)', type: 'boolean', initialValue: false,
-      description: 'Zeigt "Demnächst" auf der Startseite und zählt nicht als Standort. Studios ohne eigene Seite werden automatisch so behandelt.',
+      description: 'Zeigt "Demnächst" auf der Website (Startseite, Navigation, Studio-Seite) und zählt nicht als geöffneter Standort. Im Probetraining-Formular ist das Studio dann nicht wählbar.',
     }),
     defineField({
       name: 'sortOrder', title: 'Reihenfolge auf der Startseite', type: 'number',
