@@ -15,6 +15,13 @@ The homepage is fully built as the reference implementation — match its patter
 - **Content:** `content/pages/*.md` — real German copy per route. Use it verbatim. Never Lorem Ipsum.
 - **Routes:** `content/sitemap.json` (also mirrored in `src/data/site.js`).
 - **Original brief:** `content/01_DESIGN_SYSTEM.md`, `03_COMPONENT_SPEC.md`, `04_IMPLEMENTATION_NOTES.md`.
+- **CMS:** Sanity (`studio/`). Editors change copy there; `src/data/site.js` is only the fallback.
+  Homepage: studio cards come from `studioLocation` docs, quotes from `testimonial`,
+  all other copy from the `homePage` singleton ("Startseite"). Every Sanity field is
+  optional — `mergeHomePage()` in `src/lib/home.js` layers it over `homeContent()`.
+  Headline convention (Sanity + site.js): `\n` = new line, `*word*` = blue.
+  Studio count ("4 Standorte") is derived from published studios that have a route
+  and are not `comingSoon`; new studios without a page show as "Demnächst".
 
 ## Non-negotiables
 

@@ -23,6 +23,20 @@ export default defineType({
       description: 'z.B. 24/7 Training, Boxen & Kickboxen',
     }),
     defineField({
+      name: 'cardFeatures', title: 'Startseiten-Karte: Merkmale (max. 4)',
+      type: 'array', of: [{ type: 'string' }],
+      validation: Rule => Rule.max(4),
+      description: 'Kurze Tags auf der Studio-Karte der Startseite. Leer lassen → Key Facts werden verwendet.',
+    }),
+    defineField({
+      name: 'comingSoon', title: 'Demnächst (noch nicht eröffnet)', type: 'boolean', initialValue: false,
+      description: 'Zeigt "Demnächst" auf der Startseite und zählt nicht als Standort. Studios ohne eigene Seite werden automatisch so behandelt.',
+    }),
+    defineField({
+      name: 'sortOrder', title: 'Reihenfolge auf der Startseite', type: 'number',
+      description: 'Kleinere Zahl = weiter vorne.',
+    }),
+    defineField({
       name: 'intro', title: 'Intro-Bereich', type: 'object',
       fields: [
         defineField({ name: 'headline', title: 'Headline (Großbuchstaben)', type: 'string' }),

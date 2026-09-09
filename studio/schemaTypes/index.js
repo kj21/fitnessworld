@@ -5,11 +5,11 @@ import teamMember     from './teamMember.js'
 import jobListing     from './jobListing.js'
 import testimonial    from './testimonial.js'
 import studioContact  from './studioContact.js'
+import homePage       from './homePage.js'
 
 // Phase 2 (import and add to array when ready)
 // import course         from './course.js'
 // import scheduleEntry  from './scheduleEntry.js'
-// import siteSettings   from './siteSettings.js'
 
 // Phase 3
 // import blogPost       from './blogPost.js'
@@ -23,4 +23,5 @@ export const schemaTypes = [
   jobListing,
   testimonial,
   studioContact,
+  homePage,
 ]

@@ -46,6 +46,33 @@ export const STUDIO_CONTACTS_QUERY = `
   }
 `
 
+// Homepage studio cards. Lightweight on purpose — StudioDetail uses the full
+// STUDIO_LOCATIONS_QUERY above.
+export const HOME_STUDIOS_QUERY = `
+  *[_type == "studioLocation"] | order(sortOrder asc, slug.current asc) {
+    "slug": slug.current,
+    eyebrow, title, comingSoon, sortOrder,
+    "img": heroImage.asset->url,
+    cardFeatures, keyFacts
+  }
+`
+
+// Homepage copy (singleton). Every field is optional — see mergeHomePage().
+export const HOME_PAGE_QUERY = `
+  *[_type == "homePage"][0] {
+    seoTitle, metaDesc,
+    heroEyebrow, heroHeadline, heroLede, heroPrimaryCta, heroSecondaryCta, heroStats,
+    marqueeItems,
+    whyEyebrow, whyHeadline, whyLede, whyText, whyLink,
+    studiosEyebrow, studiosHeadline, studiosText,
+    servicesEyebrow, servicesHeadline, servicesText, services,
+    communityEyebrow, communityHeadline, communityText, communityCta,
+    numbers,
+    testimonialsEyebrow, testimonialsHeadline,
+    ctaEyebrow, ctaHeadline, ctaText, ctaButton
+  }
+`
+
 // ─── Phase 2 (add later) ──────────────────────────────────────────────────────
 // export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{ ... }`
 // export const COURSES_QUERY        = `*[_type == "course"] | order(sortOrder asc){ ... }`
