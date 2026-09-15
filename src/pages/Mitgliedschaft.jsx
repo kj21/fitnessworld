@@ -3,9 +3,11 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import FAQAccordion from '../components/FAQAccordion'
 import PageHero from '../components/PageHero'
-import { pricingPlans as pricingPlansFallback, mitgliedschaftFAQ } from '../data/site'
+import { pricingPlans as pricingPlansFallback } from '../data/site'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { PRICING_PLANS_QUERY } from '../lib/queries.js'
+import { useMembershipPage, fillCount } from '../lib/content.js'
+import { useStudios } from '../lib/studios.js'
 
 function CheckIcon({ light }) {
   return (
@@ -18,6 +20,9 @@ function CheckIcon({ light }) {
 
 export default function Mitgliedschaft() {
   const { data: pricingPlans } = useSanityData(PRICING_PLANS_QUERY, pricingPlansFallback)
+  const { studios } = useStudios()
+  // Benefits + FAQ editable in Sanity ("Mitgliedschaft-Seite"); {anzahl} → open studios
+  const page = fillCount(useMembershipPage(), studios.filter((s) => !s.comingSoon).length)
   useEffect(() => { document.title = 'Mitgliedschaft & Preise | Fitness World Studios' }, [])
 
   return (
@@ -25,7 +30,7 @@ export default function Mitgliedschaft() {
       <PageHero
         eyebrow="Mitgliedschaft"
         title="DEIN PLAN. DEIN PREIS."
-        sub="Drei Tarife – klar strukturiert, ohne versteckte Kosten. Finde die Mitgliedschaft, die zu deinem Alltag und deinen Zielen passt."
+        sub={page.heroSub}
         img="/images/membership/mitgliedschaft-hero.jpg"
         alt="Fitness World Mitgliedschaft"
       />
@@ -52,7 +57,7 @@ export default function Mitgliedschaft() {
                   </div>
                   <p className="pricing-desc">{plan.desc}</p>
                   <ul className="pricing-features">
-                    {plan.features.map((f) => (
+                    {(plan.features || []).map((f) => (
                       <li key={f}>
                         <CheckIcon light={plan.highlight} />
                         <span>{f}</span>
@@ -70,10 +75,7 @@ export default function Mitgliedschaft() {
             ))}
           </div>
           <Reveal>
-            <p className="pricing-note">
-              Alle Preise sind Richtwerte. Die verbindlichen Konditionen erhältst du beim Probetraining oder auf Anfrage.
-              <br />Bitte Preise und Laufzeiten vor Vertragsabschluss im Studio bestätigen lassen.
-            </p>
+            <p className="pricing-note" style={{ whiteSpace: 'pre-line' }}>{page.pricingNote}</p>
           </Reveal>
         </div>
       </section>
@@ -88,14 +90,7 @@ export default function Mitgliedschaft() {
             </div>
           </Reveal>
           <div className="svc-grid">
-            {[
-              { title: '24/7 Zugang', text: 'Trainiere wann du willst – morgens, abends oder nachts. Dein Studio ist immer offen.' },
-              { title: 'Vier Standorte', text: 'Mit Standard und Premium nutzt du alle vier Studios ohne Aufpreis.' },
-              { title: 'Persönliche Betreuung', text: 'Wir kennen deinen Namen, dein Ziel und begleiten dich auf deinem Weg.' },
-              { title: 'Moderne Ausstattung', text: 'Hochwertige Geräte, gepflegte Anlagen und eine motivierende Atmosphäre.' },
-              { title: 'Community', text: 'Du trainierst nicht anonym. Du wirst Teil einer echten Fitness-Community.' },
-              { title: 'Kurse inklusive', text: 'Mit Standard und Premium sind alle Gruppenangebote ohne Zusatzkosten dabei.' },
-            ].map((v, i) => (
+            {page.benefits.map((v, i) => (
               <Reveal key={v.title} delay={(i % 3) * 0.05} className="svc-card">
                 <h3>{v.title}</h3>
                 <p>{v.text}</p>
@@ -113,7 +108,7 @@ export default function Mitgliedschaft() {
             <h2 className="display" style={{ marginBottom: 40 }}>Häufige <span className="blue">Fragen.</span></h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <FAQAccordion items={mitgliedschaftFAQ} />
+            <FAQAccordion items={page.faq} />
           </Reveal>
         </div>
       </section>

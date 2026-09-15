@@ -3,11 +3,17 @@ import { Link, useLocation } from 'react-router-dom'
 import Logo from './Logo'
 import { nav, brand } from '../data/site'
 import { useStudios } from '../lib/studios.js'
+import { useCourses } from '../lib/content.js'
 
-/** nav from site.js, with the "Standorte" children filled from Sanity. */
+/** nav from site.js, with "Standorte" and "Kurse" children filled from Sanity. */
 function useNavItems() {
   const { studios } = useStudios()
+  const { featured } = useCourses()
   return nav.map((item) => {
+    if (item.courses) {
+      const own = new Set(item.children.map((c) => c.to))
+      return { ...item, children: [...item.children, ...featured.filter((f) => !own.has(f.to))] }
+    }
     if (!item.studios) return item
     const first = studios.find((s) => !s.comingSoon) || studios[0]
     return {

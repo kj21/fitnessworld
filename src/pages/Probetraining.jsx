@@ -135,7 +135,6 @@ export default function Probetraining() {
                       <option value="allgemein">Allgemeines Probetraining</option>
                       <option value="mitgliedschaft">Mitgliedschaft</option>
                       <option value="reha">Reha-Sport</option>
-                      <option value="aok">AOK-Kurs</option>
                       <option value="personal-training">Personal Training</option>
                       <option value="boxen">Boxen & Kickboxen</option>
                     </select>

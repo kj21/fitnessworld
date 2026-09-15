@@ -13,7 +13,7 @@ export const routes = [
   // Studio pages are dynamic: /<slug> for every studio published in Sanity
   // (src/lib/studios.js + src/pages/StudioRoute.jsx). Nothing to list here.
   { path: '/kurse', label: 'Kursplan & Angebote', template: 'course-overview' },
-  { path: '/kurse/reha-sport', label: 'Reha-Sport & AOK', template: 'health-landing' },
+  { path: '/kurse/reha-sport', label: 'Reha-Sport', template: 'health-landing' },
   { path: '/kurse/personal-training', label: 'Personal Training', template: 'service-landing' },
   { path: '/kurse/boxen', label: 'Boxen & Kickboxen', template: 'service-landing' },
   { path: '/mitgliedschaft', label: 'Mitglied werden / Preise', template: 'pricing' },
@@ -33,12 +33,9 @@ export const nav = [
   { label: 'Standorte', to: '/holdorf', studios: true },
   {
     label: 'Kurse', to: '/kurse',
-    children: [
-      { label: 'Kursplan & Angebote', to: '/kurse' },
-      { label: 'Reha-Sport & AOK', to: '/kurse/reha-sport' },
-      { label: 'Personal Training', to: '/kurse/personal-training' },
-      { label: 'Boxen & Kickboxen', to: '/kurse/boxen' },
-    ],
+    // `courses: true` → Header appends the featured courses from Sanity (useCourses).
+    courses: true,
+    children: [{ label: 'Kursplan & Angebote', to: '/kurse' }],
   },
   { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
   { label: 'Team', to: '/team' },
@@ -47,11 +44,11 @@ export const nav = [
 ]
 
 export const marqueeItems = [
-  '24/7 Training', 'Reha-Sport', 'AOK-Kurse', 'Boxen', 'Kickboxen',
+  '24/7 Training', 'Reha-Sport', 'Boxen', 'Kickboxen',
   'Personal Training', 'Kurse', 'Wellness', 'Community',
 ]
 
-export const heroStats = ['4 Standorte', '24/7 Training', 'Reha-Sport & AOK', 'Persönliche Betreuung']
+export const heroStats = ['4 Standorte', '24/7 Training', 'Reha-Sport', 'Persönliche Betreuung']
 
 // Offline safety net only. Sanity is the source of truth for studios — when it
 // answers, this list is NOT merged in (see src/lib/studios.js).
@@ -173,7 +170,7 @@ export const studioData = {
     },
     ausstattung: ['Kraftbereich', 'Cardio-Bereich', 'Kursraum', 'Reha-Sport Bereich', 'Getränkelounge', 'Umkleiden & Duschen', 'Aufenthaltsbereich'],
     kurse: [
-      { title: 'Reha-Sport & AOK', text: 'Gesundheitsorientiertes Training mit Betreuung und klarer Struktur.' },
+      { title: 'Reha-Sport', text: 'Gesundheitsorientiertes Training mit Betreuung und klarer Struktur.' },
       { title: 'Kurse für alle Level', text: 'Gruppentraining mit Motivation, Abwechslung und klarer Anleitung.' },
       { title: 'Kraft & Ausdauer', text: 'Modern ausgestattet und für jedes Trainingsziel geeignet.' },
     ],
@@ -235,13 +232,62 @@ export const pricingPlans = [
   },
 ]
 
+// {anzahl} → number of open studios (replaced at render time)
 export const mitgliedschaftFAQ = [
-  { q: 'Wie lange ist die Mindestlaufzeit?', a: 'Beim Flex-Tarif gibt es keine Mindestlaufzeit – du kannst monatlich kündigen. Standard und Premium haben eine Laufzeit von 12 Monaten.' },
+  { q: 'Wie lange ist die Mindestlaufzeit?', a: 'Das hängt vom Tarif ab: Es gibt monatlich kündbare Tarife sowie Tarife mit 12 oder 24 Monaten Laufzeit.' },
   { q: 'Kann ich den Tarif wechseln?', a: 'Ja. Ein Upgrade ist jederzeit möglich. Ein Wechsel in einen günstigeren Tarif ist nach Ablauf der Mindestlaufzeit möglich.' },
-  { q: 'Kann ich alle Standorte nutzen?', a: 'Mit Standard und Premium hast du Zugang zu allen vier Standorten. Der Flex-Tarif gilt für einen Standort deiner Wahl.' },
+  { q: 'Kann ich alle Standorte nutzen?', a: 'Mit deiner Mitgliedschaft kannst du alle {anzahl} Studios nutzen. Frag im Studio gern nach den Details deines Tarifs.' },
   { q: 'Was kostet ein Probetraining?', a: 'Das Probetraining ist kostenlos und unverbindlich. Du lernst das Studio kennen und wir besprechen gemeinsam, was zu dir passt.' },
   { q: 'Gibt es eine Aufnahmegebühr?', a: 'Bitte frag direkt im Studio nach – das können wir dir beim Probetraining genau sagen.' },
 ]
+
+export const mitgliedschaftBenefits = [
+  { title: '24/7 Zugang', text: 'Trainiere wann du willst – morgens, abends oder nachts. Dein Studio ist immer offen.' },
+  { title: '{anzahl} Standorte', text: 'Mit deiner Mitgliedschaft trainierst du in allen {anzahl} Studios ohne Aufpreis.' },
+  { title: 'Persönliche Betreuung', text: 'Wir kennen deinen Namen, dein Ziel und begleiten dich auf deinem Weg.' },
+  { title: 'Moderne Ausstattung', text: 'Hochwertige Geräte, gepflegte Anlagen und eine motivierende Atmosphäre.' },
+  { title: 'Community', text: 'Du trainierst nicht anonym. Du wirst Teil einer echten Fitness-Community.' },
+  { title: 'Kurse inklusive', text: 'Viele Gruppenangebote sind ohne Zusatzkosten dabei.' },
+]
+
+// ─── Kurse (fallback for Sanity "Kurs" / "Kursplan-Eintrag") ───────────────────
+export const courses = [
+  { title: 'Reha-Sport', category: 'Gesundheit', text: 'Gezielte Bewegung in der Gruppe. Ideal für den Wiedereinstieg nach Verletzungen, Operationen oder bei chronischen Beschwerden.', link: '/kurse/reha-sport', featured: true },
+  { title: 'Functional Training', category: 'Kraft & Ausdauer', text: 'Ganzkörpertraining mit Fokus auf Kraft, Stabilität, Koordination und Beweglichkeit.', link: '/probetraining' },
+  { title: 'Zirkeltraining', category: 'Kraft & Ausdauer', text: 'Effizient trainieren mit klaren Stationen und motivierender Struktur.', link: '/probetraining' },
+  { title: 'Boxen', category: 'Boxen', text: 'Technik, Kondition und mentale Stärke in einer intensiven Einheit.', link: '/kurse/boxen', featured: true, navLabel: 'Boxen & Kickboxen' },
+  { title: 'Kickboxen', category: 'Boxen', text: 'Dynamisches Training für Ausdauer, Kraft, Reaktion und Fokus.', link: '/kurse/boxen' },
+  { title: 'Personal Training', category: 'Individuell', text: 'Ein klarer Plan, persönliche Betreuung und Training, das exakt zu deinem Ziel passt.', link: '/kurse/personal-training', featured: true },
+]
+
+export const schedule = [
+  { day: 'Mo', time: '09:00', course: 'Functional Training', studio: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
+  { day: 'Mo', time: '18:30', course: 'Boxen', studio: 'Holdorf', level: 'Anfänger', trainer: 'Team FW' },
+  { day: 'Di', time: '19:00', course: 'Zirkeltraining', studio: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
+  { day: 'Mi', time: '09:30', course: 'Reha-Sport', studio: 'Goldenstedt', level: 'Einsteiger', trainer: 'Team FW' },
+  { day: 'Mi', time: '18:00', course: 'Kickboxen', studio: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
+  { day: 'Do', time: '10:00', course: 'Functional Training', studio: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
+  { day: 'Do', time: '19:30', course: 'Boxen', studio: 'Twistringen', level: 'Fortgeschrittene', trainer: 'Team FW' },
+  { day: 'Fr', time: '09:00', course: 'Zirkeltraining', studio: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
+  { day: 'Sa', time: '10:00', course: 'Functional Training', studio: 'Goldenstedt', level: 'Alle Level', trainer: 'Team FW' },
+]
+
+// ─── Unternehmen & Impressum (fallback for Sanity "Unternehmen & Impressum") ──
+// Source: Impressum on fitnessworldstudios.de (Sept 2026).
+export const company = {
+  companyName: 'E.M.A. Fitness World GmbH',
+  managingDirector: 'Erkan Asam',
+  street: 'Am Lagerweg 23',
+  zipCity: '49451 Holdorf',
+  country: 'Deutschland',
+  phone: '05494 / 980 12 63',
+  email: 'info@fitnessworld-vechta.de',
+  registerCourt: 'Amtsgericht Oldenburg',
+  registerNumber: 'HRB 217894',
+  taxNumber: '68/217/03667',
+  vatId: 'DE350911270',
+  responsible: 'Erkan Asam (info@fitnessworld-vechta.de)',
+}
 
 export const footer = {
   // {standorte} → number word of open studios, filled in by Footer.jsx
@@ -249,7 +295,8 @@ export const footer = {
   columns: [
     // `studios: true` → Footer fills the links from Sanity (useStudios).
     { title: 'Standorte', studios: true, links: [] },
-    { title: 'Leistungen', links: [['Kurse', '/kurse'], ['Reha-Sport & AOK', '/kurse/reha-sport'], ['Personal Training', '/kurse/personal-training'], ['Boxen & Kickboxen', '/kurse/boxen']] },
+    // `courses: true` → Footer fills the links from Sanity (useCourses).
+    { title: 'Leistungen', courses: true, links: [['Kurse', '/kurse']] },
     { title: 'Service', links: [['Probetraining', '/probetraining'], ['Mitgliedschaft', '/mitgliedschaft'], ['Team', '/team'], ['Jobs', '/jobs'], ['Kontakt', '/kontakt']] },
     { title: 'Rechtliches', links: [['Impressum', '/impressum'], ['Datenschutz', '/datenschutz'], ['AGB', '/agb'], ['Hausordnung', '/hausordnung']] },
   ],

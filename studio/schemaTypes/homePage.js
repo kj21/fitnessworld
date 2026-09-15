@@ -6,7 +6,7 @@ import { defineType, defineField } from 'sanity'
 // produces an empty section on the live site.
 
 const HEADLINE_HINT =
-  'Zeilenumbruch = neue Zeile. Ein Wort zwischen *Sternchen* wird blau, z.B. "Alles für *dein Ziel.*"'
+  'Zeilenumbruch = neue Zeile. Ein Wort zwischen *Sternchen* wird blau, z.B. "Alles für *dein Ziel.*" {anzahl} = Zahl der geöffneten Studios, z.B. "{anzahl} Standorte."'
 
 const ICONS = ['dumbbell', 'pulse', 'heart', 'glove', 'users', 'target']
 
@@ -95,7 +95,7 @@ export default defineType({
     // Zahlen
     defineField({
       name: 'numbers', title: 'Zahlen (4 Stück)', type: 'array', group: 'numbers',
-      description: 'Leer lassen → Standard-Zahlen; "Standorte" wird dann automatisch gezählt.',
+      description: 'Leer lassen → Standard-Zahlen; "Standorte" wird dann automatisch gezählt. Tipp: Bei "Standorte" die Zahl leer lassen, dann zählt die Website selbst.',
       of: [{
         type: 'object',
         fields: [
