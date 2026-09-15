@@ -104,10 +104,11 @@ export default function Kontakt() {
             {studios.map((s) => (
               <div key={s.name} className="studio-contact-card">
                 <strong>{s.name}</strong>
-                <p>{s.addr}</p>
-                <p><a href={`tel:${s.tel.replace(/\s/g, '')}`}>{s.tel}</a></p>
-                <p><a href={`mailto:${s.email}`}>{s.email}</a></p>
-                <p className="muted" style={{ fontSize: '.88rem' }}>{s.hours}</p>
+                {/* Every field is optional in Sanity — only render what's filled in. */}
+                {s.addr && <p>{s.addr}</p>}
+                {s.tel && <p><a href={`tel:${String(s.tel).replace(/[^\d+]/g, '')}`}>{s.tel}</a></p>}
+                {s.email && <p><a href={`mailto:${String(s.email).trim()}`}>{s.email}</a></p>}
+                {s.hours && <p className="muted" style={{ fontSize: '.88rem' }}>{s.hours}</p>}
               </div>
             ))}
           </Reveal>
