@@ -42,10 +42,11 @@ export function normalizeStudio(s) {
   const slug = slugify(rawSlug.replace(SOON_RE, ''))
   if (!slug) return null
   const comingSoon = Boolean(s.comingSoon) || SOON_RE.test(rawSlug)
+  const clean = (arr) => (Array.isArray(arr) ? arr.map((f) => String(f || '').trim()).filter(Boolean) : [])
   const features =
-    (Array.isArray(s.cardFeatures) && s.cardFeatures.length && s.cardFeatures) ||
-    (Array.isArray(s.features) && s.features.length && s.features) ||
-    (Array.isArray(s.keyFacts) && s.keyFacts.slice(0, 4)) || []
+    (clean(s.cardFeatures).length && clean(s.cardFeatures)) ||
+    (clean(s.features).length && clean(s.features)) ||
+    clean(s.keyFacts).slice(0, 4)
   return {
     ...s,
     slug,
@@ -56,8 +57,8 @@ export function normalizeStudio(s) {
     img: s.img || null,
     cardImg: s.cardImg || s.img || `studios/${slug}-card.jpg`,
     features,
-    keyFacts: Array.isArray(s.keyFacts) ? s.keyFacts : [],
-    ausstattung: Array.isArray(s.ausstattung) ? s.ausstattung : [],
+    keyFacts: clean(s.keyFacts),
+    ausstattung: clean(s.ausstattung),
     kurse: Array.isArray(s.kurse) ? s.kurse.filter((k) => k && k.title) : [],
     sortOrder: typeof s.sortOrder === 'number' ? s.sortOrder : null,
   }
