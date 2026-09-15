@@ -2,6 +2,7 @@ import { Routes, Route, useLocation, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ErrorBoundary from './components/ErrorBoundary'
 
 // Sticky bottom CTA — only visible on mobile (≤860px via CSS), hidden on /probetraining
 function StickyCTA() {
@@ -37,10 +38,12 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
       <Header />
+      <ErrorBoundary resetKey={pathname}>
       <Routes>
         <Route path="/" element={<Home />} />
         {/* Kurse */}
@@ -67,6 +70,7 @@ export default function App() {
         {/* Fallback */}
         <Route path="*" element={<Placeholder />} />
       </Routes>
+      </ErrorBoundary>
       <Footer />
       <StickyCTA />
     </>
