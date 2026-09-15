@@ -7,7 +7,9 @@
  * Run from studio/ with your Sanity login (no token needed):
  *   npx sanity exec scripts/seed-content.mjs --with-user-token
  */
-import { getCliClient } from 'sanity/cli'
+// sanity/cli is CommonJS in this studio setup, so load it via require.
+import { createRequire } from 'node:module'
+const { getCliClient } = createRequire(import.meta.url)('sanity/cli')
 
 const client = getCliClient({ apiVersion: '2024-01-01' })
 
