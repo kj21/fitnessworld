@@ -3,31 +3,8 @@ import Reveal from '../components/Reveal'
 import Button from '../components/Button'
 import FAQAccordion from '../components/FAQAccordion'
 import PageHero from '../components/PageHero'
-
-const courses = [
-  { cat: 'Gesundheit', title: 'Reha-Sport', text: 'Gezielte Bewegung in der Gruppe. Ideal für den Wiedereinstieg nach Verletzungen, Operationen oder bei chronischen Beschwerden.', to: '/kurse/reha-sport' },
-  { cat: 'Gesundheit', title: 'AOK Rücken-Fit', text: 'Ein strukturierter Kurs für mehr Stabilität, Beweglichkeit und ein besseres Körpergefühl im Alltag.', to: '/kurse/reha-sport' },
-  { cat: 'Kraft & Ausdauer', title: 'Functional Training', text: 'Ganzkörpertraining mit Fokus auf Kraft, Stabilität, Koordination und Beweglichkeit.', to: '/probetraining' },
-  { cat: 'Kraft & Ausdauer', title: 'Zirkeltraining', text: 'Effizient trainieren mit klaren Stationen und motivierender Struktur.', to: '/probetraining' },
-  { cat: 'Boxen', title: 'Boxen', text: 'Technik, Kondition und mentale Stärke in einer intensiven Einheit.', to: '/kurse/boxen' },
-  { cat: 'Boxen', title: 'Kickboxen', text: 'Dynamisches Training für Ausdauer, Kraft, Reaktion und Fokus.', to: '/kurse/boxen' },
-  { cat: 'Individuell', title: 'Personal Training', text: 'Ein klarer Plan, persönliche Betreuung und Training, das exakt zu deinem Ziel passt.', to: '/kurse/personal-training' },
-]
-
-const filters = ['Alle', 'Gesundheit', 'Kraft & Ausdauer', 'Boxen', 'Individuell']
-
-const schedule = [
-  { tag: 'Mo', uhrzeit: '09:00', kurs: 'Functional Training', standort: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Mo', uhrzeit: '18:30', kurs: 'Boxen', standort: 'Holdorf', level: 'Anfänger', trainer: 'Team FW' },
-  { tag: 'Di', uhrzeit: '10:00', kurs: 'AOK Rücken-Fit', standort: 'Goldenstedt', level: 'Einsteiger', trainer: 'Team FW' },
-  { tag: 'Di', uhrzeit: '19:00', kurs: 'Zirkeltraining', standort: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Mi', uhrzeit: '09:30', kurs: 'Reha-Sport', standort: 'Goldenstedt', level: 'Einsteiger', trainer: 'Team FW' },
-  { tag: 'Mi', uhrzeit: '18:00', kurs: 'Kickboxen', standort: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Do', uhrzeit: '10:00', kurs: 'Functional Training', standort: 'Twistringen', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Do', uhrzeit: '19:30', kurs: 'Boxen', standort: 'Twistringen', level: 'Fortgeschrittene', trainer: 'Team FW' },
-  { tag: 'Fr', uhrzeit: '09:00', kurs: 'Zirkeltraining', standort: 'Holdorf', level: 'Alle Level', trainer: 'Team FW' },
-  { tag: 'Sa', uhrzeit: '10:00', kurs: 'Functional Training', standort: 'Goldenstedt', level: 'Alle Level', trainer: 'Team FW' },
-]
+import { Link } from 'react-router-dom'
+import { useCourses, useSchedule } from '../lib/content.js'
 
 const faq = [
   { q: 'Muss ich Mitglied sein, um einen Kurs zu testen?', a: 'Nein. Du kannst viele Angebote im Rahmen eines Probetrainings kennenlernen.' },
@@ -37,10 +14,13 @@ const faq = [
 
 export default function Kurse() {
   const [active, setActive] = useState('Alle')
+  const { courses, categories } = useCourses()
+  const { schedule } = useSchedule()
+  const filters = ['Alle', ...categories]
 
   useEffect(() => { document.title = 'Kurse bei Fitness World Studios | Reha, Boxen, Functional & mehr' }, [])
 
-  const visible = active === 'Alle' ? courses : courses.filter((c) => c.cat === active)
+  const visible = active === 'Alle' || !categories.includes(active) ? courses : courses.filter((c) => c.category === active)
 
   return (
     <main>
@@ -77,14 +57,14 @@ export default function Kurse() {
           </Reveal>
           <div className="course-grid">
             {visible.map((c, i) => (
-              <Reveal key={c.title} delay={(i % 3) * 0.05}>
+              <Reveal key={c._id || c.title} delay={(i % 3) * 0.05}>
                 <article className="course-card">
-                  <span className="course-cat">{c.cat}</span>
+                  <span className="course-cat">{c.category}</span>
                   <h3>{c.title}</h3>
                   <p>{c.text}</p>
-                  <a href={c.to} className="textlink">
-                    Mehr erfahren <span className="arr">→</span>
-                  </a>
+                  {/^https?:/.test(c.link)
+                    ? <a href={c.link} className="textlink" target="_blank" rel="noopener noreferrer">Mehr erfahren <span className="arr">→</span></a>
+                    : <Link to={c.link} className="textlink">Mehr erfahren <span className="arr">→</span></Link>}
                 </article>
               </Reveal>
             ))}
@@ -117,12 +97,12 @@ export default function Kurse() {
                 </thead>
                 <tbody>
                   {schedule.map((row, i) => (
-                    <tr key={i}>
-                      <td><strong>{row.tag}</strong></td>
-                      <td>{row.uhrzeit}</td>
-                      <td>{row.kurs}</td>
-                      <td>{row.standort}</td>
-                      <td><span className="level-badge">{row.level}</span></td>
+                    <tr key={row._id || i}>
+                      <td><strong>{row.day}</strong></td>
+                      <td>{row.time}</td>
+                      <td>{row.course}</td>
+                      <td>{row.studio}</td>
+                      <td>{row.level && <span className="level-badge">{row.level}</span>}</td>
                       <td>{row.trainer}</td>
                     </tr>
                   ))}

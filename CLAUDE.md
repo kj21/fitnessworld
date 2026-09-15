@@ -25,11 +25,16 @@ The homepage is fully built as the reference implementation — match its patter
     `testimonial`. Every Sanity field is optional — `mergeHomePage()` in `src/lib/home.js`
     layers it over `homeContent()`. Headline convention: `\n` = new line, `*word*` = blue.
   - Studio count ("3 Standorte") = published studios that are not `comingSoon`.
+  - Kurse, Kursplan, Mitgliedschaft-Seite (benefits + FAQ), Unternehmen & Impressum and
+    Rechtstexte come from Sanity via the hooks in `src/lib/content.js`. Lists (courses,
+    schedule) are Sanity-authoritative like studios; singletons merge field-by-field
+    over the site.js fallback. `{anzahl}` in Startseite / Mitgliedschaft text = open studios.
+  - AOK courses are discontinued — don't reintroduce AOK copy.
 
 ## Non-negotiables
 
 1. Accent color is exactly **`#1A91D5`** (`fw-blue`). No neon green. No other accent.
-2. Use the **real logo** `public/logo/fitness-world-logo.svg` (rendered inline via `src/components/Logo.jsx`). Never redraw or recolor it.
+2. Use the **real logo** `public/logo/fitness-world-logo.svg` (rendered inline via `src/components/Logo.jsx`). Never redraw it. The "F" is white (client request, Sept 2026) because the logo always sits on navy.
 3. Blue is used **sparingly**: CTAs, eyebrows, icons, lines, hover, active states. Surfaces stay navy/white.
 4. Mobile-first. The sticky `Probetraining` CTA bar (`.mcta`) shows on mobile.
 5. No dead links — every route in `src/data/site.js` resolves (unbuilt ones render `Placeholder`); studio pages resolve via `/:slug`.

@@ -24,12 +24,12 @@ const forWhom = [
 ]
 
 export default function RehaSport() {
-  useEffect(() => { document.title = 'Reha-Sport & AOK-Kurse | Fitness World Studios' }, [])
+  useEffect(() => { document.title = 'Reha-Sport | Fitness World Studios' }, [])
 
   return (
     <main>
       <PageHero
-        eyebrow="Reha-Sport & AOK"
+        eyebrow="Reha-Sport"
         title="BEWEGUNG, DIE DICH WIEDER STÄRKER MACHT."
         sub="Unsere gesundheitsorientierten Kurse unterstützen dich dabei, sicher in Bewegung zu kommen, Beschwerden vorzubeugen und neue Stabilität aufzubauen."
         primaryCta="Beratungstermin vereinbaren"
@@ -88,29 +88,6 @@ export default function RehaSport() {
         </div>
       </section>
 
-      {/* AOK RÜCKEN-FIT */}
-      <section className="section section--white">
-        <div className="wrap">
-          <Reveal>
-            <p className="eyebrow">AOK-Kurs</p>
-            <h2 className="display">AOK <span className="blue">RÜCKEN-FIT.</span></h2>
-            <p className="lede" style={{ margin: '22px 0 28px' }}>
-              Der AOK Rücken-Fit Kurs unterstützt dich dabei, Rücken, Rumpf und Haltung gezielt zu stärken. Der Kurs ist ideal für alle, die Beschwerden vorbeugen oder mehr Stabilität im Alltag aufbauen möchten.
-            </p>
-            <ul className="check-list">
-              {['8 Wochen', '1× pro Woche', 'Geschlossene Gruppe', 'Klare Übungsstruktur', 'Geeignet für Einsteiger'].map((item) => (
-                <li key={item}>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <circle cx="9" cy="9" r="9" fill="var(--fw-blue-soft)" />
-                    <path d="M5 9l3 3 5-5" stroke="var(--fw-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
 
       {/* VERTRAUEN */}
       <section className="section section--darker">

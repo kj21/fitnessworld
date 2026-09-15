@@ -66,7 +66,36 @@ export const HOME_PAGE_QUERY = `
   }
 `
 
+// Kurse (cards on /kurse, nav dropdown, footer column)
+export const COURSES_QUERY = `
+  *[_type == "course" && active != false] | order(sortOrder asc, _createdAt asc) {
+    _id, title, category, text, link, featured, navLabel
+  }
+`
+
+// Wochenplan on /kurse
+export const SCHEDULE_QUERY = `
+  *[_type == "scheduleEntry" && active != false] {
+    _id, day, time, course, studio, level, trainer
+  }
+`
+
+// Mitgliedschaft page copy (singleton)
+export const MEMBERSHIP_PAGE_QUERY = `
+  *[_type == "membershipPage"][0] { heroSub, pricingNote, benefits[]{ title, text }, faq[]{ q, a } }
+`
+
+// Unternehmen & Impressum (singleton)
+export const SITE_SETTINGS_QUERY = `
+  *[_type == "siteSettings"][0] {
+    companyName, managingDirector, street, zipCity, country, phone, email,
+    registerCourt, registerNumber, taxNumber, vatId, responsible
+  }
+`
+
+// Rechtstexte (Impressum-Zusatz, Datenschutz, AGB, Hausordnung)
+export const LEGAL_PAGES_QUERY = `
+  *[_type == "legalPage"] { page, title, body }
+`
+
 // ─── Phase 2 (add later) ──────────────────────────────────────────────────────
-// export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{ ... }`
-// export const COURSES_QUERY        = `*[_type == "course"] | order(sortOrder asc){ ... }`
-// export const SCHEDULE_QUERY       = `*[_type == "scheduleEntry"] | order(sortOrder asc){ ... }`

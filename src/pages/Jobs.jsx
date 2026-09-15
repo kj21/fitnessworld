@@ -1,3 +1,5 @@
+import { useStudios } from '../lib/studios.js'
+import { numberWord } from '../data/site'
 import { useEffect } from 'react'
 import Reveal from '../components/Reveal'
 import Button from '../components/Button'
@@ -31,6 +33,8 @@ const jobsFallback = [
 
 export default function Jobs() {
   const { data: jobs } = useSanityData(JOB_LISTINGS_QUERY, jobsFallback)
+  const { studios } = useStudios()
+  const openStudios = studios.filter((s) => !s.comingSoon).length
   useEffect(() => { document.title = 'Stellenangebote | Fitness World Studios' }, [])
 
   return (
@@ -49,7 +53,7 @@ export default function Jobs() {
           <Reveal className="head-row">
             <div>
               <p className="eyebrow">Warum Fitness World?</p>
-              <h2 className="display">Ein Team.<br /><span className="blue">Vier Standorte.</span></h2>
+              <h2 className="display">Ein Team.<br /><span className="blue">{numberWord(openStudios)} Standorte.</span></h2>
             </div>
           </Reveal>
           <div className="steps-grid" style={{ marginTop: 0 }}>

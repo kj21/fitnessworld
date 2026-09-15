@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import { footer, brand, numberWord } from '../data/site'
 import { useStudios } from '../lib/studios.js'
+import { useCourses } from '../lib/content.js'
 
 function Social({ label, children }) {
   return <a href="#" aria-label={label}>{children}</a>
@@ -9,13 +10,17 @@ function Social({ label, children }) {
 
 export default function Footer() {
   const { studios } = useStudios()
+  const { featured } = useCourses()
   const openCount = studios.filter((s) => !s.comingSoon).length
   const text = footer.text.replace('{standorte}', numberWord(openCount).toLowerCase())
-  const columns = footer.columns.map((col) =>
-    col.studios
-      ? { ...col, links: studios.map((s) => [s.comingSoon ? `${s.name} (demnächst)` : s.name, s.to]) }
-      : col
-  )
+  const columns = footer.columns.map((col) => {
+    if (col.studios) return { ...col, links: studios.map((s) => [s.comingSoon ? `${s.name} (demnächst)` : s.name, s.to]) }
+    if (col.courses) {
+      const own = new Set(col.links.map(([, to]) => to))
+      return { ...col, links: [...col.links, ...featured.filter((f) => !own.has(f.to)).map((f) => [f.label, f.to])] }
+    }
+    return col
+  })
   return (
     <>
       <footer className="footer">

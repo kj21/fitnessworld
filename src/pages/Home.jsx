@@ -13,6 +13,7 @@ import { useSanityData } from '../hooks/useSanityData.js'
 import { HOME_PAGE_QUERY, TESTIMONIALS_QUERY } from '../lib/queries.js'
 import { mergeHomePage } from '../lib/home.js'
 import { useStudios } from '../lib/studios.js'
+import { fillCount } from '../lib/content.js'
 
 function setMetaDescription(content) {
   if (!content) return
@@ -36,7 +37,8 @@ export default function Home() {
   const { data: testimonials } = useSanityData(TESTIMONIALS_QUERY, testimonialsFallback)
 
   const openCount = studios.filter((s) => !s.comingSoon).length
-  const c         = mergeHomePage(homeContent(openCount), sanityHome)
+  // {anzahl} in any Startseite text → current number of open studios
+  const c         = fillCount(mergeHomePage(homeContent(openCount), sanityHome), openCount)
 
   useEffect(() => {
     document.title = c.seoTitle
