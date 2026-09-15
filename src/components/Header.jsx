@@ -27,6 +27,20 @@ function useNavItems() {
   })
 }
 
+const isExternal = (to) => /^https?:\/\//.test(String(to || ''))
+
+/** Router link for internal paths, plain <a> in a new tab for external URLs. */
+function NavLink({ to, children, ...rest }) {
+  if (isExternal(to)) {
+    return (
+      <a href={to} target="_blank" rel="noopener noreferrer" {...rest}>
+        {children}<span className="visually-hidden"> (öffnet in neuem Tab)</span>
+      </a>
+    )
+  }
+  return <Link to={to} {...rest}>{children}</Link>
+}
+
 function Brand({ onClick }) {
   return (
     <Link className="brand" to="/" aria-label="Fitness World Studios Startseite" onClick={onClick}>
@@ -67,12 +81,12 @@ export default function Header() {
           <nav className="nav" aria-label="Hauptnavigation">
             {items.map((item) => (
               <div className={`nav__item ${item.children ? 'has-menu' : ''}`} key={item.label}>
-                <Link to={item.to}>
+                <NavLink to={item.to}>
                   {item.label}{item.children && <span className="chev">▾</span>}
-                </Link>
+                </NavLink>
                 {item.children?.length > 0 && (
                   <div className="submenu">
-                    {item.children.map((c) => <Link key={c.to} to={c.to}>{c.label}</Link>)}
+                    {item.children.map((c) => <NavLink key={c.to} to={c.to}>{c.label}</NavLink>)}
                   </div>
                 )}
               </div>
@@ -98,7 +112,7 @@ export default function Header() {
       <div id="mobileMenu" className={`mobile ${open ? 'open' : ''}`} aria-hidden={!open}>
         {items.map((item) => (
           <div key={item.label}>
-            <Link to={item.to} onClick={() => setOpen(false)}>{item.label}</Link>
+            <NavLink to={item.to} onClick={() => setOpen(false)}>{item.label}</NavLink>
             {item.children && (
               <Link className="sub" to={item.to} onClick={() => setOpen(false)}>
                 {item.children.map((c) => c.label).join(' · ')}

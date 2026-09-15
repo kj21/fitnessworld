@@ -37,6 +37,8 @@ export const nav = [
     courses: true,
     children: [{ label: 'Kursplan & Angebote', to: '/kurse' }],
   },
+  // External link (http…) → opens in a new tab, see NavLink in Header.jsx
+  { label: 'Sauna & Spa', to: 'https://sauna-spa-twistringen.de/' },
   { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
   { label: 'Team', to: '/team' },
   { label: 'Blog', to: '/blog' },
