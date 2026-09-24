@@ -107,6 +107,7 @@ export const SERVICE_PAGES_QUERY = `
     sections[] {
       _type, _key, tone, eyebrow, headline, text, items, numbered,
       "image": image.asset->url,
+      imagePlaceholder,
       leftEyebrow, leftTitle, leftItems, rightEyebrow, rightTitle, rightItems,
       button
     }

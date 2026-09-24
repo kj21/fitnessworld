@@ -91,7 +91,7 @@ const withKeys = (value) => {
 
 // Fields that only exist in the code fallback (placeholder image paths) are
 // dropped — in Sanity the editor uploads a real image instead.
-const stripLocal = ({ heroImageLabel, imageLabel, imageAlt, ...rest }) => rest
+const stripLocal = ({ heroImageLabel, imageAlt, ...rest }) => rest
 
 const servicePageDocs = Object.values(servicePages).map((page) => ({
   _id: `servicePage-${page.slug}`,
@@ -112,5 +112,15 @@ for (const doc of [...courses, ...schedule, membershipPage, siteSettings, ...ser
   for (const key of Object.keys(doc)) if (doc[key] === undefined) delete doc[key]
   tx.createIfNotExists(doc)
 }
+// Documents seeded before the placeholder field existed: fill it in without
+// touching anything the editor has changed.
+for (const doc of servicePageDocs) {
+  const patch = {}
+  for (const section of doc.sections || []) {
+    if (section.imagePlaceholder) patch[`sections[_key=="${section._key}"].imagePlaceholder`] = section.imagePlaceholder
+  }
+  if (Object.keys(patch).length) tx.patch(doc._id, (p) => p.setIfMissing(patch))
+}
+
 const res = await tx.commit()
 console.log(`Done — transaction ${res.transactionId}, ${res.results.length} document(s) checked (existing ones untouched).`)
