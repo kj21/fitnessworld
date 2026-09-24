@@ -30,6 +30,13 @@ The homepage is fully built as the reference implementation — match its patter
     schedule) are Sanity-authoritative like studios; singletons merge field-by-field
     over the site.js fallback. `{anzahl}` in Startseite / Mitgliedschaft text = open studios.
   - AOK courses are discontinued — don't reintroduce AOK copy.
+  - **Every page's copy lives in Sanity.** Leistungs-Seiten (Reha-Sport, Boxen,
+    Personal Training) are built from re-orderable section blocks (`servicePage`,
+    rendered by `src/components/Sections.jsx`); the remaining hero / intro / FAQ /
+    CTA text is `pageCopy`; the magazine is `blogPost` with `/blog/:slug` articles.
+    Fallbacks for all of it live in `src/data/pages.js` — keep them in sync when
+    changing a page, they are what renders if Sanity is empty or unreachable.
+  - Don't hardcode new page copy. Add a field or a section block instead.
 
 ## Non-negotiables
 

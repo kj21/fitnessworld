@@ -11,12 +11,13 @@ import scheduleEntry  from './scheduleEntry.js'
 import membershipPage from './membershipPage.js'
 import siteSettings   from './siteSettings.js'
 import legalPage      from './legalPage.js'
+import servicePage    from './servicePage.js'
+import pageCopy       from './pageCopy.js'
+import blogPost       from './blogPost.js'
 
 // Phase 2 (import and add to array when ready)
 
 // Phase 3
-// import blogPost       from './blogPost.js'
-// import servicePage    from './servicePage.js'
 
 export const schemaTypes = [
   studioLocation,
@@ -31,4 +32,7 @@ export const schemaTypes = [
   course,
   scheduleEntry,
   legalPage,
+  servicePage,
+  pageCopy,
+  blogPost,
 ]

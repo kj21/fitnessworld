@@ -19,14 +19,13 @@ function StickyCTA() {
 import Home from './pages/Home'
 import StudioRoute from './pages/StudioRoute'
 import Kurse from './pages/Kurse'
-import RehaSport from './pages/RehaSport'
-import PersonalTraining from './pages/PersonalTraining'
-import Boxen from './pages/Boxen'
+import ServicePage from './pages/ServicePage'
 import Mitgliedschaft from './pages/Mitgliedschaft'
 import Probetraining from './pages/Probetraining'
 import Team from './pages/Team'
 import Jobs from './pages/Jobs'
 import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 import Kontakt from './pages/Kontakt'
 import Legal from './pages/Legal'
 import Placeholder from './pages/Placeholder'
@@ -48,9 +47,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         {/* Kurse */}
         <Route path="/kurse"                  element={<Kurse />} />
-        <Route path="/kurse/reha-sport"       element={<RehaSport />} />
-        <Route path="/kurse/personal-training" element={<PersonalTraining />} />
-        <Route path="/kurse/boxen"            element={<Boxen />} />
+        {/* Leistungs-Seiten: content + section order come from Sanity */}
+        <Route path="/kurse/reha-sport"        element={<ServicePage slug="reha-sport" />} />
+        <Route path="/kurse/personal-training" element={<ServicePage slug="personal-training" />} />
+        <Route path="/kurse/boxen"             element={<ServicePage slug="boxen" />} />
         {/* Service */}
         <Route path="/mitgliedschaft" element={<Mitgliedschaft />} />
         <Route path="/probetraining"  element={<Probetraining />} />
@@ -58,6 +58,7 @@ export default function App() {
         <Route path="/team"    element={<Team />} />
         <Route path="/jobs"    element={<Jobs />} />
         <Route path="/blog"    element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/kontakt" element={<Kontakt />} />
         {/* Legal */}
         <Route path="/impressum"   element={<Legal />} />
