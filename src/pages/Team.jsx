@@ -4,6 +4,9 @@ import Button from '../components/Button'
 import PageHero from '../components/PageHero'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { TEAM_MEMBERS_QUERY } from '../lib/queries.js'
+import { usePageCopy } from '../lib/content.js'
+import PageCta from '../components/PageCta'
+import Headline from '../components/Headline'
 
 // Fallback — used while Sanity loads or if credentials are not yet configured
 const teamFallback = [
@@ -17,14 +20,15 @@ const teamFallback = [
 
 export default function Team() {
   const { data: team } = useSanityData(TEAM_MEMBERS_QUERY, teamFallback)
-  useEffect(() => { document.title = 'Unser Team | Fitness World Studios' }, [])
+  const copy = usePageCopy('team')
+  useEffect(() => { document.title = copy.seoTitle }, [copy.seoTitle])
 
   return (
     <main>
       <PageHero
-        eyebrow="Unser Team"
-        title="MENSCHEN, DIE FÜR TRAINING BRENNEN."
-        sub="Hinter Fitness World stehen Trainerinnen und Trainer, die ihren Job ernst nehmen und dich nicht vergessen, sobald du durch die Tür gehst."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        sub={copy.sub}
         img="/images/team/team-hero.jpg"
         alt="Das Team von Fitness World Studios"
       />
@@ -33,14 +37,14 @@ export default function Team() {
       <section className="section section--light">
         <div className="wrap split">
           <Reveal>
-            <p className="eyebrow">Wer wir sind</p>
-            <h2 className="display">DEIN TRAINING<br />IST <span className="blue">UNSER JOB.</span></h2>
-            <p className="lede" style={{ marginTop: 22 }}>
-              Wir sind kein anonymes Fitnessstudio. Wir sind ein Team, das sich Zeit nimmt, deine Ziele kennt und dich auf deinem Weg begleitet. Ob erster Tag oder hundertster Besuch – wir sind da.
-            </p>
-            <div style={{ marginTop: 28 }}>
-              <Button to="/probetraining">Uns kennenlernen</Button>
-            </div>
+            {copy.introEyebrow && <p className="eyebrow">{copy.introEyebrow}</p>}
+            {copy.introHeadline && <h2 className="display"><Headline text={copy.introHeadline} /></h2>}
+            {copy.introText && <p className="lede" style={{ marginTop: 22 }}>{copy.introText}</p>}
+            {copy.introCta?.label && (
+              <div style={{ marginTop: 28 }}>
+                <Button to={copy.introCta.to || '/probetraining'}>{copy.introCta.label}</Button>
+              </div>
+            )}
           </Reveal>
           <Reveal delay={0.1}>
             <div className="split__media imgph" role="img" aria-label="Trainer bei Fitness World Studios">
@@ -75,19 +79,7 @@ export default function Team() {
         </div>
       </section>
 
-      {/* JOBS CTA */}
-      <section className="section section--dark">
-        <div className="wrap">
-          <Reveal className="finalcta">
-            <div className="finalcta__in">
-              <p className="eyebrow">Karriere</p>
-              <h2 className="display">WERDE TEIL<br /><span className="blue">DES TEAMS.</span></h2>
-              <p>Du teilst unsere Leidenschaft für Training und Menschen? Dann schau dir unsere offenen Stellen an.</p>
-              <Button to="/jobs">Stellenangebote ansehen</Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageCta copy={copy} />
     </main>
   )
 }

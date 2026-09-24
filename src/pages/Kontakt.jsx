@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal'
 import PageHero from '../components/PageHero'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { STUDIO_CONTACTS_QUERY } from '../lib/queries.js'
+import { usePageCopy } from '../lib/content.js'
 
 const studiosFallback = [
   { name: 'Holdorf', addr: 'Musterstraße 1, 49451 Holdorf', tel: '+49 5494 000000', email: 'holdorf@fitness-world-studios.de', hours: 'Mo–Fr 06:00–22:00, Sa–So 08:00–20:00, 24/7 Kartenzugang' },
@@ -12,11 +13,12 @@ const studiosFallback = [
 
 export default function Kontakt() {
   const { data: studios } = useSanityData(STUDIO_CONTACTS_QUERY, studiosFallback)
+  const copy = usePageCopy('kontakt')
   const [form, setForm] = useState({ name: '', email: '', nachricht: '', datenschutz: false })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
-  useEffect(() => { document.title = 'Kontakt | Fitness World Studios' }, [])
+  useEffect(() => { document.title = copy.seoTitle }, [copy.seoTitle])
 
   const set = (field) => (e) => {
     const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -43,9 +45,9 @@ export default function Kontakt() {
   return (
     <main>
       <PageHero
-        eyebrow="Kontakt"
-        title="WIR SIND FÜR DICH DA."
-        sub="Frage, Feedback oder einfach mal hallo sagen – wir freuen uns von dir zu hören."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        sub={copy.sub}
         img="/images/contact/kontakt-hero.jpg"
         alt="Kontakt Fitness World Studios"
       />

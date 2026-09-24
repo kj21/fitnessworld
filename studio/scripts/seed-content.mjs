@@ -1,5 +1,6 @@
 /**
- * Seed Kurse, Kursplan, Mitgliedschaft-Seite and Unternehmen & Impressum.
+ * Seed Kurse, Kursplan, Mitgliedschaft-Seite, Unternehmen & Impressum,
+ * Leistungs-Seiten and Seitentexte.
  *
  * Safe on the live dataset: every document is created with createIfNotExists,
  * so anything that already exists (or was edited) is left untouched.
@@ -9,6 +10,7 @@
  */
 // sanity/cli is CommonJS in this studio setup, so load it via require.
 import { createRequire } from 'node:module'
+import { servicePages, pageCopy } from '../../src/data/pages.js'
 const { getCliClient } = createRequire(import.meta.url)('sanity/cli')
 
 const client = getCliClient({ apiVersion: '2024-01-01' })
@@ -75,8 +77,38 @@ const siteSettings = {
   responsible: 'Erkan Asam (info@fitnessworld-vechta.de)',
 }
 
+// ─── Leistungs-Seiten & Seitentexte (aus src/data/pages.js) ──────────────────
+// Sanity needs a _key on every array item; the fallback data only has them on
+// the top-level sections.
+let keySeq = 0
+const withKeys = (value) => {
+  if (Array.isArray(value)) return value.map((v) => (v && typeof v === 'object' ? { _key: v._key || `k${++keySeq}`, ...withKeys(v) } : v))
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withKeys(v)]))
+  }
+  return value
+}
+
+// Fields that only exist in the code fallback (placeholder image paths) are
+// dropped — in Sanity the editor uploads a real image instead.
+const stripLocal = ({ heroImageLabel, imageLabel, imageAlt, ...rest }) => rest
+
+const servicePageDocs = Object.values(servicePages).map((page) => ({
+  _id: `servicePage-${page.slug}`,
+  _type: 'servicePage',
+  ...stripLocal(withKeys(page)),
+  sections: (withKeys(page.sections) || []).map(stripLocal),
+}))
+
+const pageCopyDocs = Object.entries(pageCopy).map(([name, copy]) => ({
+  _id: `pageCopy-${name}`,
+  _type: 'pageCopy',
+  page: name,
+  ...withKeys(copy),
+}))
+
 const tx = client.transaction()
-for (const doc of [...courses, ...schedule, membershipPage, siteSettings]) {
+for (const doc of [...courses, ...schedule, membershipPage, siteSettings, ...servicePageDocs, ...pageCopyDocs]) {
   for (const key of Object.keys(doc)) if (doc[key] === undefined) delete doc[key]
   tx.createIfNotExists(doc)
 }

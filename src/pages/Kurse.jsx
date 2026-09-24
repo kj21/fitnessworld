@@ -4,34 +4,31 @@ import Button from '../components/Button'
 import FAQAccordion from '../components/FAQAccordion'
 import PageHero from '../components/PageHero'
 import { Link } from 'react-router-dom'
-import { useCourses, useSchedule } from '../lib/content.js'
+import { useCourses, useSchedule, usePageCopy } from '../lib/content.js'
+import PageCta from '../components/PageCta'
 
-const faq = [
-  { q: 'Muss ich Mitglied sein, um einen Kurs zu testen?', a: 'Nein. Du kannst viele Angebote im Rahmen eines Probetrainings kennenlernen.' },
-  { q: 'Sind die Kurse für Anfänger geeignet?', a: 'Ja. Viele Kurse sind für Einsteiger geeignet. Bei intensiveren Angeboten sagen wir dir vorher, was du mitbringen solltest.' },
-  { q: 'Muss ich mich anmelden?', a: 'Für viele Kurse ist eine Anmeldung sinnvoll, damit wir die Gruppengröße planen können.' },
-]
 
 export default function Kurse() {
   const [active, setActive] = useState('Alle')
   const { courses, categories } = useCourses()
   const { schedule } = useSchedule()
+  const copy = usePageCopy('kurse')
   const filters = ['Alle', ...categories]
 
-  useEffect(() => { document.title = 'Kurse bei Fitness World Studios | Reha, Boxen, Functional & mehr' }, [])
+  useEffect(() => { document.title = copy.seoTitle }, [copy.seoTitle])
 
   const visible = active === 'Alle' || !categories.includes(active) ? courses : courses.filter((c) => c.category === active)
 
   return (
     <main>
       <PageHero
-        eyebrow="Kurse & Angebote"
-        title="FINDE DEN KURS, DER ZU DIR PASST."
-        sub="Ob Gesundheit, Kraft, Ausdauer oder Technik: Unsere Kurse geben dir Struktur, Motivation und die richtige Unterstützung."
-        primaryCta="Kursplan ansehen"
-        primaryTo="#kursplan"
-        secondaryCta="Probetraining vereinbaren"
-        secondaryTo="/probetraining"
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        sub={copy.sub}
+        primaryCta={copy.primaryCta?.label}
+        primaryTo={copy.primaryCta?.to}
+        secondaryCta={copy.secondaryCta?.label}
+        secondaryTo={copy.secondaryCta?.to}
         img="/images/courses/kurse-hero.jpg"
         alt="Kursbereich Fitness World Studios"
       />
@@ -121,24 +118,12 @@ export default function Kurse() {
             <h2 className="display" style={{ marginBottom: 40 }}>Häufige <span className="blue">Fragen.</span></h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <FAQAccordion items={faq} />
+            <FAQAccordion items={copy.faq || []} />
           </Reveal>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="section section--dark">
-        <div className="wrap">
-          <Reveal className="finalcta">
-            <div className="finalcta__in">
-              <p className="eyebrow">Probetraining</p>
-              <h2 className="display">DU WILLST EINEN<br /><span className="blue">KURS TESTEN?</span></h2>
-              <p>Vereinbare dein kostenloses Probetraining und finde den Kurs, der zu dir passt.</p>
-              <Button to="/probetraining">Probetraining vereinbaren</Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageCta copy={copy} />
     </main>
   )
 }
