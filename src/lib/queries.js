@@ -98,4 +98,38 @@ export const LEGAL_PAGES_QUERY = `
   *[_type == "legalPage"] { page, title, body }
 `
 
+// Leistungs-Seiten (/kurse/reha-sport, /kurse/boxen, /kurse/personal-training)
+export const SERVICE_PAGES_QUERY = `
+  *[_type == "servicePage"] {
+    slug, eyebrow, title, sub, primaryCta, secondaryCta,
+    "heroImage": heroImage.asset->url,
+    seoTitle, metaDesc,
+    sections[] {
+      _type, _key, tone, eyebrow, headline, text, items, numbered,
+      "image": image.asset->url,
+      leftEyebrow, leftTitle, leftItems, rightEyebrow, rightTitle, rightItems,
+      button
+    }
+  }
+`
+
+// Kopf-/Einleitungs-/Abschlusstexte der übrigen Seiten
+export const PAGE_COPY_QUERY = `
+  *[_type == "pageCopy"] {
+    page, eyebrow, title, sub, primaryCta, secondaryCta,
+    introEyebrow, introHeadline, introText, introCta,
+    faq[]{ q, a },
+    ctaEyebrow, ctaHeadline, ctaText, ctaButton,
+    seoTitle, metaDesc
+  }
+`
+
+// Magazin
+export const BLOG_POSTS_QUERY = `
+  *[_type == "blogPost"] | order(featured desc, publishedAt desc) {
+    _id, title, "slug": slug.current, category, excerpt, publishedAt, featured,
+    "image": image.asset->url, body
+  }
+`
+
 // ─── Phase 2 (add later) ──────────────────────────────────────────────────────

@@ -4,6 +4,7 @@ import Reveal from '../components/Reveal'
 import FAQAccordion from '../components/FAQAccordion'
 import PageHero from '../components/PageHero'
 import { useStudios } from '../lib/studios.js'
+import { usePageCopy } from '../lib/content.js'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -15,16 +16,11 @@ const vorteile = [
   { title: 'Sicher starten', text: 'Du musst nicht wissen, wo du anfangen sollst. Genau dafür sind wir da.' },
 ]
 
-const faq = [
-  { q: 'Kostet das Probetraining wirklich nichts?', a: 'Ja. Das Probetraining ist kostenlos und unverbindlich.' },
-  { q: 'Muss ich Sportsachen mitbringen?', a: 'Ja. Bring bequeme Sportkleidung, saubere Sportschuhe, ein Handtuch und etwas zu trinken mit.' },
-  { q: 'Wie lange dauert ein Probetraining?', a: 'Plane ungefähr 60 bis 90 Minuten ein, damit genug Zeit für Studioführung, Fragen und Training bleibt.' },
-  { q: 'Kann ich jemanden mitbringen?', a: 'Frag uns vorher kurz an. In vielen Fällen ist das möglich.' },
-]
 
 export default function Probetraining() {
   const query = useQuery()
   const { studios } = useStudios()
+  const copy = usePageCopy('probetraining')
   const defaultStudio = query.get('studio') || ''
   const defaultInteresse = query.get('interesse') || ''
 
@@ -36,7 +32,7 @@ export default function Probetraining() {
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
-  useEffect(() => { document.title = 'Kostenloses Probetraining | Fitness World Studios' }, [])
+  useEffect(() => { document.title = copy.seoTitle }, [copy.seoTitle])
 
   const set = (field) => (e) => {
     const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -64,9 +60,9 @@ export default function Probetraining() {
   return (
     <main>
       <PageHero
-        eyebrow="Kostenloses Probetraining"
-        title="TESTE UNS. FINDE DEIN TRAINING."
-        sub="Lerne Fitness World persönlich kennen. Wir zeigen dir das Studio, beantworten deine Fragen und helfen dir beim passenden Einstieg."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        sub={copy.sub}
         img="/images/forms/probetraining-hero.jpg"
         alt="Kostenloses Probetraining bei Fitness World Studios"
       />
@@ -196,7 +192,7 @@ export default function Probetraining() {
             <h2 className="display" style={{ marginBottom: 40 }}>Häufige <span className="blue">Fragen.</span></h2>
           </Reveal>
           <Reveal delay={0.05}>
-            <FAQAccordion items={faq} />
+            <FAQAccordion items={copy.faq || []} />
           </Reveal>
         </div>
       </section>

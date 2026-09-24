@@ -469,6 +469,9 @@
 .legal-h{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:40px 0 12px; color:var(--text-dark)}
 .legal-h:first-child{margin-top:0}
 .legal-p{white-space:pre-line; color:var(--text-muted); line-height:1.75; margin:0 0 16px}
+.blog-card__img img, .featured-img img{width:100%; height:100%; object-fit:cover; display:block}
+.article-img{width:100%; border-radius:var(--r-m); margin-bottom:28px; display:block}
+.textlink.is-disabled, .btn.is-disabled{opacity:.55; pointer-events:none}
 .legal-h--sub{font-size:1.05rem; margin-top:28px}
 .legal-list{color:var(--text-muted); line-height:1.75; margin:0 0 16px; padding-left:1.3em}
 .legal-list li{margin-bottom:6px}

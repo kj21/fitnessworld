@@ -6,11 +6,16 @@
 import { useSanityData } from '../hooks/useSanityData.js'
 import {
   COURSES_QUERY, SCHEDULE_QUERY, MEMBERSHIP_PAGE_QUERY, SITE_SETTINGS_QUERY, LEGAL_PAGES_QUERY,
+  SERVICE_PAGES_QUERY, PAGE_COPY_QUERY, BLOG_POSTS_QUERY,
 } from './queries.js'
 import {
   courses as coursesFallback, schedule as scheduleFallback,
   mitgliedschaftBenefits, mitgliedschaftFAQ, company as companyFallback, numberWord,
 } from '../data/site'
+import {
+  servicePages as servicePagesFallback, pageCopy as pageCopyFallback,
+  blogPosts as blogPostsFallback,
+} from '../data/pages'
 
 const nonEmpty = (v) => v != null && !(typeof v === 'string' && v.trim() === '') && !(Array.isArray(v) && v.length === 0)
 
@@ -102,4 +107,38 @@ export function useLegalPages() {
   const byPage = {}
   ;(Array.isArray(data) ? data : []).forEach((d) => { if (d?.page) byPage[d.page] = d })
   return byPage
+}
+
+// ── Leistungs-Seiten ─────────────────────────────────────────────────────────
+/**
+ * One service page ("Leistungs-Seite") by slug. A Sanity document replaces the
+ * fallback entirely once it has sections, so removing a section in Sanity
+ * removes it from the site; an empty document keeps the fallback sections.
+ */
+export function useServicePage(slug) {
+  const { data, loading } = useSanityData(SERVICE_PAGES_QUERY, [])
+  const fallback = servicePagesFallback[slug] || null
+  const doc = (Array.isArray(data) ? data : []).find((d) => d?.slug === slug) || null
+  if (!doc) return { page: fallback, loading, fromSanity: false }
+  const merged = mergeFields(fallback || {}, doc)
+  return { page: { ...merged, slug }, loading, fromSanity: true }
+}
+
+// ── Seitentexte ──────────────────────────────────────────────────────────────
+/** Hero/intro/FAQ/CTA copy for one page, merged over the site fallback. */
+export function usePageCopy(page) {
+  const { data } = useSanityData(PAGE_COPY_QUERY, [])
+  const doc = (Array.isArray(data) ? data : []).find((d) => d?.page === page) || null
+  return mergeFields(pageCopyFallback[page] || {}, doc)
+}
+
+// ── Magazin ──────────────────────────────────────────────────────────────────
+export function useBlogPosts() {
+  const { data, loading } = useSanityData(BLOG_POSTS_QUERY, [])
+  const fromSanity = Array.isArray(data) && data.length > 0
+  const posts = (fromSanity ? data : blogPostsFallback).filter((p) => p?.title)
+  const featured = posts.find((p) => p.featured) || posts[0] || null
+  const rest = posts.filter((p) => p !== featured)
+  const categories = [...new Set(posts.map((p) => p.category).filter(Boolean))]
+  return { posts, featured, rest, categories, fromSanity, loading }
 }

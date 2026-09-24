@@ -6,6 +6,8 @@ import Button from '../components/Button'
 import PageHero from '../components/PageHero'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { JOB_LISTINGS_QUERY } from '../lib/queries.js'
+import { usePageCopy } from '../lib/content.js'
+import PageCta from '../components/PageCta'
 
 const jobsFallback = [
   {
@@ -34,15 +36,16 @@ const jobsFallback = [
 export default function Jobs() {
   const { data: jobs } = useSanityData(JOB_LISTINGS_QUERY, jobsFallback)
   const { studios } = useStudios()
+  const copy = usePageCopy('jobs')
   const openStudios = studios.filter((s) => !s.comingSoon).length
-  useEffect(() => { document.title = 'Stellenangebote | Fitness World Studios' }, [])
+  useEffect(() => { document.title = copy.seoTitle }, [copy.seoTitle])
 
   return (
     <main>
       <PageHero
-        eyebrow="Karriere"
-        title="ARBEITE, WO ANDERE TRAINIEREN."
-        sub="Wir suchen Menschen, die Fitness leben, nicht nur vermitteln. Werde Teil des Fitness World Teams."
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        sub={copy.sub}
         img="/images/jobs/jobs-hero.jpg"
         alt="Fitness World Studios Team"
       />
@@ -110,19 +113,7 @@ export default function Jobs() {
         </div>
       </section>
 
-      {/* INITIATIVBEWERBUNG */}
-      <section className="section section--dark">
-        <div className="wrap">
-          <Reveal className="finalcta">
-            <div className="finalcta__in">
-              <p className="eyebrow">Keine passende Stelle?</p>
-              <h2 className="display">INITIATIV-<br /><span className="blue">BEWERBUNG.</span></h2>
-              <p>Wenn du keine passende Stelle siehst, aber trotzdem Teil des Teams werden willst: Schreib uns. Wir freuen uns über motivierte Menschen.</p>
-              <Button to="/kontakt">Initiativ bewerben</Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageCta copy={copy} />
     </main>
   )
 }
