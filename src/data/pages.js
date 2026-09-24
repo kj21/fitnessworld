@@ -21,7 +21,7 @@ export const servicePages = {
         headline: 'FÜR MEHR SICHERHEIT\n*IM ALLTAG.*',
         text: 'Reha-Sport richtet sich an Menschen, die nach Verletzungen, Operationen oder bei körperlichen Beschwerden wieder mehr Sicherheit, Kraft und Beweglichkeit aufbauen möchten. Das Training findet in der Gruppe statt und orientiert sich an gesundheitlichen Zielen.',
         items: ['Rückenbeschwerden', 'Gelenkprobleme', 'Wiedereinstieg nach längerer Pause', 'Aufbau von Stabilität und Beweglichkeit', 'Mehr Vertrauen in den eigenen Körper'],
-        imageLabel: '/images/services/reha.jpg', imageAlt: 'Reha-Sport Gruppentraining',
+        imagePlaceholder: '/images/services/reha.jpg', imageAlt: 'Reha-Sport Gruppentraining',
       },
       {
         _type: 'steps', _key: 'ablauf', tone: 'dark',
@@ -70,7 +70,7 @@ export const servicePages = {
         _type: 'split', _key: 'intro', tone: 'light',
         eyebrow: 'Das Training', headline: 'MEHR ALS\n*EIN WORKOUT.*',
         text: 'Boxen und Kickboxen verbinden Technik, Ausdauer, Kraft und Konzentration. Du brauchst keine Vorerfahrung. Wichtig ist nur, dass du bereit bist, dich zu bewegen, Neues zu lernen und dranzubleiben.',
-        imageLabel: '/images/services/boxen.jpg', imageAlt: 'Boxtraining Fitness World',
+        imagePlaceholder: '/images/services/boxen.jpg', imageAlt: 'Boxtraining Fitness World',
       },
       {
         _type: 'twoLists', _key: 'listen', tone: 'dark',
@@ -123,7 +123,7 @@ export const servicePages = {
         _type: 'split', _key: 'fuer-wen', tone: 'dark',
         eyebrow: 'Für wen geeignet?', headline: 'FÜR ALLE,\n*DIE MEHR WOLLEN.*',
         items: ['Menschen mit klaren Zielen und wenig Zeit', 'Einsteiger, die sicher starten wollen', 'Wiedereinsteiger nach längerer Pause', 'Fortgeschrittene mit Trainingsplateau', 'Alle, die gezielter und effizienter trainieren wollen'],
-        imageLabel: '/images/services/personal-training.jpg', imageAlt: 'Personal Training Betreuung',
+        imagePlaceholder: '/images/services/personal-training.jpg', imageAlt: 'Personal Training Betreuung',
       },
       {
         _type: 'steps', _key: 'ablauf', tone: 'white',
