@@ -53,9 +53,9 @@ function Split({ block }) {
           {block.text && <p className="lede" style={{ margin: '22px 0 24px' }}>{block.text}</p>}
           <CheckList items={items} light={light} />
         </Reveal>
-        {(block.image || block.imageLabel) && (
+        {(block.image || block.imagePlaceholder) && (
           <Reveal delay={0.1}>
-            <Media image={block.image} label={block.imageLabel} alt={block.imageAlt || block.eyebrow || ''} />
+            <Media image={block.image} label={block.imagePlaceholder} alt={block.imageAlt || block.eyebrow || ''} />
           </Reveal>
         )}
       </div>

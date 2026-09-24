@@ -82,6 +82,10 @@ export default defineType({
             defineField({ name: 'text', title: 'Text', type: 'text', rows: 4 }),
             defineField({ name: 'items', title: 'Checkliste (optional)', type: 'array', of: [{ type: 'string' }] }),
             defineField({ name: 'image', title: 'Bild (optional)', type: 'image', options: { hotspot: true } }),
+            defineField({
+              name: 'imagePlaceholder', title: 'Platzhalter-Pfad (bis ein Bild hochgeladen ist)', type: 'string',
+              description: 'Zeigt eine graue Fläche mit diesem Pfad, z.B. /images/services/reha.jpg. Sobald oben ein Bild hochgeladen ist, wird dieses angezeigt.',
+            }),
             tone('light'),
           ],
           preview: { select: { title: 'headline', subtitle: 'eyebrow' }, prepare: ({ title, subtitle }) => ({ title: (title || 'Text').split('\n')[0], subtitle: `Text · ${subtitle || ''}` }) },
