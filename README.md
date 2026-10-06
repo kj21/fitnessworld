@@ -43,7 +43,4 @@ vercel.json      SPA rewrite for deploys
 Push to a repo, import on Vercel. Framework preset: **Vite**. `vercel.json` already
 handles SPA routing so deep links (`/holdorf`, `/mitgliedschaft`, …) resolve.
 
-## Next steps
-
-See `CLAUDE.md` → "Build order" and `tasks/todo.md`. The studio-detail page should be
-built once as a reusable template and fed each location's data.
+Production freeze 07.10.26
