@@ -4,7 +4,7 @@
 export const brand = {
   name: 'Fitness World',
   sub: 'Studios',
-  claim: 'Stärker. Gesünder. Gemeinsam.',
+  claim: 'Training nach deinem Lifestyle.',
 }
 
 // Full route table (from content/sitemap.json). Home is built; rest are stubs.
