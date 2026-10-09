@@ -9,15 +9,6 @@ import { PRICING_PLANS_QUERY } from '../lib/queries.js'
 import { useMembershipPage, fillCount } from '../lib/content.js'
 import { useStudios } from '../lib/studios.js'
 
-function CheckIcon({ light }) {
-  return (
-    <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <circle cx="9" cy="9" r="9" fill={light ? 'rgba(255,255,255,.18)' : 'var(--fw-blue-soft)'} />
-      <path d="M5 9l3 3 5-5" stroke={light ? '#fff' : 'var(--fw-blue)'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export default function Mitgliedschaft() {
   const { data: pricingPlans } = useSanityData(PRICING_PLANS_QUERY, pricingPlansFallback)
   const { studios } = useStudios()
@@ -58,16 +49,10 @@ export default function Mitgliedschaft() {
                   <p className="pricing-desc">{plan.desc}</p>
                   <ul className="pricing-features">
                     {(plan.features || []).map((f) => (
-                      <li key={f}>
-                        <CheckIcon light={plan.highlight} />
-                        <span>{f}</span>
-                      </li>
+                      <li key={f}><span>{f}</span></li>
                     ))}
                   </ul>
-                  <Button
-                    to="/probetraining"
-                    variant={plan.highlight ? 'primary' : 'ghost-dark'}
-                  >
+                  <Button to="/probetraining" variant={plan.highlight ? 'primary' : 'ghost-dark'}>
                     {plan.cta}
                   </Button>
                 </div>
