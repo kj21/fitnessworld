@@ -64,7 +64,6 @@ export default function Home() {
             {c.heroStats.map((s) => <div key={s}><span className="dot" />{s}</div>)}
           </Reveal>
         </div>
-        <div className="scrollcue" aria-hidden="true">Scroll</div>
       </section>
 
       {/* 2 — BLUE ACCESS BAR */}
