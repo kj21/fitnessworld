@@ -119,8 +119,6 @@
   .hero__stats{display:flex; flex-wrap:wrap; gap:14px 40px; padding-top:28px; border-top:1px solid var(--line-dark); max-width:760px}
   .hero__stats div{display:flex; align-items:center; gap:12px; font-weight:700; font-size:.95rem; letter-spacing:.02em}
   .hero__stats .dot{width:9px; height:9px; border-radius:50%; background:var(--fw-blue); flex:none}
-  .scrollcue{position:absolute; right:32px; bottom:30px; writing-mode:vertical-rl; text-transform:uppercase; letter-spacing:.3em; font-size:.66rem; color:rgba(255,255,255,.5); display:flex; align-items:center; gap:12px}
-  .scrollcue::after{content:""; width:1px; height:54px; background:linear-gradient(var(--fw-blue),transparent)}
 
   /* marquee */
   .marquee{background:var(--fw-blue); color:var(--navy-900); padding:16px 0; overflow:hidden; white-space:nowrap; border-top:1px solid rgba(0,0,0,.08)}
@@ -254,7 +252,6 @@
   .tst-grid,.svc-grid{grid-template-columns:1fr}
   .gallery{grid-template-columns:1fr 1fr; grid-auto-rows:150px}
   .finalcta{padding:54px 26px}
-  .scrollcue{display:none}
 }
 @media(max-width:520px){ .loc-grid{grid-template-columns:1fr} }
 @media(prefers-reduced-motion:reduce){
