@@ -42,7 +42,7 @@
   }
   .eyebrow::before{content:""; width:26px; height:2px; background:var(--fw-blue); display:inline-block}
   .display{
-    font-family:"Oswald","Anton",sans-serif; font-weight:300; text-transform:uppercase;
+    font-family:"Anton",Impact,sans-serif; font-weight:400; text-transform:uppercase;
     line-height:.9; letter-spacing:.005em; margin:0;
   }
   h1.display{font-size:clamp(3.1rem,8.8vw,7.4rem)}
@@ -79,7 +79,7 @@
   .brand{display:flex; align-items:center; gap:12px}
   .brand .mark{width:42px; height:42px; flex:none}
   .brand__txt{display:flex; flex-direction:column; line-height:1}
-  .brand__name{font-family:"Oswald","Anton",sans-serif; color:#fff; font-size:1.15rem; letter-spacing:.06em; text-transform:uppercase; font-weight:400}
+  .brand__name{font-family:"Anton",sans-serif; color:#fff; font-size:1.15rem; letter-spacing:.06em; text-transform:uppercase}
   .brand__sub{font-size:.6rem; letter-spacing:.34em; color:var(--fw-blue); text-transform:uppercase; margin-top:3px; font-weight:700}
   .nav{display:flex; align-items:center; gap:6px}
   .visually-hidden{position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
@@ -101,7 +101,7 @@
   /* mobile menu */
   .mobile{position:fixed; inset:0; z-index:55; background:var(--navy-900); padding:96px 28px 40px; transform:translateY(-100%); transition:transform .45s var(--ease); display:flex; flex-direction:column; overflow-y:auto}
   .mobile.open{transform:translateY(0)}
-  .mobile a{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:2rem; color:#fff; padding:14px 0; border-bottom:1px solid var(--line-dark)}
+  .mobile a{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:2rem; color:#fff; padding:14px 0; border-bottom:1px solid var(--line-dark)}
   .mobile a.sub{font-family:"Manrope"; font-size:1rem; text-transform:none; color:rgba(255,255,255,.6); padding:8px 0 8px 16px; border:0}
   .mobile .btn{margin-top:28px; justify-content:center}
 
@@ -123,7 +123,7 @@
   /* marquee */
   .marquee{background:var(--fw-blue); color:var(--navy-900); padding:16px 0; overflow:hidden; white-space:nowrap; border-top:1px solid rgba(0,0,0,.08)}
   .marquee__track{display:inline-flex; animation:marquee 32s linear infinite; will-change:transform}
-  .marquee span{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.15rem; letter-spacing:.05em; padding:0 26px; display:inline-flex; align-items:center; font-weight:400}
+  .marquee span{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.15rem; letter-spacing:.05em; padding:0 26px; display:inline-flex; align-items:center}
   .marquee span::after{content:"·"; margin-left:52px; opacity:.55}
 
   /* editorial split */
@@ -147,7 +147,7 @@
   .loc-card__bg img{width:100%; height:100%; object-fit:cover; display:block}
   .loc-card__soon{display:block; margin-bottom:10px; font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--fw-blue)}
   .loc-card__body{padding:26px}
-  .loc-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.9rem; margin:0 0 6px; line-height:1; font-weight:400}
+  .loc-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.9rem; margin:0 0 6px; line-height:1}
   .loc-card__line{height:3px; width:0; background:var(--fw-blue); margin:8px 0 16px; transition:width .4s var(--ease)}
   .loc-card:hover .loc-card__line{width:54px}
   .loc-card ul{list-style:none; margin:0 0 18px; padding:0; display:flex; flex-wrap:wrap; gap:8px}
@@ -161,7 +161,7 @@
   .svc-card:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.1); transform:translateY(-4px)}
   .svc-card .ico{width:48px; height:48px; border-radius:6px; background:var(--fw-blue-soft); color:var(--fw-blue); display:grid; place-items:center; margin-bottom:20px}
   .svc-card .ico svg{width:26px; height:26px}
-  .svc-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:0 0 10px; font-weight:400}
+  .svc-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:0 0 10px}
   .svc-card p{margin:0 0 14px; font-size:.96rem; color:var(--text-muted)}
 
   /* community gallery */
@@ -172,7 +172,7 @@
 
   /* numbers */
   .nums{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center}
-  .nums .n{font-family:"Oswald","Anton",sans-serif; font-size:clamp(2.8rem,6vw,5rem); line-height:1; color:#fff}
+  .nums .n{font-family:"Anton",sans-serif; font-size:clamp(2.8rem,6vw,5rem); line-height:1; color:#fff}
   .nums .n .blue{color:var(--fw-blue)}
   .nums .l{margin-top:10px; text-transform:uppercase; letter-spacing:.14em; font-size:.74rem; font-weight:700; color:rgba(255,255,255,.6)}
   .nums>div{padding:10px; border-left:1px solid var(--line-dark)}
@@ -301,10 +301,10 @@
 .step-card:hover{border-color:var(--fw-blue)}
 .step-card--light{background:#fff; border-color:var(--line-light); color:var(--text-dark)}
 .step-card--light:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.1); transform:translateY(-4px)}
-.step-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.2rem; margin:0 0 12px; letter-spacing:.02em; font-weight:400}
+.step-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.2rem; margin:0 0 12px; letter-spacing:.02em}
 .step-card p{margin:0; font-size:.96rem; color:rgba(255,255,255,.7)}
 .step-card--light p{color:var(--text-muted)}
-.step-num{width:44px; height:44px; border-radius:6px; background:var(--fw-blue); color:#fff; font-family:"Oswald","Anton",sans-serif; font-size:1.3rem; display:grid; place-items:center; margin-bottom:18px; flex:none}
+.step-num{width:44px; height:44px; border-radius:6px; background:var(--fw-blue); color:#fff; font-family:"Anton",sans-serif; font-size:1.3rem; display:grid; place-items:center; margin-bottom:18px; flex:none}
 .step-num--dark{background:var(--fw-blue)}
 
 /* Svc card dark variant */
@@ -312,7 +312,7 @@
 .svc-card--dark h3{color:#fff}
 .svc-card--dark p{color:rgba(255,255,255,.7)}
 .svc-card--dark:hover{border-color:var(--fw-blue)}
-.svc-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:0 0 10px}
+.svc-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:0 0 10px}
 
 /* Trust block */
 .trust-block{max-width:680px; margin-inline:auto; text-align:center}
@@ -350,7 +350,7 @@
 .course-card{background:#fff; border:1px solid var(--line-light); border-radius:8px; padding:28px 24px; transition:.28s var(--ease)}
 .course-card:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.09); transform:translateY(-3px)}
 .course-cat{font-size:.74rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--fw-blue); display:block; margin-bottom:10px}
-.course-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.2rem; margin:0 0 10px}
+.course-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.2rem; margin:0 0 10px}
 .course-card p{font-size:.96rem; color:var(--text-muted); margin:0 0 14px}
 
 /* Schedule table */
@@ -363,31 +363,31 @@
 .level-badge{background:var(--fw-blue-soft); color:var(--fw-blue); border-radius:50px; padding:3px 11px; font-size:.8rem; font-weight:700; white-space:nowrap}
 
 /* Pricing */
-.pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:40px}
+.pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px}
 
 /* Minimal plan card: hairline frame, one big thin price, quiet rows. */
 .pricing-card{position:relative; background:#fff; border:1px solid var(--line-light); border-radius:var(--r-m);
-  padding:40px 34px 34px; display:flex; flex-direction:column; transition:border-color .25s var(--ease)}
+  padding:26px 26px 24px; display:flex; flex-direction:column; transition:border-color .25s var(--ease)}
 .pricing-card:hover{border-color:var(--fw-blue)}
 .pricing-card--highlight{border-color:var(--fw-blue)}
 .pricing-badge{align-self:flex-start; border:1px solid var(--line-light); color:var(--text-muted);
-  font-size:.7rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; padding:7px 18px; border-radius:50px; margin-bottom:30px}
+  font-size:.68rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; padding:5px 14px; border-radius:50px; margin-bottom:18px}
 .pricing-card--highlight .pricing-badge{border-color:var(--fw-blue); color:var(--fw-blue)}
-.pricing-name{font-family:"Oswald","Anton",sans-serif; font-weight:400; text-transform:uppercase; font-size:1.05rem;
-  letter-spacing:.14em; color:var(--text-dark); margin-bottom:10px}
-.pricing-price{display:flex; align-items:baseline; gap:12px; margin-bottom:28px}
-.pricing-amount{font-family:"Oswald","Anton",sans-serif; font-weight:300; font-size:3.6rem; line-height:1;
-  letter-spacing:-.01em; color:var(--text-dark)}
-.pricing-period{font-size:.92rem; color:var(--text-muted)}
+.pricing-name{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.05rem;
+  letter-spacing:.14em; color:var(--text-dark); margin-bottom:6px}
+.pricing-price{display:flex; align-items:baseline; gap:10px; margin-bottom:16px}
+.pricing-amount{font-family:"Anton",sans-serif; font-size:2.6rem; line-height:1;
+  letter-spacing:.01em; color:var(--text-dark)}
+.pricing-period{font-size:.85rem; color:var(--text-muted)}
 .pricing-card--highlight .pricing-period{color:var(--text-muted)}
 
 /* Feature rows: label left, hairline between, no icons. */
-.pricing-features{list-style:none; margin:0 0 26px; padding:0; display:flex; flex-direction:column; flex:1}
-.pricing-features li{display:flex; align-items:center; justify-content:space-between; gap:16px;
-  font-size:.95rem; font-weight:500; color:var(--text-dark); padding:14px 0; border-top:1px solid var(--line-light)}
+.pricing-features{list-style:none; margin:0 0 20px; padding:0; display:flex; flex-direction:column; flex:1}
+.pricing-features li{display:flex; align-items:center; justify-content:space-between; gap:14px;
+  font-size:.88rem; font-weight:500; color:var(--text-dark); padding:8px 0; border-top:1px solid var(--line-light)}
 .pricing-features li:first-child{border-top:0; padding-top:0}
 .pricing-card--highlight .pricing-features li{color:var(--text-dark)}
-.pricing-desc{font-size:.93rem; color:var(--text-muted); margin:0 0 28px; line-height:1.65; padding-top:18px; border-top:1px solid var(--line-light)}
+.pricing-desc{font-size:.88rem; color:var(--text-muted); margin:0 0 18px; line-height:1.55; padding-top:14px; border-top:1px solid var(--line-light)}
 .pricing-card--highlight .pricing-desc{color:var(--text-muted)}
 .pricing-card .btn{width:100%; justify-content:center}
 
@@ -416,7 +416,7 @@
 .form-check label{font-size:.88rem; line-height:1.55; cursor:pointer}
 .form-check a{color:var(--fw-blue); text-decoration:underline}
 .form-success{display:flex; flex-direction:column; align-items:flex-start; gap:16px; background:var(--off-white); border:1px solid var(--line-light); border-left:4px solid var(--fw-blue); border-radius:8px; padding:32px}
-.form-success h3{margin:0; font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.4rem}
+.form-success h3{margin:0; font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.4rem}
 .form-success p{margin:0; color:var(--text-muted)}
 
 /* Probetraining advantages */
@@ -430,7 +430,7 @@
 .team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
 .team-card{background:#fff; border:1px solid var(--line-light); border-radius:8px; padding:28px; transition:.28s var(--ease)}
 .team-card:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.09); transform:translateY(-3px)}
-.team-avatar{width:58px; height:58px; border-radius:50%; background:var(--fw-blue); color:#fff; font-family:"Oswald","Anton",sans-serif; font-size:1.5rem; display:grid; place-items:center; margin-bottom:14px}
+.team-avatar{width:58px; height:58px; border-radius:50%; background:var(--fw-blue); color:#fff; font-family:"Anton",sans-serif; font-size:1.5rem; display:grid; place-items:center; margin-bottom:14px}
 .team-info{display:flex; flex-direction:column; gap:3px; margin-bottom:14px}
 .team-name{font-size:1.06rem; font-weight:800; color:var(--text-dark)}
 .team-role{font-size:.88rem; color:var(--fw-blue); font-weight:700}
@@ -448,7 +448,7 @@
 .blog-card:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.09)}
 .blog-card__img{min-height:220px; border-radius:0}
 .blog-card__body{padding:24px}
-.blog-card__body h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.1rem; margin:10px 0 10px; line-height:1.1}
+.blog-card__body h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.1rem; margin:10px 0 10px; line-height:1.1}
 .blog-card__body p{margin:0 0 14px; font-size:.96rem; color:var(--text-muted); line-height:1.65}
 .newsletter-form{display:flex; gap:12px; flex-wrap:wrap; margin-top:4px}
 .newsletter-input{flex:1; min-width:220px; border:1.5px solid rgba(255,255,255,.2); border-radius:8px; padding:14px 16px; background:rgba(255,255,255,.06); color:#fff; font-size:.96rem; font-family:inherit}
@@ -460,7 +460,7 @@
 .job-card{background:#fff; border:1px solid var(--line-light); border-radius:8px; padding:30px 28px; transition:.28s var(--ease)}
 .job-card:hover{border-color:var(--fw-blue); box-shadow:0 18px 44px rgba(16,36,55,.09)}
 .job-header{display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:14px; flex-wrap:wrap}
-.job-title{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.3rem; margin:0 0 6px; letter-spacing:.02em}
+.job-title{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.3rem; margin:0 0 6px; letter-spacing:.02em}
 .job-meta{font-size:.88rem; color:var(--text-muted); display:flex; gap:8px}
 .job-card>p{color:var(--text-muted); margin:0 0 18px}
 .job-tasks{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px}
@@ -469,14 +469,14 @@
 /* Contact studio cards */
 .kontakt-studios{}
 .studio-contact-card{background:#fff; border:1px solid var(--line-light); border-radius:8px; padding:22px; margin-bottom:16px}
-.studio-contact-card strong{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.15rem; display:block; margin-bottom:8px}
+.studio-contact-card strong{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.15rem; display:block; margin-bottom:8px}
 .studio-contact-card p{margin:4px 0; font-size:.92rem; color:var(--text-muted)}
 .studio-contact-card a{color:var(--fw-blue)}
 .studio-contact-card a:hover{text-decoration:underline}
 
 /* Legal */
 .legal-wrap{max-width:760px; margin-inline:auto}
-.legal-h{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:40px 0 12px; color:var(--text-dark)}
+.legal-h{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.25rem; letter-spacing:.02em; margin:40px 0 12px; color:var(--text-dark)}
 .legal-h:first-child{margin-top:0}
 .legal-p{white-space:pre-line; color:var(--text-muted); line-height:1.75; margin:0 0 16px}
 .blog-card__img img, .featured-img img{width:100%; height:100%; object-fit:cover; display:block}
@@ -654,7 +654,7 @@ html,body{overflow-x:hidden}
 .bp-node::before{content:""; position:absolute; left:-33px; top:4px; width:16px; height:16px; border-radius:50%;
   background:var(--navy-900); border:2px solid var(--fw-blue); box-shadow:0 0 0 5px rgba(26,145,213,.12)}
 .section--light .bp-node::before, .section--white .bp-node::before{background:#fff}
-.bp-node h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.12rem; letter-spacing:.02em; margin:0 0 8px; font-weight:400}
+.bp-node h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.12rem; letter-spacing:.02em; margin:0 0 8px}
 .bp-node p{margin:0; color:var(--text-muted); font-size:.97rem; line-height:1.65}
 .section--dark .bp-node p, .section--darker .bp-node p{color:rgba(255,255,255,.72)}
 
@@ -664,8 +664,8 @@ html,body{overflow-x:hidden}
 .bp-step::before{content:""; position:absolute; left:0; top:21px; right:0; height:2px; background:rgba(26,145,213,.28)}
 .bp-step:last-child::before{display:none}
 .bp-step__num{position:relative; z-index:1; width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
-  background:var(--fw-blue); color:#fff; font-family:"Oswald","Anton",sans-serif; font-size:1.1rem; margin-bottom:20px}
-.bp-step h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.02rem; margin:0 0 8px; letter-spacing:.02em; font-weight:400}
+  background:var(--fw-blue); color:#fff; font-family:"Anton",sans-serif; font-size:1.1rem; margin-bottom:20px}
+.bp-step h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.02rem; margin:0 0 8px; letter-spacing:.02em}
 .bp-step p{margin:0; color:var(--text-muted); font-size:.93rem; line-height:1.6; padding-right:14px}
 
 /* Access bar: the service system as one connected strip. */
@@ -693,7 +693,7 @@ html,body{overflow-x:hidden}
 .decide-card__goal{font-size:.74rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--fw-blue)}
 .decide-card__ico{width:42px; height:42px; border-radius:6px; display:grid; place-items:center; background:var(--fw-blue-soft); color:var(--fw-blue)}
 .decide-card__ico svg{width:21px; height:21px}
-.decide-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.3rem; margin:0; letter-spacing:.02em; font-weight:400}
+.decide-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.3rem; margin:0; letter-spacing:.02em}
 .decide-card p{margin:0; color:var(--text-muted); font-size:.95rem; line-height:1.62; flex:1}
 
 /* Studio finder cards: practical fit instead of lifestyle imagery. */
@@ -708,7 +708,7 @@ html,body{overflow-x:hidden}
   font-size:.74rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#fff}
 .finder-card__pin i{width:8px; height:8px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:var(--fw-blue)}
 .finder-card__body{padding:24px 24px 26px; display:flex; flex-direction:column; gap:14px; flex:1}
-.finder-card h3{font-family:"Oswald","Anton",sans-serif; text-transform:uppercase; font-size:1.7rem; margin:0; line-height:1; color:#fff; font-weight:400}
+.finder-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.7rem; margin:0; line-height:1; color:#fff}
 .finder-card__best{font-size:.78rem; font-weight:700; color:var(--fw-blue); letter-spacing:.06em}
 .finder-card__rows{display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--line-dark); padding-top:14px}
 .finder-card__row{display:flex; gap:10px; font-size:.86rem; color:rgba(255,255,255,.72); line-height:1.45}
@@ -737,10 +737,10 @@ html,body{overflow-x:hidden}
   display:flex; flex-direction:column; gap:14px; transition:border-color .25s var(--ease)}
 .plan-card:hover{border-color:var(--fw-blue)}
 .plan-card__kind{font-size:.7rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.5)}
-.plan-card h3{font-family:"Oswald","Anton",sans-serif; font-weight:400; text-transform:uppercase; font-size:1.02rem;
+.plan-card h3{font-family:"Anton",sans-serif; text-transform:uppercase; font-size:1.02rem;
   letter-spacing:.14em; margin:0; color:#fff}
 .plan-card p{margin:0; color:rgba(255,255,255,.6); font-size:.93rem; line-height:1.62; flex:1}
-.plan-card__price{font-family:"Oswald","Anton",sans-serif; font-weight:300; font-size:3rem; color:#fff; line-height:1; letter-spacing:-.01em}
+.plan-card__price{font-family:"Anton",sans-serif; font-size:3rem; color:#fff; line-height:1; letter-spacing:-.01em}
 .plan-card__price span{font-family:"Manrope",sans-serif; font-size:.85rem; font-weight:500; color:rgba(255,255,255,.55); margin-left:10px; letter-spacing:0}
 
 /* Guided Probetraining entry point. */
