@@ -27,7 +27,7 @@ export default function Mitgliedschaft() {
       />
 
       {/* PRICING */}
-      <section className="section section--light" id="preise">
+      <section className="section section--light" id="preise" style={{ paddingTop: 60, paddingBottom: 60 }}>
         <div className="wrap">
           <Reveal className="head-row">
             <div>

@@ -27,7 +27,7 @@ export default {
         line: '#E6EBF1',
       },
       fontFamily: {
-        display: ['Oswald', 'Anton', 'sans-serif'],
+        display: ['Anton', 'Impact', 'sans-serif'],
         body: ['Manrope', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
