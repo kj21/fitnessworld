@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Link } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -11,7 +11,7 @@ function StickyCTA() {
   return (
     <div className="mcta">
       <Link to="/probetraining" className="btn btn--primary">
-        Kostenloses Probetraining <span className="arr">→</span>
+        Probetraining <span className="arr">→</span>
       </Link>
     </div>
   )
@@ -48,9 +48,16 @@ export default function App() {
         {/* Kurse */}
         <Route path="/kurse"                  element={<Kurse />} />
         {/* Leistungs-Seiten: content + section order come from Sanity */}
-        <Route path="/kurse/reha-sport"        element={<ServicePage slug="reha-sport" />} />
-        <Route path="/kurse/personal-training" element={<ServicePage slug="personal-training" />} />
-        <Route path="/kurse/boxen"             element={<ServicePage slug="boxen" />} />
+        <Route path="/24-7-training"     element={<ServicePage slug="training-247" />} />
+        <Route path="/reha-sport"        element={<ServicePage slug="reha-sport" />} />
+        <Route path="/fighter-world"     element={<ServicePage slug="fighter-world" />} />
+        <Route path="/personal-training" element={<ServicePage slug="personal-training" />} />
+        {/* Old URLs stay alive */}
+        <Route path="/kurse/reha-sport"        element={<Navigate to="/reha-sport" replace />} />
+        <Route path="/kurse/personal-training" element={<Navigate to="/personal-training" replace />} />
+        <Route path="/kurse/boxen"             element={<Navigate to="/fighter-world" replace />} />
+        <Route path="/boxen"                   element={<Navigate to="/fighter-world" replace />} />
+        <Route path="/standorte"               element={<Navigate to="/#standorte" replace />} />
         {/* Service */}
         <Route path="/mitgliedschaft" element={<Mitgliedschaft />} />
         <Route path="/probetraining"  element={<Probetraining />} />

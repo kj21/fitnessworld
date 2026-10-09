@@ -38,6 +38,24 @@ The homepage is fully built as the reference implementation — match its patter
     changing a page, they are what renders if Sanity is empty or unreachable.
   - Don't hardcode new page copy. Add a field or a section block instead.
 
+## Positioning (Rebrand Okt 2026) — "Blue Access System"
+
+- Claim: **„Training nach deinem Lifestyle."** Hero: `TRAINING NACH *DEINEM LIFESTYLE.*`
+- The site sells a flexible training *system*, not a regional community gym:
+  24/7 Zugang · persönliche Betreuung · Reha-Sport · Kurse & Zirkel · Fighter World · Wellness.
+- **Blue Path** is the recurring brand device: thin blue route lines, pins, numbered
+  steps and card connectors (`.bp-*`, `.access-bar`, `.decide-card`, `.finder-card`,
+  `.panel__frame`, `.entry` in `src/index.css`). Use it to connect sections instead of
+  adding new decorative styles.
+- Never write: „Stärker. Gesünder. Gemeinsam.", „Vier Standorte. Eine Community.",
+  „Fitness ist besser gemeinsam.", „Ein Preis. X Studios.", „Training, das in dein Leben
+  passt." or generic community-gym wording ("Szene", "deine Crew", "Gym Community").
+- Preferred wording: flexibel · betreut · dein Einstieg · dein Rhythmus · dein Standort ·
+  gesundheitlich begleitet · klarer Trainingsweg · 24/7 Zugang · Trainerzeiten · Fighter World.
+- **24/7 access is never staffed service.** Every place that mentions 24/7 must keep the
+  Trainerzeiten distinction visible (homepage note, `/24-7-training`, studio pages).
+- Boxen is branded **Fighter World** (`/fighter-world`); `/kurse/boxen` and `/boxen` redirect.
+
 ## Non-negotiables
 
 1. Accent color is exactly **`#1A91D5`** (`fw-blue`). No neon green. No other accent.

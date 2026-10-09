@@ -77,7 +77,7 @@ export default function Footer() {
 
       <div className="mcta">
         <Link className="btn btn--primary" to="/probetraining">
-          Kostenloses Probetraining <span className="arr">→</span>
+          Probetraining <span className="arr">→</span>
         </Link>
       </div>
     </>

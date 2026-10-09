@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import Reveal from '../components/Reveal'
-import Marquee from '../components/Marquee'
 import Button, { TextLink } from '../components/Button'
 import Headline from '../components/Headline'
+import BlueLabel from '../components/BlueLabel'
+import AccessBar from '../components/AccessBar'
+import DecisionCard from '../components/DecisionCard'
+import FinderCard from '../components/FinderCard'
+import PathSteps, { PathTrack } from '../components/PathSteps'
 import ImagePlaceholder from '../components/ImagePlaceholder'
-import LocationCard from '../components/LocationCard'
-import ServiceCard from '../components/ServiceCard'
-import TestimonialCard from '../components/TestimonialCard'
-import Stat from '../components/Stat'
-import { testimonials as testimonialsFallback, homeContent } from '../data/site'
+import { homeContent } from '../data/site'
 import { useSanityData } from '../hooks/useSanityData.js'
-import { HOME_PAGE_QUERY, TESTIMONIALS_QUERY } from '../lib/queries.js'
+import { HOME_PAGE_QUERY, PRICING_PLANS_QUERY } from '../lib/queries.js'
 import { mergeHomePage } from '../lib/home.js'
 import { useStudios } from '../lib/studios.js'
 import { fillCount } from '../lib/content.js'
@@ -26,19 +26,19 @@ function setMetaDescription(content) {
   el.setAttribute('content', content)
 }
 
+/**
+ * Startseite — "Blue Access System".
+ * Hero → Access Bar → Einstieg → Studio Finder → 24/7 → Reha → Fighter World
+ * → Mitgliedschaft → Probetraining. Every text comes from the Sanity
+ * "Startseite" document, layered over the fallback in src/data/site.js.
+ */
 export default function Home() {
-  // Three Sanity sources:
-  //   studio cards  ← "Studio Standort" documents (Sanity is authoritative;
-  //                   site.js only when Sanity is unreachable — see useStudios)
-  //   page copy     ← "Startseite" singleton (every field optional, merged over site.js)
-  //   testimonials  ← "Kundenstimme" documents
-  const { studios }            = useStudios()
-  const { data: sanityHome }   = useSanityData(HOME_PAGE_QUERY, null)
-  const { data: testimonials } = useSanityData(TESTIMONIALS_QUERY, testimonialsFallback)
+  const { studios } = useStudios()
+  const { data: sanityHome } = useSanityData(HOME_PAGE_QUERY, null)
+  const { data: plans } = useSanityData(PRICING_PLANS_QUERY, [])
 
   const openCount = studios.filter((s) => !s.comingSoon).length
-  // {anzahl} in any Startseite text → current number of open studios
-  const c         = fillCount(mergeHomePage(homeContent(openCount), sanityHome), openCount)
+  const c = fillCount(mergeHomePage(homeContent(openCount), sanityHome), openCount)
 
   useEffect(() => {
     document.title = c.seoTitle
@@ -47,12 +47,12 @@ export default function Home() {
 
   return (
     <main>
-      {/* HERO */}
+      {/* 1 — HERO */}
       <section className="hero" aria-label="Intro">
         <div className="hero__bg" />
         <div className="hero__inner">
-          <Reveal as="p" className="eyebrow">{c.heroEyebrow}</Reveal>
-          <Reveal as="h1" className="display" delay={0.05}>
+          <Reveal><BlueLabel>{c.heroEyebrow}</BlueLabel></Reveal>
+          <Reveal as="h1" className="display" delay={0.05} style={{ marginTop: 22 }}>
             <Headline text={c.heroHeadline} block />
           </Reveal>
           <Reveal as="p" className="lede" delay={0.12}>{c.heroLede}</Reveal>
@@ -67,127 +67,156 @@ export default function Home() {
         <div className="scrollcue" aria-hidden="true">Scroll</div>
       </section>
 
-      <Marquee items={c.marqueeItems} />
-
-      {/* WARUM */}
-      <section className="section section--light">
-        <div className="wrap split">
-          <Reveal>
-            <p className="eyebrow">{c.whyEyebrow}</p>
-            <h2 className="display"><Headline text={c.whyHeadline} /></h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="lede" style={{ marginBottom: 18 }}>{c.whyLede}</p>
-            <p className="muted" style={{ marginBottom: 28 }}>{c.whyText}</p>
-            <TextLink to={c.whyLink.to}>{c.whyLink.label}</TextLink>
-          </Reveal>
-        </div>
-        <div className="wrap" style={{ marginTop: 56 }}>
-          <Reveal>
-            <ImagePlaceholder className="split__media" label="/images/sections/trainer-floor.jpg" alt="Trainer korrigiert eine Übung auf der Trainingsfläche" />
-          </Reveal>
+      {/* 2 — BLUE ACCESS BAR */}
+      <section className="section section--dark" style={{ paddingTop: 48, paddingBottom: 48 }} aria-label="Leistungen im Überblick">
+        <div className="wrap">
+          <AccessBar items={c.accessBar} />
         </div>
       </section>
 
-      {/* STANDORTE */}
+      {/* 3 — EINSTIEG WÄHLEN */}
+      <section className="section section--light" id="einstieg">
+        <div className="wrap">
+          <Reveal className="head-row">
+            <div>
+              <BlueLabel>{c.decisionEyebrow}</BlueLabel>
+              <h2 className="display" style={{ marginTop: 18 }}><Headline text={c.decisionHeadline} /></h2>
+            </div>
+            <p className="muted" style={{ maxWidth: '46ch' }}>{c.decisionText}</p>
+          </Reveal>
+          <div className="decide-grid">
+            {c.decisionCards.map((card, i) => (
+              <Reveal key={card.title} delay={(i % 3) * 0.05}><DecisionCard {...card} /></Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4 — STUDIO FINDER */}
       <section className="section section--dark" id="standorte">
         <div className="wrap">
           <Reveal className="head-row">
             <div>
-              <p className="eyebrow">{c.studiosEyebrow}</p>
-              <h2 className="display"><Headline text={c.studiosHeadline} /></h2>
+              <BlueLabel>{c.studiosEyebrow}</BlueLabel>
+              <h2 className="display" style={{ marginTop: 18 }}><Headline text={c.studiosHeadline} /></h2>
             </div>
             <p className="muted" style={{ maxWidth: '42ch' }}>{c.studiosText}</p>
           </Reveal>
-          <div className="loc-grid">
-            {studios.map((loc, i) => (
-              <Reveal key={loc.slug} delay={i * 0.07}><LocationCard {...loc} /></Reveal>
+          <div className="finder-grid">
+            {studios.map((studio, i) => (
+              <Reveal key={studio.slug} delay={(i % 3) * 0.06}><FinderCard {...studio} /></Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* LEISTUNGEN */}
-      <section className="section section--white">
-        <div className="wrap">
-          <Reveal className="head-row">
-            <div>
-              <p className="eyebrow">{c.servicesEyebrow}</p>
-              <h2 className="display"><Headline text={c.servicesHeadline} /></h2>
-            </div>
-            <p className="muted" style={{ maxWidth: '46ch' }}>{c.servicesText}</p>
-          </Reveal>
-          <div className="svc-grid">
-            {c.services.map((s, i) => (
-              <Reveal key={s.title} delay={(i % 3) * 0.05}><ServiceCard {...s} /></Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* COMMUNITY */}
-      <section className="section section--darker" id="community">
-        <div className="wrap split" style={{ alignItems: 'start' }}>
+      {/* 5 — 24/7 TRAINING */}
+      <section className="section section--white" id="24-7">
+        <div className="wrap panel">
           <Reveal>
-            <p className="eyebrow">{c.communityEyebrow}</p>
-            <h2 className="display"><Headline text={c.communityHeadline} /></h2>
-            <p className="muted" style={{ margin: '22px 0 28px', maxWidth: '42ch' }}>{c.communityText}</p>
-            <Button to={c.communityCta.to} variant="ghost-light">{c.communityCta.label}</Button>
-          </Reveal>
-          <Reveal className="gallery" delay={0.1}>
-            <ImagePlaceholder className="g-tall" label="community-01" alt="Community-Moment 1" />
-            <ImagePlaceholder label="community-02" alt="Community-Moment 2" />
-            <ImagePlaceholder className="g-wide" label="community-03" alt="Community-Moment 3" />
-            <ImagePlaceholder label="community-04" alt="Community-Moment 4" />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ZAHLEN */}
-      <section className="section section--dark" style={{ padding: '72px 0' }}>
-        <div className="wrap">
-          <Reveal className="nums">
-            {c.numbers.map((num) => (
-              <div key={num.label}>
-                <div className="n">
-                  {num.text
-                    ? <Headline text={num.text} />
-                    : <Stat value={Number(num.count) || 0} decimals={num.decimals || 0} suffix={num.suffix || ''} />}
-                </div>
-                <div className="l">{num.label}</div>
+            <BlueLabel>{c.access247Eyebrow}</BlueLabel>
+            <h2 className="display" style={{ margin: '18px 0 20px' }}><Headline text={c.access247Headline} /></h2>
+            <p className="lede" style={{ marginBottom: 30 }}>{c.access247Text}</p>
+            <PathTrack items={c.access247Points} />
+            {c.access247Note?.text && (
+              <div className="panel__frame" style={{ marginTop: 30 }}>
+                <strong>{c.access247Note.title}</strong>
+                <p>{c.access247Note.text}</p>
               </div>
-            ))}
+            )}
+            {c.access247Cta?.label && (
+              <div style={{ marginTop: 30 }}>
+                <Button to={c.access247Cta.to} variant="ghost-dark">{c.access247Cta.label}</Button>
+              </div>
+            )}
+          </Reveal>
+          <Reveal delay={0.1}>
+            <ImagePlaceholder className="panel__media" label="/images/sections/24-7-zugang.jpg" alt="Zugang per Transponder außerhalb der Trainerzeiten" />
           </Reveal>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="section section--light">
+      {/* 6 — REHA & GESUNDHEIT */}
+      <section className="section section--light" id="reha">
+        <div className="wrap">
+          <Reveal>
+            <BlueLabel>{c.rehaEyebrow}</BlueLabel>
+            <h2 className="display" style={{ margin: '18px 0 18px', maxWidth: '22ch' }}><Headline text={c.rehaHeadline} /></h2>
+            <p className="lede" style={{ maxWidth: '58ch' }}>{c.rehaText}</p>
+          </Reveal>
+          <PathSteps steps={c.rehaSteps} />
+          {c.rehaCta?.label && (
+            <Reveal style={{ marginTop: 44 }}>
+              <Button to={c.rehaCta.to}>{c.rehaCta.label}</Button>
+            </Reveal>
+          )}
+        </div>
+      </section>
+
+      {/* 7 — FIGHTER WORLD */}
+      <section className="section section--darker" id="fighter-world">
+        <div className="wrap panel">
+          <Reveal delay={0.05}>
+            <ImagePlaceholder className="panel__media" label="/images/sections/fighter-world.jpg" alt="Boxtraining in der Fighter World" />
+          </Reveal>
+          <Reveal>
+            <BlueLabel>{c.fighterEyebrow}</BlueLabel>
+            <h2 className="display" style={{ margin: '18px 0 20px' }}><Headline text={c.fighterHeadline} /></h2>
+            <p className="lede" style={{ marginBottom: 30 }}>{c.fighterText}</p>
+            <PathTrack items={c.fighterPoints} />
+            {c.fighterCta?.label && (
+              <div style={{ marginTop: 30 }}>
+                <Button to={c.fighterCta.to}>{c.fighterCta.label}</Button>
+              </div>
+            )}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 8 — MITGLIEDSCHAFT */}
+      <section className="section section--dark" id="mitgliedschaft">
         <div className="wrap">
           <Reveal className="head-row">
             <div>
-              <p className="eyebrow">{c.testimonialsEyebrow}</p>
-              <h2 className="display"><Headline text={c.testimonialsHeadline} /></h2>
+              <BlueLabel>{c.membershipEyebrow}</BlueLabel>
+              <h2 className="display" style={{ marginTop: 18 }}><Headline text={c.membershipHeadline} /></h2>
             </div>
+            <p className="muted" style={{ maxWidth: '42ch' }}>{c.membershipText}</p>
           </Reveal>
-          <div className="tst-grid">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.07}><TestimonialCard {...t} /></Reveal>
-            ))}
-          </div>
+          {plans.length > 0 && (
+            <div className="plan-grid">
+              {plans.slice(0, 3).map((plan, i) => (
+                <Reveal key={plan.name} delay={i * 0.06} className="plan-card">
+                  <span className="plan-card__kind">{plan.badge || 'Tarif'}</span>
+                  <h3>{plan.name}</h3>
+                  {plan.price && <div className="plan-card__price">{plan.price} €<span>{plan.period || 'pro Monat'}</span></div>}
+                  {plan.desc && <p>{plan.desc}</p>}
+                  <TextLink to="/mitgliedschaft">Details ansehen</TextLink>
+                </Reveal>
+              ))}
+            </div>
+          )}
+          <Reveal style={{ marginTop: 40 }}>
+            <Button to={c.membershipCta.to}>{c.membershipCta.label}</Button>
+          </Reveal>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="section section--dark">
+      {/* 9 — PROBETRAINING */}
+      <section className="section section--light" id="probetraining">
         <div className="wrap">
-          <Reveal className="finalcta">
-            <div className="finalcta__in">
-              <p className="eyebrow">{c.ctaEyebrow}</p>
-              <h2 className="display"><Headline text={c.ctaHeadline} /></h2>
-              <p>{c.ctaText}</p>
-              <Button to={c.ctaButton.to}>{c.ctaButton.label}</Button>
-            </div>
+          <Reveal className="entry">
+            <BlueLabel>{c.ctaEyebrow}</BlueLabel>
+            <h2 className="display" style={{ margin: '18px 0 16px' }}><Headline text={c.ctaHeadline} /></h2>
+            <p className="lede" style={{ maxWidth: '56ch' }}>{c.ctaText}</p>
+            {Array.isArray(c.ctaSteps) && c.ctaSteps.length > 0 && (
+              <div className="entry__steps">
+                {c.ctaSteps.map((step, i) => (
+                  <span className="entry__step" key={step}><i>{i + 1}</i>{step}</span>
+                ))}
+              </div>
+            )}
+            <Button to={c.ctaButton.to}>{c.ctaButton.label}</Button>
           </Reveal>
         </div>
       </section>

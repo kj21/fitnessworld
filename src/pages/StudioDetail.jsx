@@ -3,6 +3,11 @@ import Reveal from '../components/Reveal'
 import Button, { TextLink } from '../components/Button'
 import ImagePlaceholder from '../components/ImagePlaceholder'
 import PageHero from '../components/PageHero'
+import BlueLabel from '../components/BlueLabel'
+import Headline from '../components/Headline'
+import { useSchedule, useCourses } from '../lib/content.js'
+import { useSanityData } from '../hooks/useSanityData.js'
+import { STUDIO_CONTACTS_QUERY } from '../lib/queries.js'
 
 function CheckIcon() {
   return (
@@ -32,6 +37,9 @@ function setMetaDescription(content) {
  * trial-training CTA.
  */
 export default function StudioDetail({ data: d }) {
+  const { schedule } = useSchedule()
+  const { courses } = useCourses()
+  const { data: contacts } = useSanityData(STUDIO_CONTACTS_QUERY, [])
   const soon = d.comingSoon
   const trialTo = `/probetraining?studio=${d.slug}`
   const title = d.title || `FITNESS WORLD ${d.name.toUpperCase()}`
@@ -54,6 +62,45 @@ export default function StudioDetail({ data: d }) {
         img={d.img || `/images/studios/${d.slug}-hero.jpg`}
         alt={`${d.eyebrow} Eingangsbereich`}
       />
+
+      {/* QUICK DECISION BAR — what this location is good for */}
+      {(d.bestFor || d.access || d.trainerHours || d.features?.length > 0) && (
+        <section className="section section--dark" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div className="wrap">
+            <Reveal className="finder-card__tags" style={{ marginBottom: d.bestFor ? 18 : 0 }}>
+              {(d.features || []).map((f) => <span key={f}>{f}</span>)}
+            </Reveal>
+            {d.bestFor && <Reveal className="finder-card__best" delay={0.05}>Passt zu: {d.bestFor}</Reveal>}
+          </div>
+        </section>
+      )}
+
+      {/* PASST DIESER STANDORT ZU DIR? — access vs. staffed trainer hours.
+          Always shown on open studios so nobody reads 24/7 access as 24/7 staffing. */}
+      {!soon && (
+        <section className="section section--white">
+          <div className="wrap">
+            <Reveal>
+              <BlueLabel>Standort-Check</BlueLabel>
+              <h2 className="display" style={{ marginTop: 18 }}>
+                <Headline text={'PASST DIESER STANDORT\n*ZU DIR?*'} />
+              </h2>
+            </Reveal>
+            <div className="panel" style={{ marginTop: 36, gridTemplateColumns: '1fr 1fr' }}>
+              <Reveal className="panel__frame">
+                <strong>24/7 Zugang</strong>
+                <p>{d.access || 'Zugang per Transponder rund um die Uhr. Die Details zu deinem Vertrag klären wir beim Probetraining.'}</p>
+              </Reveal>
+              <Reveal className="panel__frame" delay={0.06}>
+                <strong>Betreuung zu Trainerzeiten</strong>
+                <p>{d.trainerHours
+                  ? `Persönliche Betreuung, Einweisung und Trainingsplanung: ${d.trainerHours}.`
+                  : 'Persönliche Betreuung, Einweisung und Trainingsplanung gibt es zu den Trainerzeiten dieses Standorts. Die aktuellen Zeiten nennen wir dir gern.'}</p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* KEY FACTS */}
       {d.keyFacts.length > 0 && (
@@ -143,6 +190,79 @@ export default function StudioDetail({ data: d }) {
         </section>
       )}
 
+      {/* KURSE AN DIESEM STANDORT */}
+      {(() => {
+        const rows = schedule.filter((r) => String(r.studio || '').toLowerCase() === d.name.toLowerCase())
+        if (!rows.length) return null
+        return (
+          <section className="section section--light">
+            <div className="wrap">
+              <Reveal className="head-row">
+                <div>
+                  <BlueLabel>Kurse vor Ort</BlueLabel>
+                  <h2 className="display" style={{ marginTop: 18 }}>
+                    <Headline text={`KURSE IN\n*${d.name.toUpperCase()}.*`} />
+                  </h2>
+                </div>
+                <TextLink to="/kurse">Ganzen Kursplan ansehen</TextLink>
+              </Reveal>
+              <Reveal className="table-wrap">
+                <table className="schedule-table" aria-label={`Kursplan ${d.name}`}>
+                  <thead>
+                    <tr><th scope="col">Tag</th><th scope="col">Uhrzeit</th><th scope="col">Kurs</th><th scope="col">Level</th></tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, i) => (
+                      <tr key={r._id || i}>
+                        <td><strong>{r.day}</strong></td>
+                        <td>{r.time}</td>
+                        <td>{r.course}</td>
+                        <td>{r.level && <span className="level-badge">{r.level}</span>}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Reveal>
+            </div>
+          </section>
+        )
+      })()}
+
+      {/* KONTAKT & ANFAHRT */}
+      {(() => {
+        const contact = (Array.isArray(contacts) ? contacts : []).find(
+          (c) => String(c.name || '').toLowerCase() === d.name.toLowerCase()
+        )
+        if (!contact) return null
+        const mapQuery = encodeURIComponent(`Fitness World ${d.name} ${contact.addr || ''}`)
+        return (
+          <section className="section section--white">
+            <div className="wrap panel">
+              <Reveal>
+                <BlueLabel>Kontakt & Anfahrt</BlueLabel>
+                <h2 className="display" style={{ margin: '18px 0 24px' }}>
+                  <Headline text={'SO ERREICHST\n*DU UNS.*'} />
+                </h2>
+                <div className="finder-card__rows" style={{ borderTop: 0, paddingTop: 0 }}>
+                  {contact.addr && <div className="finder-card__row"><b>Adresse</b><span style={{ color: 'var(--text-muted)' }}>{contact.addr}</span></div>}
+                  {contact.tel && <div className="finder-card__row"><b>Telefon</b><a href={`tel:${String(contact.tel).replace(/[^\d+]/g, '')}`}>{contact.tel}</a></div>}
+                  {contact.email && <div className="finder-card__row"><b>E-Mail</b><a href={`mailto:${contact.email}`}>{contact.email}</a></div>}
+                  {contact.hours && <div className="finder-card__row"><b>Zeiten</b><span style={{ color: 'var(--text-muted)' }}>{contact.hours}</span></div>}
+                </div>
+                <div style={{ marginTop: 26 }}>
+                  <a className="textlink" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer">
+                    Route planen <span className="arr">→</span>
+                  </a>
+                </div>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <ImagePlaceholder className="panel__media" label={`/images/studios/${d.slug}-karte.jpg`} alt={`Anfahrt ${d.eyebrow}`} />
+              </Reveal>
+            </div>
+          </section>
+        )
+      })()}
+
       {/* GALLERY */}
       <section className="section section--darker">
         <div className="wrap">
@@ -165,7 +285,7 @@ export default function StudioDetail({ data: d }) {
             <div className="finalcta__in">
               <p className="eyebrow">{soon ? 'Demnächst' : 'Probetraining'}</p>
               <h2 className="display">
-                {d.ctaHeadline || (soon ? `BALD AUCH IN ${d.name.toUpperCase()}.` : 'KOMM ZUM PROBETRAINING.')}
+                {d.ctaHeadline || (soon ? `BALD AUCH IN ${d.name.toUpperCase()}.` : `PROBETRAINING IN ${d.name.toUpperCase()} ANFRAGEN.`)}
               </h2>
               <p>
                 {d.ctaText || (soon
@@ -174,7 +294,7 @@ export default function StudioDetail({ data: d }) {
               </p>
               {soon
                 ? <Button to="/kontakt">Kontakt aufnehmen</Button>
-                : <Button to={trialTo}>Probetraining buchen</Button>}
+                : <Button to={trialTo}>{`Probetraining in ${d.name} anfragen`}</Button>}
             </div>
           </Reveal>
         </div>

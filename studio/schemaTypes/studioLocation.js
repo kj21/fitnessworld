@@ -38,6 +38,18 @@ export default defineType({
       description: 'z.B. 24/7 Training, Boxen & Kickboxen',
     }),
     defineField({
+      name: 'bestFor', title: 'Passt besonders zu (z.B. 24/7, Reha, Boxen)', type: 'string',
+      description: 'Kurz, erscheint auf der Standort-Karte: „Passt zu: 24/7 Training & Reha-Sport“.',
+    }),
+    defineField({
+      name: 'accessNote', title: 'Zugang (z.B. 24/7 mit Transponder)', type: 'string',
+      description: 'Wann kommt man ins Studio? Wird getrennt von den Trainerzeiten angezeigt.',
+    }),
+    defineField({
+      name: 'trainerHours', title: 'Trainerzeiten (betreute Zeiten)', type: 'string',
+      description: 'z.B. Mo–Fr 09:00–21:00. Bewusst getrennt vom 24/7 Zugang, damit niemand durchgehende Betreuung erwartet.',
+    }),
+    defineField({
       name: 'cardFeatures', title: 'Startseiten-Karte: Merkmale (max. 4)',
       type: 'array', of: [{ type: 'string' }],
       validation: Rule => Rule.max(4),
