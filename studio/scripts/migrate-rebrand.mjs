@@ -35,6 +35,9 @@ const replace = {
   heroEyebrow: c.heroEyebrow,
   heroHeadline: c.heroHeadline,
   heroLede: c.heroLede,
+  // {anzahl} is replaced at render time by the number of open studios, so the
+  // first fact stays correct when a studio opens.
+  heroStats: ['{anzahl} Standorte', '24/7 Zugang', 'Betreuung zu Trainerzeiten', 'Reha-Sport mit Verordnung'],
   heroPrimaryCta: c.heroPrimaryCta,
   heroSecondaryCta: c.heroSecondaryCta,
   studiosEyebrow: c.studiosEyebrow,
