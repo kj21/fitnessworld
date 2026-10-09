@@ -69,8 +69,8 @@ The homepage is fully built as the reference implementation — match its patter
 ## Design tokens (wired into Tailwind — see `tailwind.config.js`)
 
 - Colors: `fw-blue`, `fw-blue-hover` (#1479B3), `navy-900/800/700`, `offwhite`, `ink`, `muted`, `line`.
-- Fonts: `font-display` (Anton, uppercase headlines) · `font-body` (Manrope).
-- Radius: `rounded-s/m/l` (10/18/28px). Max width: `max-w-site` (1240px).
+- Fonts: `font-display` (**Oswald**, uppercase headlines, weight 300 for display sizes and 400 for small labels) · `font-body` (Manrope). Anton was replaced in Oct 2026 — headlines stay condensed but thin.
+- Radius: `rounded-s/m/l` (4/8/14px — deliberately tight). Pills (50px) stay round for badges and tags. Max width: `max-w-site` (1240px).
 - CSS variables for the same tokens live in `src/index.css` (`--fw-blue`, `--navy-900`, …).
 
 ## Typography rules
