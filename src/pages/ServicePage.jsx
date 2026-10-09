@@ -40,7 +40,7 @@ export default function ServicePage({ slug }) {
         primaryTo={page.primaryCta?.to}
         secondaryCta={page.secondaryCta?.label}
         secondaryTo={page.secondaryCta?.to}
-        img={page.heroImage || page.heroImageLabel}
+        img={page.heroImage || page.heroImagePlaceholder}
         alt={page.eyebrow}
       />
       <Sections blocks={page.sections} />

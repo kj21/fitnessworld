@@ -61,6 +61,11 @@ export function normalizeStudio(s) {
     ausstattung: clean(s.ausstattung),
     kurse: Array.isArray(s.kurse) ? s.kurse.filter((k) => k && k.title) : [],
     sortOrder: typeof s.sortOrder === 'number' ? s.sortOrder : null,
+    // Practical fit shown on the finder card and the location page. Access and
+    // trainer hours stay separate on purpose: 24/7 entry is not staffed time.
+    bestFor: s.bestFor || '',
+    access: s.accessNote || s.access || '',
+    trainerHours: s.trainerHours || '',
   }
 }
 

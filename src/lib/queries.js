@@ -9,6 +9,7 @@ export const STUDIOS_QUERY = `
     _id,
     "slug": slug.current,
     eyebrow, title, sub, comingSoon, sortOrder,
+    bestFor, accessNote, trainerHours,
     "img": heroImage.asset->url,
     cardFeatures, keyFacts,
     seoTitle, metaDesc,
@@ -55,14 +56,16 @@ export const HOME_PAGE_QUERY = `
   *[_type == "homePage"][0] {
     seoTitle, metaDesc,
     heroEyebrow, heroHeadline, heroLede, heroPrimaryCta, heroSecondaryCta, heroStats,
-    marqueeItems,
-    whyEyebrow, whyHeadline, whyLede, whyText, whyLink,
+    accessBar[]{ icon, label, meta },
+    decisionEyebrow, decisionHeadline, decisionText,
+    decisionCards[]{ icon, goal, title, text, to, linkLabel },
     studiosEyebrow, studiosHeadline, studiosText,
-    servicesEyebrow, servicesHeadline, servicesText, services,
-    communityEyebrow, communityHeadline, communityText, communityCta,
-    numbers,
-    testimonialsEyebrow, testimonialsHeadline,
-    ctaEyebrow, ctaHeadline, ctaText, ctaButton
+    access247Eyebrow, access247Headline, access247Text,
+    access247Points[]{ title, text }, access247Note{ title, text }, access247Cta,
+    rehaEyebrow, rehaHeadline, rehaText, rehaSteps[]{ title, text }, rehaCta,
+    fighterEyebrow, fighterHeadline, fighterText, fighterPoints[]{ title, text }, fighterCta,
+    membershipEyebrow, membershipHeadline, membershipText, membershipCta,
+    ctaEyebrow, ctaHeadline, ctaText, ctaSteps, ctaButton
   }
 `
 

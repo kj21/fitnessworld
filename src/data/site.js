@@ -12,10 +12,11 @@ export const routes = [
   { path: '/', label: 'Startseite', template: 'home' },
   // Studio pages are dynamic: /<slug> for every studio published in Sanity
   // (src/lib/studios.js + src/pages/StudioRoute.jsx). Nothing to list here.
+  { path: '/24-7-training', label: '24/7 Training', template: 'service' },
+  { path: '/reha-sport', label: 'Reha-Sport & Gesundheit', template: 'service' },
+  { path: '/fighter-world', label: 'Fighter World', template: 'service' },
+  { path: '/personal-training', label: 'Personal Training', template: 'service' },
   { path: '/kurse', label: 'Kursplan & Angebote', template: 'course-overview' },
-  { path: '/kurse/reha-sport', label: 'Reha-Sport', template: 'health-landing' },
-  { path: '/kurse/personal-training', label: 'Personal Training', template: 'service-landing' },
-  { path: '/kurse/boxen', label: 'Boxen & Kickboxen', template: 'service-landing' },
   { path: '/mitgliedschaft', label: 'Mitglied werden / Preise', template: 'pricing' },
   { path: '/probetraining', label: 'Kostenloses Probetraining', template: 'lead-form' },
   { path: '/team', label: 'Unser Team', template: 'team' },
@@ -30,19 +31,13 @@ export const routes = [
 
 export const nav = [
   // `studios: true` → Header fills the children from Sanity (useStudios).
-  { label: 'Standorte', to: '/holdorf', studios: true },
-  {
-    label: 'Kurse', to: '/kurse',
-    // `courses: true` → Header appends the featured courses from Sanity (useCourses).
-    courses: true,
-    children: [{ label: 'Kursplan & Angebote', to: '/kurse' }],
-  },
+  { label: 'Standorte', to: '/standorte', studios: true },
+  { label: '24/7 Training', to: '/24-7-training' },
+  { label: 'Reha & Gesundheit', to: '/reha-sport' },
+  { label: 'Fighter World', to: '/fighter-world' },
+  { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
   // External link (http…) → opens in a new tab, see NavLink in Header.jsx
   { label: 'Sauna & Spa', to: 'https://sauna-spa-twistringen.de/' },
-  { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
-  { label: 'Team', to: '/team' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Kontakt', to: '/kontakt' },
 ]
 
 export const marqueeItems = [
@@ -50,14 +45,14 @@ export const marqueeItems = [
   'Personal Training', 'Kurse', 'Wellness', 'Community',
 ]
 
-export const heroStats = ['4 Standorte', '24/7 Training', 'Reha-Sport', 'Persönliche Betreuung']
+export const heroStats = ['4 Standorte', '24/7 Zugang', 'Betreuung zu Trainerzeiten', 'Reha-Sport mit Verordnung']
 
 // Offline safety net only. Sanity is the source of truth for studios — when it
 // answers, this list is NOT merged in (see src/lib/studios.js).
 export const locations = [
-  { slug: 'holdorf',     name: 'Holdorf',     to: '/holdorf',     cardImg: 'studios/holdorf-card.jpg',     features: ['24/7 Training', 'Boxen', 'Wellness', 'Parkplätze'] },
-  { slug: 'goldenstedt', name: 'Goldenstedt', to: '/goldenstedt', cardImg: 'studios/goldenstedt-card.jpg', features: ['24/7 Training', 'Reha-Sport', 'Kurse', 'Lounge'] },
-  { slug: 'twistringen', name: 'Twistringen', to: '/twistringen', cardImg: 'studios/twistringen-card.jpg', features: ['24/7 Training', 'Functional', 'Community', 'Solarium'] },
+  { slug: 'holdorf',     name: 'Holdorf',     to: '/holdorf',     cardImg: 'studios/holdorf-card.jpg',     bestFor: '24/7 Training & Fighter World', accessNote: '24/7 mit Transponder', features: ['24/7 Zugang', 'Boxen', 'Wellness', 'Parkplätze'] },
+  { slug: 'goldenstedt', name: 'Goldenstedt', to: '/goldenstedt', cardImg: 'studios/goldenstedt-card.jpg', bestFor: 'Reha-Sport & Kurse', accessNote: '24/7 mit Transponder', features: ['24/7 Zugang', 'Reha-Sport', 'Kurse', 'Lounge'] },
+  { slug: 'twistringen', name: 'Twistringen', to: '/twistringen', cardImg: 'studios/twistringen-card.jpg', bestFor: 'Kraft, Kurse & Wellness', accessNote: '24/7 mit Transponder', features: ['24/7 Zugang', 'Functional', 'Kurse', 'Solarium'] },
 ]
 
 export const services = [
@@ -90,47 +85,93 @@ export const numberWord = (n) => NUMBER_WORDS[n] ?? String(n)
 export function homeContent(studioCount = locations.length) {
   const word = numberWord(studioCount)
   return {
-    seoTitle: 'Fitness World Studios | 24/7 Fitness, Reha-Sport & Kurse',
-    metaDesc: `24/7 Training, Reha-Sport, Kurse und persönliche Betreuung an ${word.toLowerCase()} Standorten. Kostenloses Probetraining bei Fitness World Studios.`,
+    seoTitle: 'Fitness World Studios | 24/7 Training, Reha-Sport, Kurse & Fighter World',
+    metaDesc: `24/7 Zugang, persönliche Betreuung, Reha-Sport, Kurse und Fighter World an ${word.toLowerCase()} Standorten. Finde deinen Einstieg beim kostenlosen Probetraining.`,
 
+    // 1 — Hero
     heroEyebrow: 'Fitness World Studios',
-    heroHeadline: 'Stärker.\n*Gesünder.*\nGemeinsam.',
-    heroLede: `24/7 Training, Reha-Sport, Kurse und persönliche Betreuung an ${word.toLowerCase()} Standorten. Für deinen Start, deinen Wiedereinstieg und dein nächstes Ziel.`,
-    heroPrimaryCta:   { label: 'Kostenloses Probetraining', to: '/probetraining' },
-    heroSecondaryCta: { label: 'Studio finden', to: '/holdorf' },
-    heroStats: [`${studioCount} Standorte`, ...heroStats.slice(1)],
+    heroHeadline: 'TRAINING NACH\n*DEINEM LIFESTYLE.*',
+    heroLede: '24/7 Zugang, persönliche Betreuung, Reha-Sport, Kurse und Fighter World – so flexibel, wie dein Alltag es braucht.',
+    heroPrimaryCta:   { label: 'Studio & Probetraining finden', to: '/probetraining' },
+    heroSecondaryCta: { label: '24/7 Training entdecken', to: '/24-7-training' },
+    heroStats: [`${studioCount} Standorte`, '24/7 Zugang', 'Betreuung zu Trainerzeiten', 'Reha-Sport mit Verordnung'],
 
-    marqueeItems,
+    // 2 — Blue Access Bar
+    accessBar: [
+      { icon: 'clock',  label: '24/7 Zugang',           meta: 'Transponder' },
+      { icon: 'target', label: 'Persönliche Betreuung', meta: 'zu Trainerzeiten' },
+      { icon: 'heart',  label: 'Reha-Sport',            meta: 'mit Verordnung' },
+      { icon: 'glove',  label: 'Boxen & Kickboxen',     meta: 'Fighter World' },
+      { icon: 'spa',    label: 'Wellness',              meta: 'Solarium & Sauna' },
+      { icon: 'pin',    label: 'Mehrere Standorte',     meta: 'ein Zugang' },
+    ],
 
-    whyEyebrow: 'Warum Fitness World?',
-    whyHeadline: 'Training allein\nreicht *nicht.*',
-    whyLede: 'Wir glauben, dass langfristige Erfolge dort entstehen, wo professionelle Betreuung, moderne Trainingsmöglichkeiten und echte Gemeinschaft zusammenkommen.',
-    whyText: 'Egal ob du gerade erst anfängst, nach einer Pause zurückkommst oder gezielt stärker werden willst: Bei Fitness World findest du einen Ort, der zu deinem Alltag passt und dich nicht alleine lässt.',
-    whyLink: { label: 'Mehr über uns', to: '/team' },
+    // 3 — Einstieg wählen
+    decisionEyebrow: 'Dein Einstieg',
+    decisionHeadline: 'WÄHLE DEINEN *EINSTIEG.*',
+    decisionText: 'Jeder Mensch startet anders. Deshalb findest du bei Fitness World Studios nicht nur Geräte, sondern den Trainingsweg, der zu deinem Alltag, deinem Ziel und deinem Level passt.',
+    decisionCards: [
+      { icon: 'clock',    goal: 'Flexibel trainieren',   title: '24/7 Zugang',        text: 'Trainiere unabhängig von Öffnungszeiten – früh vor der Schicht, spät nach Feierabend.', to: '/24-7-training' },
+      { icon: 'heart',    goal: 'Schmerzfreier werden',  title: 'Reha-Sport',         text: 'Gesundheitlich begleitetes Training in fester Gruppe, mit ärztlicher Verordnung.', to: '/reha-sport' },
+      { icon: 'dumbbell', goal: 'Stärker werden',        title: 'Kraft & Geräte',     text: 'Moderne Geräte, klarer Plan und ein Trainer, der dir die Technik zeigt.', to: '/kurse' },
+      { icon: 'users',    goal: 'Gemeinsam trainieren',  title: 'Kurse & Zirkel',     text: 'Feste Termine, Gruppendynamik und ein Plan, der dich in Bewegung hält.', to: '/kurse' },
+      { icon: 'glove',    goal: 'Auspowern',             title: 'Fighter World',      text: 'Boxen, Kickboxen und Frauenboxen – Technik, Kondition und Fokus.', to: '/fighter-world' },
+      { icon: 'spa',      goal: 'Erholen',               title: 'Wellness',           text: 'Solarium, Sauna und Regeneration als fester Teil deines Trainingswegs.', to: '/kontakt' },
+    ],
 
-    studiosEyebrow: 'Unsere Studios',
-    studiosHeadline: `${word} Standorte.\nEine *Community.*`,
-    studiosText: 'Wähle dein Studio in deiner Nähe und finde heraus, welche Angebote, Kurse und Trainingsmöglichkeiten vor Ort auf dich warten.',
+    // 4 — Studio Finder
+    studiosEyebrow: 'Standorte',
+    studiosHeadline: 'FINDE DEINEN\n*FITNESS WORLD STANDORT.*',
+    studiosText: 'Jeder Standort hat seinen eigenen Schwerpunkt – von 24/7 Training über Reha-Sport bis Boxen und Wellness.',
 
-    servicesEyebrow: 'Unsere Leistungen',
-    servicesHeadline: 'Alles für *dein Ziel.*',
-    servicesText: 'Ob Kraft, Ausdauer, Gesundheit oder Technik: Wir bieten dir Training, das zu deinem Ziel und deinem Level passt.',
-    services,
+    // 5 — 24/7
+    access247Eyebrow: '24/7 Training',
+    access247Headline: 'TRAINIERE, WENN ES\n*FÜR DICH PASST.*',
+    access247Text: 'Frühschicht, Spätschicht, Familie oder voller Kalender: Mit 24/7 Zugang trainierst du unabhängig von klassischen Öffnungszeiten.',
+    access247Points: [
+      { title: 'Zugang per Transponder', text: 'Dein Transponder öffnet dein Studio – auch außerhalb der betreuten Zeiten.' },
+      { title: 'Flexibel rund um die Uhr', text: 'Kein Warten auf Öffnungszeiten. Du trainierst in deinem Rhythmus.' },
+      { title: 'Ideal für Schichtarbeit', text: 'Früh, spät oder zwischendurch: Dein Training passt sich dem Dienstplan an.' },
+      { title: 'Betreuung zu Trainerzeiten', text: 'Einweisung, Trainingsplan und Fragen klären wir, wenn ein Trainer da ist.' },
+    ],
+    access247Note: { title: 'Wichtig zu wissen', text: '24/7 Zugang heißt: Du kommst rund um die Uhr ins Studio. Persönliche Betreuung gibt es zu den ausgewiesenen Trainerzeiten deines Standorts.' },
+    access247Cta: { label: '24/7 Training entdecken', to: '/24-7-training' },
 
-    communityEyebrow: 'Community',
-    communityHeadline: 'Fitness ist besser *gemeinsam.*',
-    communityText: 'Bei Fitness World trainierst du nicht anonym. Du wirst Teil einer Gemeinschaft, die sich gegenseitig motiviert, unterstützt und gemeinsam besser wird.',
-    communityCta: { label: 'Community entdecken', to: '/team' },
+    // 6 — Reha & Gesundheit
+    rehaEyebrow: 'Reha & Gesundheit',
+    rehaHeadline: 'REHA-SPORT, DER DICH WIEDER\n*IN BEWEGUNG BRINGT.*',
+    rehaText: 'Mit ärztlicher Verordnung, qualifizierter Betreuung und klarer Kursstruktur.',
+    rehaSteps: [
+      { title: 'Verordnung erhalten', text: 'Dein Arzt stellt die Verordnung für Reha-Sport aus.' },
+      { title: 'Beratung vereinbaren', text: 'Wir klären Ablauf, Kurszeiten und den passenden Standort.' },
+      { title: 'Kurs starten', text: 'Du trainierst in einer festen Gruppe mit qualifizierter Anleitung.' },
+      { title: 'Fortschritt aufbauen', text: 'Wir begleiten dich, bis Bewegung wieder zu deinem Alltag gehört.' },
+    ],
+    rehaCta: { label: 'Beratung vereinbaren', to: '/probetraining?interesse=reha' },
 
-    numbers: numbers.map((n) => (n.label === 'Standorte' ? { ...n, count: studioCount } : n)),
+    // 7 — Fighter World
+    fighterEyebrow: 'Fighter World',
+    fighterHeadline: 'TECHNIK. KONDITION.\n*FOKUS.*',
+    fighterText: 'Boxen, Kickboxen und Frauenboxen für alle, die mehr wollen als nur Geräte.',
+    fighterPoints: [
+      { title: 'Technik von Grund auf', text: 'Saubere Schlag- und Beinarbeit, Schritt für Schritt aufgebaut.' },
+      { title: 'Kondition mit System', text: 'Intervalle, Pratzen und Partnerübungen statt starrer Geräteabfolge.' },
+      { title: 'Frauenboxen', text: 'Eigene Einheiten mit klarer Struktur und ruhigem Einstieg.' },
+    ],
+    fighterCta: { label: 'Fighter World entdecken', to: '/fighter-world' },
 
-    testimonialsEyebrow: 'Das sagen unsere Mitglieder',
-    testimonialsHeadline: 'Echte Stimmen.\nEchtes *Vertrauen.*',
+    // 8 — Mitgliedschaft
+    membershipEyebrow: 'Mitgliedschaft',
+    membershipHeadline: 'STARTE SO FLEXIBEL,\n*WIE DU TRAINIERST.*',
+    membershipText: 'Finde die Mitgliedschaft, die zu deinem Alltag, deinem Ziel und deinem Standort passt.',
+    membershipCta: { label: 'Mitgliedschaft anfragen', to: '/mitgliedschaft' },
 
+    // 9 — Probetraining
     ctaEyebrow: 'Probetraining',
-    ctaHeadline: 'Finde heraus,\nwas in dir *steckt.*',
-    ctaText: 'Vereinbare jetzt dein kostenloses Probetraining und lerne Fitness World persönlich kennen.',
-    ctaButton: { label: 'Probetraining vereinbaren', to: '/probetraining' },
+    ctaHeadline: 'FINDE DEINEN *STARTPUNKT.*',
+    ctaText: 'Wähle deinen Standort und sag uns, wie du trainieren möchtest. Wir melden uns mit dem passenden Einstieg.',
+    ctaSteps: ['Standort wählen', 'Trainingsart angeben', 'Termin abstimmen'],
+    ctaButton: { label: 'Probetraining anfragen', to: '/probetraining' },
   }
 }
 
@@ -293,12 +334,12 @@ export const company = {
 
 export const footer = {
   // {standorte} → number word of open studios, filled in by Footer.jsx
-  text: 'Dein Training. Deine Gesundheit. Deine Community. An {standorte} Standorten für dich da – rund um die Uhr.',
+  text: 'Training nach deinem Lifestyle: 24/7 Zugang, Reha-Sport, Kurse und Fighter World an {standorte} Standorten.',
   columns: [
     // `studios: true` → Footer fills the links from Sanity (useStudios).
     { title: 'Standorte', studios: true, links: [] },
     // `courses: true` → Footer fills the links from Sanity (useCourses).
-    { title: 'Leistungen', courses: true, links: [['Kurse', '/kurse']] },
+    { title: 'Training', courses: true, links: [['24/7 Training', '/24-7-training'], ['Reha-Sport', '/reha-sport'], ['Fighter World', '/fighter-world'], ['Kurse', '/kurse']] },
     { title: 'Service', links: [['Probetraining', '/probetraining'], ['Mitgliedschaft', '/mitgliedschaft'], ['Team', '/team'], ['Jobs', '/jobs'], ['Kontakt', '/kontakt']] },
     { title: 'Rechtliches', links: [['Impressum', '/impressum'], ['Datenschutz', '/datenschutz'], ['AGB', '/agb'], ['Hausordnung', '/hausordnung']] },
   ],

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Wraps children, fades/slides them in when scrolled into view.
-export default function Reveal({ children, as: Tag = 'div', delay = 0, className = '', ...rest }) {
+export default function Reveal({ children, as: Tag = 'div', delay = 0, className = '', style, ...rest }) {
   const ref = useRef(null)
   const [shown, setShown] = useState(false)
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Reveal({ children, as: Tag = 'div', delay = 0, className
     return () => io.disconnect()
   }, [])
   return (
-    <Tag ref={ref} className={`reveal ${shown ? 'in' : ''} ${className}`} style={{ transitionDelay: `${delay}s` }} {...rest}>
+    <Tag ref={ref} className={`reveal ${shown ? 'in' : ''} ${className}`} style={{ transitionDelay: `${delay}s`, ...style }} {...rest}>
       {children}
     </Tag>
   )

@@ -128,11 +128,13 @@ export default function Probetraining() {
                     <label htmlFor="interesse">Interesse</label>
                     <select id="interesse" value={form.interesse} onChange={set('interesse')}>
                       <option value="">Bitte wählen</option>
-                      <option value="allgemein">Allgemeines Probetraining</option>
-                      <option value="mitgliedschaft">Mitgliedschaft</option>
+                      <option value="24-7">24/7 Training</option>
+                      <option value="kraft">Krafttraining</option>
                       <option value="reha">Reha-Sport</option>
+                      <option value="kurse">Kurse</option>
+                      <option value="boxen">Boxen / Kickboxen</option>
                       <option value="personal-training">Personal Training</option>
-                      <option value="boxen">Boxen & Kickboxen</option>
+                      <option value="wellness">Wellness</option>
                     </select>
                   </div>
                 </div>

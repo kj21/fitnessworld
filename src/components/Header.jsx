@@ -94,7 +94,7 @@ export default function Header() {
           </nav>
           <div className="header__cta">
             <Link className="btn btn--primary" to="/probetraining">
-              Kostenloses Probetraining <span className="arr">→</span>
+              Studio &amp; Probetraining finden <span className="arr">→</span>
             </Link>
             <button
               className="burger"
@@ -121,7 +121,7 @@ export default function Header() {
           </div>
         ))}
         <Link className="btn btn--primary" to="/probetraining" onClick={() => setOpen(false)}>
-          Kostenloses Probetraining <span className="arr">→</span>
+          Studio &amp; Probetraining finden <span className="arr">→</span>
         </Link>
       </div>
     </>

@@ -55,9 +55,11 @@ export default defineType({
       name: 'slug', title: 'Seite', type: 'string', group: 'hero',
       options: {
         list: [
-          { title: 'Reha-Sport (/kurse/reha-sport)', value: 'reha-sport' },
-          { title: 'Boxen & Kickboxen (/kurse/boxen)', value: 'boxen' },
-          { title: 'Personal Training (/kurse/personal-training)', value: 'personal-training' },
+          { title: '24/7 Training (/24-7-training)', value: 'training-247' },
+          { title: 'Reha-Sport & Gesundheit (/reha-sport)', value: 'reha-sport' },
+          { title: 'Fighter World (/fighter-world)', value: 'fighter-world' },
+          { title: 'Personal Training (/personal-training)', value: 'personal-training' },
+          { title: 'Boxen (alt — ersetzt durch Fighter World)', value: 'boxen' },
         ],
       },
       validation: (R) => R.required(),
@@ -166,6 +168,6 @@ export default defineType({
   ],
   preview: {
     select: { title: 'eyebrow', subtitle: 'slug' },
-    prepare: ({ title, subtitle }) => ({ title: title || subtitle, subtitle: `/kurse/${subtitle === 'reha-sport' ? 'reha-sport' : subtitle}` }),
+    prepare: ({ title, subtitle }) => ({ title: title || subtitle, subtitle: subtitle === 'training-247' ? '/24-7-training' : `/${subtitle}` }),
   },
 })
