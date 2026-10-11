@@ -30,9 +30,54 @@ import Kontakt from './pages/Kontakt'
 import Legal from './pages/Legal'
 import Placeholder from './pages/Placeholder'
 
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion:reduce)').matches
+
+// Sticky header height plus a little air, so an anchor never lands underneath it.
+const ANCHOR_OFFSET = 104
+
+/**
+ * Scroll behaviour for client-side navigation.
+ * - A link with a hash (/#standorte, #kursplan) scrolls smoothly to that
+ *   section; React Router does not do this on its own.
+ * - Any other navigation jumps to the top instantly, so moving between pages
+ *   doesn't animate a long rewind.
+ *
+ * The scroll runs straight from the effect rather than inside
+ * requestAnimationFrame: animation frames are suspended in a background tab,
+ * which silently skipped the jump. A short retry covers the case where the
+ * target section mounts a tick after the route does.
+ */
+function ScrollManager() {
+  const { pathname, hash, key } = useLocation()
+
+  useEffect(() => {
+    const behavior = prefersReducedMotion() ? 'auto' : 'smooth'
+
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      return undefined
+    }
+
+    const id = decodeURIComponent(hash.slice(1))
+    const timers = []
+
+    const scrollToTarget = () => {
+      const target = document.getElementById(id)
+      if (!target) return false
+      const top = target.getBoundingClientRect().top + window.scrollY - ANCHOR_OFFSET
+      window.scrollTo({ top: Math.max(0, top), behavior })
+      return true
+    }
+
+    if (!scrollToTarget()) {
+      // the section may mount a tick later (route change, lazy content)
+      timers.push(setTimeout(scrollToTarget, 60), setTimeout(scrollToTarget, 240))
+    }
+
+    return () => timers.forEach(clearTimeout)
+  }, [pathname, hash, key])
+
   return null
 }
 
@@ -40,7 +85,7 @@ export default function App() {
   const { pathname } = useLocation()
   return (
     <>
-      <ScrollToTop />
+      <ScrollManager />
       <Header />
       <ErrorBoundary resetKey={pathname}>
       <Routes>
