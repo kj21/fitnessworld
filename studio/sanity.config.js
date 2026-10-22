@@ -11,6 +11,15 @@ const SINGLETONS = [
 ]
 const SINGLETON_TYPES = SINGLETONS.map((s) => s.type)
 
+// Fixed Leistungs-Seiten, listed by name in the studio sidebar.
+const SERVICE_PAGES = [
+  { id: 'servicePage-training-247',     title: '24/7 Training' },
+  { id: 'servicePage-reha-sport',       title: 'Reha & Gesundheit' },
+  { id: 'servicePage-fighter-world',    title: 'Fighter World' },
+  { id: 'servicePage-personal-training', title: 'Personal Training' },
+  { id: 'servicePage-sauna-spa',        title: 'Sauna & Spa' },
+]
+
 export default defineConfig({
   name:    'fitness-world-studios',
   title:   'Fitness World Studios',
@@ -32,7 +41,28 @@ export default defineConfig({
                 .child(S.document().schemaType(type).documentId(type))
             ),
             S.divider(),
-            ...S.documentTypeListItems().filter((item) => !SINGLETON_TYPES.includes(item.getId())),
+            // Leistungs-Seiten by name — otherwise "24/7 Training" hides behind
+            // a generic list and is hard to find.
+            S.listItem()
+              .title('Leistungs-Seiten')
+              .child(
+                S.list()
+                  .title('Leistungs-Seiten')
+                  .items([
+                    ...SERVICE_PAGES.map(({ id, title }) =>
+                      S.listItem()
+                        .title(title)
+                        .id(id)
+                        .child(S.document().schemaType('servicePage').documentId(id))
+                    ),
+                    S.divider(),
+                    S.documentTypeListItem('servicePage').title('Alle Leistungs-Seiten'),
+                  ])
+              ),
+            S.divider(),
+            ...S.documentTypeListItems().filter(
+              (item) => ![...SINGLETON_TYPES, 'servicePage'].includes(item.getId())
+            ),
           ]),
     }),
     visionTool(), // GROQ playground — remove before going to production if desired

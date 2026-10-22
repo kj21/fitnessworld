@@ -11,6 +11,7 @@ export const STUDIOS_QUERY = `
     eyebrow, title, sub, comingSoon, sortOrder,
     bestFor, accessNote, trainerHours,
     "img": heroImage.asset->url,
+    "cardImg": cardImage.asset->url,
     cardFeatures, keyFacts,
     seoTitle, metaDesc,
     intro { headline, text },
@@ -64,6 +65,8 @@ export const HOME_PAGE_QUERY = `
     access247Points[]{ title, text }, access247Note{ title, text }, access247Cta,
     rehaEyebrow, rehaHeadline, rehaText, rehaSteps[]{ title, text }, rehaCta,
     fighterEyebrow, fighterHeadline, fighterText, fighterPoints[]{ title, text }, fighterCta,
+    "access247Image": access247Image.asset->url,
+    "fighterImage": fighterImage.asset->url,
     membershipEyebrow, membershipHeadline, membershipText, membershipCta,
     ctaEyebrow, ctaHeadline, ctaText, ctaSteps, ctaButton
   }

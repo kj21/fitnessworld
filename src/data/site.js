@@ -15,6 +15,7 @@ export const routes = [
   { path: '/24-7-training', label: '24/7 Training', template: 'service' },
   { path: '/reha-sport', label: 'Reha-Sport & Gesundheit', template: 'service' },
   { path: '/fighter-world', label: 'Fighter World', template: 'service' },
+  { path: '/sauna-spa', label: 'Sauna & Spa', template: 'service' },
   { path: '/personal-training', label: 'Personal Training', template: 'service' },
   { path: '/kurse', label: 'Kursplan & Angebote', template: 'course-overview' },
   { path: '/mitgliedschaft', label: 'Mitglied werden / Preise', template: 'pricing' },
@@ -36,8 +37,7 @@ export const nav = [
   { label: 'Reha & Gesundheit', to: '/reha-sport' },
   { label: 'Fighter World', to: '/fighter-world' },
   { label: 'Mitgliedschaft', to: '/mitgliedschaft' },
-  // External link (http…) → opens in a new tab, see NavLink in Header.jsx
-  { label: 'Sauna & Spa', to: 'https://sauna-spa-twistringen.de/' },
+  { label: 'Sauna & Spa', to: '/sauna-spa' },
 ]
 
 export const marqueeItems = [

@@ -59,6 +59,7 @@ export default defineType({
           { title: 'Reha-Sport & Gesundheit (/reha-sport)', value: 'reha-sport' },
           { title: 'Fighter World (/fighter-world)', value: 'fighter-world' },
           { title: 'Personal Training (/personal-training)', value: 'personal-training' },
+          { title: 'Sauna & Spa (/sauna-spa)', value: 'sauna-spa' },
           { title: 'Boxen (alt — ersetzt durch Fighter World)', value: 'boxen' },
         ],
       },
