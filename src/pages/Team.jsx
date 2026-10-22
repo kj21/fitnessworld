@@ -66,7 +66,9 @@ export default function Team() {
           <div className="team-grid">
             {team.map((member, i) => (
               <Reveal key={member.name} delay={(i % 3) * 0.06} className="team-card">
-                <div className="team-avatar">{member.initial}</div>
+                {/^https?:\/\//.test(String(member.photo || ''))
+                  ? <img className="team-avatar team-avatar--photo" src={`${member.photo}?w=240&h=240&fit=crop&auto=format`} alt={member.name} loading="lazy" />
+                  : <div className="team-avatar">{member.initial}</div>}
                 <div className="team-info">
                   <strong className="team-name">{member.name}</strong>
                   <span className="team-role">{member.role}</span>

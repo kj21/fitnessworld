@@ -97,6 +97,7 @@ export default function App() {
         <Route path="/reha-sport"        element={<ServicePage slug="reha-sport" />} />
         <Route path="/fighter-world"     element={<ServicePage slug="fighter-world" />} />
         <Route path="/personal-training" element={<ServicePage slug="personal-training" />} />
+        <Route path="/sauna-spa"        element={<ServicePage slug="sauna-spa" />} />
         {/* Old URLs stay alive */}
         <Route path="/kurse/reha-sport"        element={<Navigate to="/reha-sport" replace />} />
         <Route path="/kurse/personal-training" element={<Navigate to="/personal-training" replace />} />

@@ -29,7 +29,14 @@ export default defineType({
     defineField({ name: 'eyebrow',  title: 'Eyebrow (z.B. "Studio Holdorf")', type: 'string', validation: Rule => Rule.required() }),
     defineField({ name: 'title',    title: 'Seitentitel (Großbuchstaben)', type: 'string', description: 'z.B. FITNESS WORLD HOLDORF' }),
     defineField({ name: 'sub',      title: 'Untertitel', type: 'text', rows: 3 }),
-    defineField({ name: 'heroImage', title: 'Hero-Bild', type: 'image', options: { hotspot: true } }),
+    defineField({
+      name: 'heroImage', title: 'Hero-Bild (oben auf der Studio-Seite)', type: 'image', options: { hotspot: true },
+      description: 'Wird auch auf der Startseiten-Karte gezeigt, solange unten kein eigenes Karten-Bild hochgeladen ist.',
+    }),
+    defineField({
+      name: 'cardImage', title: 'Karten-Bild (Startseite)', type: 'image', options: { hotspot: true },
+      description: 'Optional. Nur nötig, wenn auf der Startseite ein anderes Bild als das Hero-Bild stehen soll.',
+    }),
     defineField({ name: 'seoTitle', title: 'SEO-Titel (Browser-Tab)', type: 'string' }),
     defineField({ name: 'metaDesc', title: 'Meta-Beschreibung', type: 'text', rows: 2 }),
     defineField({

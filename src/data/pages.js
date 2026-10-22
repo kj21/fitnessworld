@@ -158,6 +158,44 @@ export const servicePages = {
     ],
   },
 
+  'sauna-spa': {
+    slug: 'sauna-spa',
+    eyebrow: 'Sauna & Spa',
+    title: 'REGENERATION GEHÖRT ZUM TRAINING.',
+    sub: 'Sauna, Solarium und Ruhe nach dem Training – an den Standorten, die einen Wellnessbereich haben.',
+    primaryCta: { label: 'Standort & Probetraining finden', to: '/probetraining?interesse=wellness' },
+    heroImagePlaceholder: '/images/services/sauna-spa-hero.jpg',
+    seoTitle: 'Sauna & Spa | Fitness World Studios',
+    metaDesc: 'Sauna, Solarium und Regeneration bei Fitness World Studios: Standorte, Zeiten und was du mitbringen solltest.',
+    sections: [
+      {
+        _type: 'split', _key: 'angebot', tone: 'light',
+        eyebrow: 'Das Angebot',
+        headline: 'ERHOLUNG NACH\n*DEINER EINHEIT.*',
+        text: 'Nach dem Training runterkommen, Muskeln lockern und den Kopf frei bekommen: Unser Wellnessbereich gehört für viele Mitglieder fest zur Trainingswoche dazu.',
+        items: ['Sauna', 'Solarium', 'Ruhebereich', 'Duschen & Einzelumkleiden'],
+        imagePlaceholder: '/images/services/sauna-spa.jpg', imageAlt: 'Saunabereich',
+      },
+      {
+        _type: 'twoLists', _key: 'standorte', tone: 'dark',
+        leftEyebrow: 'Standorte', leftTitle: 'WO ES SAUNA & SPA GIBT.',
+        leftItems: ['Bitte in Sanity die Standorte mit Wellnessbereich eintragen'],
+        rightEyebrow: 'Zeiten', rightTitle: 'WANN GEÖFFNET IST.',
+        rightItems: ['Bitte in Sanity die Zeiten je Standort eintragen'],
+      },
+      {
+        _type: 'note', _key: 'hinweis', tone: 'white',
+        text: 'Handtuch und Badeschuhe bitte selbst mitbringen. Die aktuellen Zeiten erfährst du an deinem Standort oder an der Theke.',
+      },
+      {
+        _type: 'cta', _key: 'cta', tone: 'dark',
+        eyebrow: 'Probetraining', headline: 'TRAINING UND ERHOLUNG\n*AN EINEM ORT.*',
+        text: 'Komm vorbei, sieh dir dein Studio an und finde den Einstieg, der zu dir passt.',
+        button: { label: 'Probetraining anfragen', to: '/probetraining?interesse=wellness' },
+      },
+    ],
+  },
+
   'personal-training': {
     slug: 'personal-training',
     eyebrow: 'Personal Training',

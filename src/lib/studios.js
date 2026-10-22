@@ -55,7 +55,7 @@ export function normalizeStudio(s) {
     eyebrow: s.eyebrow || `Studio ${s.name || studioName(s, slug)}`,
     comingSoon,
     img: s.img || null,
-    cardImg: s.cardImg || s.img || `studios/${slug}-card.jpg`,
+    cardImg: s.cardImg || s.img || `studios/${slug}-card.jpg`, // Karten-Bild → Hero-Bild → Platzhalter
     features,
     keyFacts: clean(s.keyFacts),
     ausstattung: clean(s.ausstattung),

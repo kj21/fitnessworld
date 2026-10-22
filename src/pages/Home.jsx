@@ -8,6 +8,16 @@ import DecisionCard from '../components/DecisionCard'
 import FinderCard from '../components/FinderCard'
 import PathSteps, { PathTrack } from '../components/PathSteps'
 import ImagePlaceholder from '../components/ImagePlaceholder'
+
+const isUrl = (v) => /^https?:\/\//.test(String(v || ''))
+
+/** Section visual: the image from Sanity, otherwise the tagged placeholder. */
+function SectionMedia({ image, label, alt }) {
+  if (isUrl(image)) {
+    return <img className="panel__media panel__media--photo" src={`${image}?w=1200&auto=format`} alt={alt} loading="lazy" />
+  }
+  return <ImagePlaceholder className="panel__media" label={label} alt={alt} />
+}
 import { homeContent } from '../data/site'
 import { useSanityData } from '../hooks/useSanityData.js'
 import { HOME_PAGE_QUERY, PRICING_PLANS_QUERY } from '../lib/queries.js'
@@ -130,7 +140,7 @@ export default function Home() {
             )}
           </Reveal>
           <Reveal delay={0.1}>
-            <ImagePlaceholder className="panel__media" label="/images/sections/24-7-zugang.jpg" alt="Zugang per Transponder außerhalb der Trainerzeiten" />
+            <SectionMedia image={c.access247Image} label="/images/sections/24-7-zugang.jpg" alt="Zugang per Transponder außerhalb der Trainerzeiten" />
           </Reveal>
         </div>
       </section>
@@ -156,7 +166,7 @@ export default function Home() {
       <section className="section section--darker" id="fighter-world">
         <div className="wrap panel">
           <Reveal delay={0.05}>
-            <ImagePlaceholder className="panel__media" label="/images/sections/fighter-world.jpg" alt="Boxtraining in der Fighter World" />
+            <SectionMedia image={c.fighterImage} label="/images/sections/fighter-world.jpg" alt="Boxtraining in der Fighter World" />
           </Reveal>
           <Reveal>
             <BlueLabel>{c.fighterEyebrow}</BlueLabel>

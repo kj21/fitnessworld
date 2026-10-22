@@ -182,6 +182,10 @@ export default defineType({
         defineField({ name: 'text',  title: 'Text',  type: 'text', rows: 3 }),
       ],
     }),
+    defineField({
+      name: 'access247Image', title: 'Bild', type: 'image', options: { hotspot: true }, group: 'access247',
+      description: 'Ohne Bild zeigt die Website eine graue Fläche mit dem vorgesehenen Pfad.',
+    }),
     cta('access247Cta', 'Button', 'access247'),
 
     // ── 6 Reha & Gesundheit ──────────────────────────────────────────────
@@ -215,6 +219,10 @@ export default defineType({
         ],
         preview: { select: { title: 'title', subtitle: 'text' } },
       }],
+    }),
+    defineField({
+      name: 'fighterImage', title: 'Bild', type: 'image', options: { hotspot: true }, group: 'fighter',
+      description: 'Ohne Bild zeigt die Website eine graue Fläche mit dem vorgesehenen Pfad.',
     }),
     cta('fighterCta', 'Button', 'fighter'),
 
