@@ -56,10 +56,10 @@ export default defineType({
 
     // Warum
     defineField({ name: 'whyEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy' }),
-    headline('whyHeadline', 'Headline', 'why'),
+    headline('whyHeadline', 'Headline', 'legacy'),
     defineField({ name: 'whyLede', title: 'Einleitung', type: 'text', rows: 3, group: 'legacy' }),
     defineField({ name: 'whyText', title: 'Text',       type: 'text', rows: 4, group: 'legacy' }),
-    cta('whyLink', 'Textlink', 'why'),
+    cta('whyLink', 'Textlink', 'legacy'),
 
     // Studios — the cards themselves come from the "Studio Standort" documents.
     defineField({ name: 'studiosEyebrow', title: 'Eyebrow', type: 'string', group: 'studios' }),
@@ -71,7 +71,7 @@ export default defineType({
 
     // Leistungen
     defineField({ name: 'servicesEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy' }),
-    headline('servicesHeadline', 'Headline', 'services'),
+    headline('servicesHeadline', 'Headline', 'legacy'),
     defineField({ name: 'servicesText', title: 'Text', type: 'text', rows: 3, group: 'legacy' }),
     defineField({
       name: 'services', title: 'Leistungen (6 Karten)', type: 'array', group: 'legacy',
@@ -89,9 +89,9 @@ export default defineType({
 
     // Community
     defineField({ name: 'communityEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy' }),
-    headline('communityHeadline', 'Headline', 'community'),
+    headline('communityHeadline', 'Headline', 'legacy'),
     defineField({ name: 'communityText', title: 'Text', type: 'text', rows: 3, group: 'legacy' }),
-    cta('communityCta', 'Button', 'community'),
+    cta('communityCta', 'Button', 'legacy'),
 
     // Zahlen
     defineField({
@@ -115,7 +115,7 @@ export default defineType({
 
     // Kundenstimmen — the quotes come from "Kundenstimme" documents.
     defineField({ name: 'testimonialsEyebrow', title: 'Eyebrow', type: 'string', group: 'legacy' }),
-    headline('testimonialsHeadline', 'Headline', 'testimonials'),
+    headline('testimonialsHeadline', 'Headline', 'legacy'),
 
     // Abschluss-CTA
     defineField({ name: 'ctaEyebrow', title: 'Eyebrow', type: 'string', group: 'cta' }),

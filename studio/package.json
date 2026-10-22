@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",
-    "deploy": "sanity deploy"
+    "deploy": "sanity deploy",
+    "check": "node scripts/check-field-groups.mjs",
+    "predeploy": "node scripts/check-field-groups.mjs"
   },
   "dependencies": {
     "@sanity/vision": "^3.0.0",
