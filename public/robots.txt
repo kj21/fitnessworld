@@ -1,0 +1,7 @@
+# Fitness World Studios – Live-Domain
+# Suchmaschinen duerfen die Seite vollstaendig crawlen.
+User-agent: *
+Allow: /
+
+# Das Sanity Studio gehoert nicht in den Index.
+Disallow: /studio

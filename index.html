@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo/fitness-world-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Staging-Schutz: Auf *.vercel.app darf nichts in den Google-Index.
+      // Zweite Ebene zum X-Robots-Tag-Header aus vercel.json — greift auch,
+      // falls die Seite einmal ohne Vercel-Routing ausgeliefert wird.
+      if (/\.vercel\.app$/i.test(location.hostname)) {
+        var robots = document.createElement('meta')
+        robots.name = 'robots'
+        robots.content = 'noindex,nofollow'
+        document.head.appendChild(robots)
+      }
+    </script>
     <title>Fitness World Studios | 24/7 Fitness, Reha-Sport & Kurse</title>
     <meta name="description" content="Trainiere bei Fitness World Studios. 24/7 Training, Reha-Sport, Boxen, Personal Training und Community." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
