@@ -1,0 +1,6 @@
+# Fitness World Studios – Staging (*.vercel.app)
+# Diese Datei wird nur auf der Vercel-Vorschau-Domain ausgeliefert.
+# Dort soll nichts indexiert werden, damit die Live-Domain keine
+# doppelten Inhalte bekommt.
+User-agent: *
+Disallow: /
