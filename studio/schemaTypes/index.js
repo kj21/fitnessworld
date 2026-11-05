@@ -10,6 +10,7 @@ import course         from './course.js'
 import scheduleEntry  from './scheduleEntry.js'
 import membershipPage from './membershipPage.js'
 import siteSettings   from './siteSettings.js'
+import siteNavigation from './siteNavigation.js'
 import legalPage      from './legalPage.js'
 import servicePage    from './servicePage.js'
 import pageCopy       from './pageCopy.js'
@@ -29,6 +30,7 @@ export const schemaTypes = [
   homePage,
   membershipPage,
   siteSettings,
+  siteNavigation,
   course,
   scheduleEntry,
   legalPage,

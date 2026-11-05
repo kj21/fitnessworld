@@ -7,6 +7,7 @@ import { schemaTypes } from './schemaTypes/index.js'
 const SINGLETONS = [
   { type: 'homePage',       title: 'Startseite' },
   { type: 'membershipPage', title: 'Mitgliedschaft-Seite' },
+  { type: 'siteNavigation', title: 'Navigation' },
   { type: 'siteSettings',   title: 'Unternehmen & Impressum' },
 ]
 const SINGLETON_TYPES = SINGLETONS.map((s) => s.type)

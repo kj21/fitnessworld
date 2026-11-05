@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Logo from './Logo'
-import { nav, brand } from '../data/site'
+import { brand } from '../data/site'
 import { useStudios } from '../lib/studios.js'
-import { useCourses } from '../lib/content.js'
+import { useCourses, useNavigation } from '../lib/content.js'
 
-/** nav from site.js, with "Standorte" and "Kurse" children filled from Sanity. */
+/** Menu from Sanity (site.js fallback), with "Standorte"/"Kurse" children filled. */
 function useNavItems() {
   const { studios } = useStudios()
   const { featured } = useCourses()
+  const nav = useNavigation()
   return nav.map((item) => {
     if (item.courses) {
       const own = new Set(item.children.map((c) => c.to))
