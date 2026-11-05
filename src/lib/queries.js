@@ -99,6 +99,13 @@ export const SITE_SETTINGS_QUERY = `
   }
 `
 
+// Hauptnavigation (singleton). Empty or missing → site.js nav stays.
+export const NAVIGATION_QUERY = `
+  *[_type == "siteNavigation"][0] {
+    items[]{ label, to, submenu }
+  }
+`
+
 // Rechtstexte (Impressum-Zusatz, Datenschutz, AGB, Hausordnung)
 export const LEGAL_PAGES_QUERY = `
   *[_type == "legalPage"] { page, title, body }

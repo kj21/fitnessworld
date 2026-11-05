@@ -6,11 +6,12 @@
 import { useSanityData } from '../hooks/useSanityData.js'
 import {
   COURSES_QUERY, SCHEDULE_QUERY, MEMBERSHIP_PAGE_QUERY, SITE_SETTINGS_QUERY, LEGAL_PAGES_QUERY,
-  SERVICE_PAGES_QUERY, PAGE_COPY_QUERY, BLOG_POSTS_QUERY,
+  SERVICE_PAGES_QUERY, PAGE_COPY_QUERY, BLOG_POSTS_QUERY, NAVIGATION_QUERY,
 } from './queries.js'
 import {
   courses as coursesFallback, schedule as scheduleFallback,
   mitgliedschaftBenefits, mitgliedschaftFAQ, company as companyFallback, numberWord,
+  nav as navFallback,
 } from '../data/site'
 import {
   servicePages as servicePagesFallback, pageCopy as pageCopyFallback,
@@ -122,6 +123,27 @@ export function useServicePage(slug) {
   if (!doc) return { page: fallback, loading, fromSanity: false }
   const merged = mergeFields(fallback || {}, doc)
   return { page: { ...merged, slug }, loading, fromSanity: true }
+}
+
+// ── Navigation ───────────────────────────────────────────────────────────────
+/**
+ * Menüpunkte im Kopfbereich, aus Sanity ("Navigation") wenn gepflegt.
+ *
+ * The Sanity list is authoritative: deleting an item there removes it from the
+ * menu. Only an empty or missing document falls back to site.js, so the site
+ * can never end up without a menu.
+ */
+export function useNavigation() {
+  const { data } = useSanityData(NAVIGATION_QUERY, null)
+  const items = (Array.isArray(data?.items) ? data.items : []).filter((i) => i?.label && i?.to)
+  if (!items.length) return navFallback
+  return items.map(({ label, to, submenu }) => ({
+    label,
+    to,
+    // Header reads these two flags; `courses` additionally needs a children array.
+    ...(submenu === 'studios' ? { studios: true } : {}),
+    ...(submenu === 'courses' ? { courses: true, children: [] } : {}),
+  }))
 }
 
 // ── Seitentexte ──────────────────────────────────────────────────────────────
